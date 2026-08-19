@@ -9,9 +9,10 @@ __pycache__/
 .env
 .env.*
 .DS_Store
-.aistack/runs/
-.aistack/last-codex.md
-.aistack/cache/
+.aistack/
+.serena/
+prompt.md
+VIBE.md
 benchmarks/last-report.*
 !benchmarks/suite-report.json
 !benchmarks/suite-report.md

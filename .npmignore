@@ -1,5 +1,5 @@
 # The repository root is a private workspace. The publishable artifact is the
-# standalone `leanagent` workspace package; never include local state or source
+# standalone `tidyrun` workspace package; never include local state or source
 # material if someone runs `npm pack` at the root.
 .aistack/
 .serena/
@@ -14,6 +14,6 @@ examples/
 fixtures/
 packages/
 scripts/
-leanagent.yaml
+tidyrun.yaml
 package-lock.json
 tsconfig.base.json

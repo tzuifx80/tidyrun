@@ -56,7 +56,7 @@ const report = {
   schema: "tidyrun.final-launch-report/v1",
   commitSha: process.env.BENCHMARK_COMMIT ?? "d74ae8670dedf79f94e136202ea853dacd82535f",
   observedAt: new Date().toISOString(),
-  environment: { os: "Windows", platform: process.platform, node: process.version, npm: process.env.npm_package_manager ?? "npm 11.16.0", python: "3.11.15", repository: root },
+  environment: { os: "Windows", platform: process.platform, node: process.version, npm: process.env.npm_package_manager ?? "npm 11.16.0", python: "3.11.15", repository: "." },
   agents: { codex: { installed: "0.147.0", authenticated: true, model: "gpt-5.4-mini", reasoning: "low", tasksCompleted: 10 }, gemini: { installed: "0.53.1", authenticated: false, result: "not run" }, opencode: { installed: "1.18.15", credentialsDetected: true, result: "no completed task; provider attempts errored or timed out" } },
   repositories: ["fixtures/python-project", "fixtures/typescript-app"],
   realAgentStudy: { methodology: "Fresh A/B repositories from the same generated source commit; identical task prompt and Codex model; B adds only TidyRun wrapper instructions and a local package install; acceptance commands run independently after the agent.", tasks: taskRows, aggregate, negativeResults: ["Aggregate wall time increased in the TidyRun treatment; this study does not support a speedup claim.", "Provider token telemetry was observed but is not presented as billing savings.", "The one-shot coding tasks did not exercise verified command reuse; deterministic fixtures cover that mechanism separately."] },
