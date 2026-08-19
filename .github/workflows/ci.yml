@@ -23,6 +23,6 @@ jobs:
       - run: npm run lint
       - run: npm run benchmark
       - run: npm run package:smoke
-      - run: npm pack --dry-run -w @leanagent/core
-      - run: npm pack --dry-run -w @leanagent/cli
-      - run: npm pack --dry-run -w leanagent
+      - run: npm pack --dry-run -w @tidyrun/core
+      - run: npm pack --dry-run -w @tidyrun/cli
+      - run: npm pack --dry-run -w tidyrun

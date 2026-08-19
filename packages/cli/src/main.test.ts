@@ -3,6 +3,6 @@ import { upsertForTest } from "./sync.js";
 
 describe("sync markers", () => {
   it("is imported from helper", () => {
-    expect(upsertForTest("hello", "<!-- leanagent:start -->x<!-- leanagent:end -->")).toContain("leanagent:start");
+    expect(upsertForTest("hello", "<!-- tidyrun:start -->x<!-- tidyrun:end -->")).toContain("tidyrun:start");
   });
 });

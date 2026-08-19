@@ -1,3 +1,3 @@
-module example.com/leanagent-fixture-go
+module example.com/tidyrun-fixture-go
 
 go 1.22

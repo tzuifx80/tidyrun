@@ -30,7 +30,7 @@ export class FileArtifactStore implements ArtifactStore {
     const full = redactSecrets(input.full);
     const compressed = redactSecrets(input.compressed);
     const digest = sha256(`${input.kind}\0${input.command ?? ""}\0${full}`);
-    const id = `la_${digest.slice(0, 16)}`;
+    const id = `tr_${digest.slice(0, 16)}`;
     const dir = join(this.root, id);
     mkdirSync(dir, { recursive: true, mode: 0o700 });
     const fullPath = join(dir, "full.txt");
@@ -108,7 +108,7 @@ export class FileArtifactStore implements ArtifactStore {
     if (!existsSync(this.root)) return [];
     const rows = [...this.index.values()].filter((row) => isValidRecord(this.root, row));
     for (const id of readdirSync(this.root)) {
-      if (!id.startsWith("la_")) continue;
+      if (!id.startsWith("tr_")) continue;
       const row = this.get(id);
       if (row && !rows.some((item) => item.id === row.id)) rows.push(row);
     }
@@ -153,7 +153,7 @@ export class FileArtifactStore implements ArtifactStore {
 
   private persistIndex(mergeDisk = true): void {
     // The index is only an acceleration layer; merge on-disk rows before each
-    // atomic replacement so two LeanAgent processes do not lose each other's
+    // atomic replacement so two TidyRun processes do not lose each other's
     // metadata. Artifact directories remain independently content-addressed.
     const merged = new Map<string, ArtifactRecord>();
     if (mergeDisk) {
@@ -249,14 +249,14 @@ function writeFileAtomic(path: string, value: string): void {
         rmSync(tmp, { force: true });
       } catch {
         try { rmSync(tmp, { force: true }); } catch { /* best effort */ }
-        throw new Error(`unable to persist LeanAgent artifact: ${path}`);
+        throw new Error(`unable to persist TidyRun artifact: ${path}`);
       }
     }
   }
 }
 
 function normalizeId(id: string): string {
-  return id.replace(/^LA:\/\/(?:command|file)\//i, "").replace(/^la:\/\//i, "");
+  return id.replace(/^TR:\/\/(?:command|file)\//i, "").replace(/^tr:\/\//i, "");
 }
 
 function isWithin(root: string, candidate: string): boolean {

@@ -1,19 +1,19 @@
 # Supported agents and capability levels
 
-LeanAgent reports the capability level it can legitimately provide. A rules file is not an interception hook; the distinction is intentional.
+TidyRun reports the capability level it can legitimately provide. A rules file is not an interception hook; the distinction is intentional.
 
 | Agent | Level | Current integration | Limitation |
 |---|---|---|---|
-| Generic shell agents | FULL | `leanagent run -- <command>` captures commands, output, artifacts, metrics | Agent file reads are visible only when the agent uses the wrapper/API |
-| Gemini CLI | PARTIAL | `leanagent hook gemini` handles documented JSON `BeforeTool`, `AfterTool`, and `SessionStart` hooks; `GEMINI.md` sync | Only exposed hook tool payloads are observable; file reads and model usage are not universally exposed |
+| Generic shell agents | FULL | `tidyrun run -- <command>` captures commands, output, artifacts, metrics | Agent file reads are visible only when the agent uses the wrapper/API |
+| Gemini CLI | PARTIAL | `tidyrun hook gemini` handles documented JSON `BeforeTool`, `AfterTool`, and `SessionStart` hooks; `GEMINI.md` sync | Only exposed hook tool payloads are observable; file reads and model usage are not universally exposed |
 | Codex | PARTIAL | `AGENTS.md` sync and generic wrapper | No provider-specific interception is assumed in the core |
-| Claude Code | PARTIAL | `CLAUDE.md` sync, `leanagent mcp`, and generic wrapper | MCP exposes structured tools/context, not transparent interception of every terminal operation |
-| OpenCode | FALLBACK | repository detection and `leanagent mcp` | Plugin API is host-version dependent |
+| Claude Code | PARTIAL | `CLAUDE.md` sync, `tidyrun mcp`, and generic wrapper | MCP exposes structured tools/context, not transparent interception of every terminal operation |
+| OpenCode | FALLBACK | repository detection and `tidyrun mcp` | Plugin API is host-version dependent |
 | Cursor / Windsurf | FALLBACK | managed rules and terminal wrapper | Editor terminal interception is not consistently exposed |
 | Cline / Roo Code | FALLBACK | managed rules and MCP server | Extension host controls tool interception |
-| Aider | FALLBACK | `leanagent run` and repository rules | No universal native event stream |
+| Aider | FALLBACK | `tidyrun run` and repository rules | No universal native event stream |
 
-The adapter catalog is inspectable with `leanagent adapters --json`. LeanAgent does not claim model-token savings unless provider usage metadata is actually delivered.
+The adapter catalog is inspectable with `tidyrun adapters --json`. TidyRun does not claim model-token savings unless provider usage metadata is actually delivered.
 
 ### Capability matrix
 

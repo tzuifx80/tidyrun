@@ -11,8 +11,8 @@ const releaseCommit = execFileSync("git", ["rev-parse", "HEAD"], { cwd: root, en
 const runEnabled = process.env.REAL_BENCH_RUN === "1";
 const agent = process.env.REAL_BENCH_AGENT ?? "codex";
 const timeoutMs = Number(process.env.REAL_BENCH_TIMEOUT_MS ?? 120_000);
-const packageTarball = process.env.LEANAGENT_TARBALL ?? join(tmpdir(), "leanagent-real-bench-package", "leanagent-0.1.0.tgz");
-const outRoot = process.env.REAL_BENCH_OUT ?? join(tmpdir(), `leanagent-real-bench-${Date.now()}`);
+const packageTarball = process.env.TIDYRUN_TARBALL ?? join(tmpdir(), "tidyrun-real-bench-package", "tidyrun-0.1.0.tgz");
+const outRoot = process.env.REAL_BENCH_OUT ?? join(tmpdir(), `tidyrun-real-bench-${Date.now()}`);
 
 const tasks = [
   {
@@ -95,15 +95,15 @@ if (!runEnabled) {
 }
 
 if (agent !== "codex") throw new Error(`Unsupported REAL_BENCH_AGENT=${agent}; only codex is enabled for this reproducible harness.`);
-if (!existsSync(packageTarball)) throw new Error(`LeanAgent tarball not found: ${packageTarball}`);
+if (!existsSync(packageTarball)) throw new Error(`TidyRun tarball not found: ${packageTarball}`);
 mkdirSync(outRoot, { recursive: true });
 const results = [];
 for (const task of selectedTasks()) {
   const taskResult = await runTask(task);
   results.push(taskResult);
-  writeFileSync(join(outRoot, "real-agent-results.json"), JSON.stringify({ schema: "leanagent.real-agent/v1", releaseCommit, agent, tasks: results }, null, 2) + "\n");
+  writeFileSync(join(outRoot, "real-agent-results.json"), JSON.stringify({ schema: "tidyrun.real-agent/v1", releaseCommit, agent, tasks: results }, null, 2) + "\n");
 }
-process.stdout.write(JSON.stringify({ schema: "leanagent.real-agent/v1", releaseCommit, agent, outRoot, tasks: results }, null, 2) + "\n");
+process.stdout.write(JSON.stringify({ schema: "tidyrun.real-agent/v1", releaseCommit, agent, outRoot, tasks: results }, null, 2) + "\n");
 
 function selectedTasks() {
   const requested = process.env.REAL_BENCH_TASKS?.split(",").map((id) => id.trim()).filter(Boolean);
@@ -116,7 +116,7 @@ function selectedTasks() {
 async function runTask(task) {
   const taskRoot = join(outRoot, task.id);
   const baselineRoot = join(taskRoot, "baseline");
-  const leanRoot = join(taskRoot, "leanagent");
+  const leanRoot = join(taskRoot, "tidyrun");
   const hiddenRoot = join(taskRoot, "hidden");
   mkdirSync(hiddenRoot, { recursive: true });
   prepareRepo(task, baselineRoot);
@@ -133,22 +133,22 @@ async function runTask(task) {
   if (startingCommit !== leanCommit) throw new Error(`${task.id}: A/B starting commits differ`);
   setupInstructions(baselineRoot, false);
   setupInstructions(leanRoot, true);
-  setupLeanAgent(leanRoot);
+  setupTidyRun(leanRoot);
   const baseline = runProvider(task.prompt, baselineRoot, join(taskRoot, "baseline.codex.jsonl"), false);
-  const lean = runProvider(task.prompt, leanRoot, join(taskRoot, "leanagent.codex.jsonl"), true);
+  const lean = runProvider(task.prompt, leanRoot, join(taskRoot, "tidyrun.codex.jsonl"), true);
   const baselineQuality = runVerification(task, baselineRoot, hiddenRoot, "baseline");
-  const leanQuality = runVerification(task, leanRoot, hiddenRoot, "leanagent");
-  const stats = readLeanStats(leanRoot);
-  return { id: task.id, repository: task.repo, prompt: task.prompt, startingCommit, baseline: { ...baseline, quality: baselineQuality }, leanagent: { ...lean, quality: leanQuality, stats }, qualityParity: baselineQuality.status === leanQuality.status && leanQuality.status === "PASS", metrics: summarize(baseline, baselineQuality, lean, leanQuality, stats) };
+  const leanQuality = runVerification(task, leanRoot, hiddenRoot, "tidyrun");
+  const stats = readTidyRunStats(leanRoot);
+  return { id: task.id, repository: task.repo, prompt: task.prompt, startingCommit, baseline: { ...baseline, quality: baselineQuality }, tidyrun: { ...lean, quality: leanQuality, stats }, qualityParity: baselineQuality.status === leanQuality.status && leanQuality.status === "PASS", metrics: summarize(baseline, baselineQuality, lean, leanQuality, stats) };
 }
 
 function prepareRepo(task, destination) {
   const source = join(root, "fixtures", task.repo === "python" ? "python-project" : "typescript-app");
   mkdirSync(destination, { recursive: true });
   cpSync(source, destination, { recursive: true });
-  writeFileSync(join(destination, ".gitignore"), "node_modules/\n.leanagent/\n.bench-home/\n*.jsonl\n");
+  writeFileSync(join(destination, ".gitignore"), "node_modules/\n.tidyrun/\n.bench-home/\n*.jsonl\n");
   writeFileSync(join(destination, "AGENTS.md"), "# Benchmark instructions\n\nThis is a controlled benchmark. Keep the requested change minimal, do not edit tests unless the task explicitly asks, and run the stated acceptance command.\n");
-  if (task.repo === "python") writeFileSync(join(destination, "package.json"), "{\"name\":\"leanagent-python-benchmark\",\"private\":true}\n");
+  if (task.repo === "python") writeFileSync(join(destination, "package.json"), "{\"name\":\"tidyrun-python-benchmark\",\"private\":true}\n");
   else {
     const packageJson = JSON.parse(readFileSync(join(destination, "package.json"), "utf8"));
     packageJson.scripts = { test: "node --experimental-strip-types tests/math.ts" };
@@ -159,27 +159,27 @@ function prepareRepo(task, destination) {
   }
 }
 
-function setupInstructions(repo, leanagent) {
-  const text = leanagent
-    ? "# Benchmark instructions\n\nThis controlled task must stay focused on the repository. Do not inspect external user skill or policy files. Use `npx --no-install leanagent run -- <command>` for every test, build, or diagnostic shell command; when using PowerShell cmdlets, put them inside `pwsh -NoProfile -Command`. Do not nest `leanagent cat` inside `leanagent run`; recover an artifact with `npx --no-install leanagent cat <id>`. Keep the requested change minimal and do not edit tests unless asked.\n"
-    : "# Benchmark instructions\n\nThis controlled task must stay focused on the repository. Do not inspect external user skill or policy files. Run the stated test or diagnostic commands directly; when using PowerShell cmdlets, put them inside `pwsh -NoProfile -Command`. Do not use LeanAgent or any wrapper. Keep the requested change minimal and do not edit tests unless asked.\n";
+function setupInstructions(repo, useTidyRun) {
+  const text = useTidyRun
+    ? "# Benchmark instructions\n\nFocus on the repo. Run required commands via `npx --no-install tidyrun run -- <command>`.\nIf full output is needed, fetch artifacts with `npx --no-install tidyrun cat <id>`.\nMinimal change; don't edit tests unless asked.\n"
+    : "# Benchmark instructions\n\nFocus on the repo. Run required commands directly.\nMinimal change; don't edit tests unless asked.\n";
   writeFileSync(join(repo, "AGENTS.md"), text);
 }
 
-function setupLeanAgent(repo) {
-  const env = { ...process.env, LEANAGENT_HOME: join(repo, ".bench-home") };
+function setupTidyRun(repo) {
+  const env = { ...process.env, TIDYRUN_HOME: join(repo, ".bench-home") };
   const install = runNpm(["install", "--ignore-scripts", "--offline", "--no-save", packageTarball], repo, env);
-  if (install.status !== 0) throw new Error(`LeanAgent install failed: ${install.error ? String(install.error) : install.stderr || install.stdout || `exit ${install.status}`}`);
-  const init = runNpm(["exec", "--", "leanagent", "init", "--json"], repo, env);
-  if (init.status !== 0) throw new Error(`LeanAgent init failed: ${init.error ? String(init.error) : init.stderr || init.stdout || `exit ${init.status}`}`);
+  if (install.status !== 0) throw new Error(`TidyRun install failed: ${install.error ? String(install.error) : install.stderr || install.stdout || `exit ${install.status}`}`);
+  const init = runNpm(["exec", "--", "tidyrun", "init", "--json"], repo, env);
+  if (init.status !== 0) throw new Error(`TidyRun init failed: ${init.error ? String(init.error) : init.stderr || init.stdout || `exit ${init.status}`}`);
 }
 
-function runProvider(prompt, cwd, logPath, leanagent) {
+function runProvider(prompt, cwd, logPath, useTidyrun) {
   const started = performance.now();
   const args = ["exec", "--ephemeral", "--ignore-user-config", "--ignore-rules", "--json", "--dangerously-bypass-approvals-and-sandbox", "--cd", cwd, prompt];
   if (process.env.REAL_BENCH_MODEL) args.splice(args.length - 1, 0, "--model", process.env.REAL_BENCH_MODEL);
   if (process.env.REAL_BENCH_REASONING) args.splice(args.length - 1, 0, "-c", `model_reasoning_effort=${process.env.REAL_BENCH_REASONING}`);
-  const env = leanagent ? { ...process.env, LEANAGENT_HOME: join(cwd, ".bench-home") } : process.env;
+  const env = useTidyrun ? { ...process.env, TIDYRUN_HOME: join(cwd, ".bench-home") } : process.env;
   const result = spawnSync("codex", args, { cwd, env, encoding: "utf8", timeout: timeoutMs, maxBuffer: 50 * 1024 * 1024, windowsHide: true });
   const stdout = result.stdout ?? "";
   const stderr = result.stderr ?? "";
@@ -200,11 +200,11 @@ function runVerification(task, cwd, hiddenRoot, side) {
   return { status: result.error?.code === "ETIMEDOUT" ? "TIMEOUT" : result.status === 0 ? "PASS" : "FAIL", exit: result.status, outputBytes: Buffer.byteLength(`${result.stdout ?? ""}${result.stderr ?? ""}`, "utf8") };
 }
 
-function readLeanStats(repo) {
-  const env = { ...process.env, LEANAGENT_HOME: join(repo, ".bench-home") };
+function readTidyRunStats(repo) {
+  const env = { ...process.env, TIDYRUN_HOME: join(repo, ".bench-home") };
   const aggregate = aggregateLeanSessions(repo);
   if (aggregate) return aggregate;
-  const result = runNpm(["exec", "--", "leanagent", "stats", "--json"], repo, env);
+  const result = runNpm(["exec", "--", "tidyrun", "stats", "--json"], repo, env);
   if (result.status !== 0) return { status: "UNAVAILABLE", detail: (result.stderr || result.stdout || "").trim().slice(0, 400) };
   try {
     const parsed = JSON.parse(result.stdout);
@@ -243,13 +243,13 @@ function quoteCmdArg(value) {
 function summarize(baseline, baselineQuality, lean, leanQuality, stats) {
   const raw = Number(stats?.rawBytes ?? 0);
   const delivered = Number(stats?.deliveredBytes ?? 0);
-  return { taskSuccess: baselineQuality.status === "PASS" && leanQuality.status === "PASS", toolOutputBytes: { baseline: baseline.agentVisibleToolOutputBytes, leanagent: delivered || lean.agentVisibleToolOutputBytes }, toolCalls: { baseline: baseline.toolCalls, leanagent: lean.toolCalls }, wallMs: { baseline: baseline.wallMs, leanagent: lean.wallMs }, inputTokens: { baseline: baseline.inputTokens, leanagent: lean.inputTokens }, outputTokens: { baseline: baseline.outputTokens, leanagent: lean.outputTokens }, rawBytes: raw, deliveredBytes: delivered, overheadMs: Number(stats?.overheadMs ?? 0), cacheHits: Number(stats?.cacheHits ?? 0), duplicateReads: Number(stats?.duplicateReadsReused ?? 0) };
+  return { taskSuccess: baselineQuality.status === "PASS" && leanQuality.status === "PASS", toolOutputBytes: { baseline: baseline.agentVisibleToolOutputBytes, tidyrun: delivered || lean.agentVisibleToolOutputBytes }, toolCalls: { baseline: baseline.toolCalls, tidyrun: lean.toolCalls }, wallMs: { baseline: baseline.wallMs, tidyrun: lean.wallMs }, inputTokens: { baseline: baseline.inputTokens, tidyrun: lean.inputTokens }, outputTokens: { baseline: baseline.outputTokens, tidyrun: lean.outputTokens }, rawBytes: raw, deliveredBytes: delivered, overheadMs: Number(stats?.overheadMs ?? 0), cacheHits: Number(stats?.cacheHits ?? 0), duplicateReads: Number(stats?.duplicateReadsReused ?? 0) };
 }
 
 function commitRepo(repo, message) {
   execFileSync("git", ["init", "-q"], { cwd: repo });
   execFileSync("git", ["config", "user.email", "bench@example.invalid"], { cwd: repo });
-  execFileSync("git", ["config", "user.name", "LeanAgent Benchmark"], { cwd: repo });
+  execFileSync("git", ["config", "user.name", "TidyRun Benchmark"], { cwd: repo });
   execFileSync("git", ["add", "-A"], { cwd: repo });
   execFileSync("git", ["commit", "-qm", message], { cwd: repo });
 }

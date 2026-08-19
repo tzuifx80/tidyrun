@@ -1,6 +1,6 @@
 # Configuration
 
-`leanagent init` writes `leanagent.yaml` with the balanced preset. A user-level file may be placed at `~/.leanagent/config/leanagent.yaml`; repository values override it. Telemetry is always forced off in the core configuration.
+`tidyrun init` writes `tidyrun.yaml` with the balanced preset. A user-level file may be placed at `~/.tidyrun/config/tidyrun.yaml`; repository values override it. Telemetry is always forced off in the core configuration.
 
 ```yaml
 version: 1
@@ -31,4 +31,4 @@ security:
 
 `performance` is the adaptive cost model. Pure commands such as `node --version` take the direct fast path; structured compression starts only once output is large enough, and successful results are persisted for reuse only when the observed command is long enough to repay local storage overhead. Set `fast_path: false` to disable these bypasses while retaining the normal rules.
 
-Disable a rule with `leanagent rules disable <rule-id>`. Use `LEANAGENT_BYPASS=1` for a session-wide bypass, and `leanagent clean --artifacts` to remove local result storage. Rules never delete original data; output is recoverable from `LA://` artifact IDs.
+Disable a rule with `tidyrun rules disable <rule-id>`. Use `TIDYRUN_BYPASS=1` for a session-wide bypass, and `tidyrun clean --artifacts` to remove local result storage. Rules never delete original data; output is recoverable from `TR://` artifact IDs.

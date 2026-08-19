@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { createLeanAgent } from "./engine.js";
+import { createTidyRun } from "./engine.js";
 import { FileArtifactStore } from "./store.js";
 import { compressOutput } from "./compress.js";
 import { affectedTests, indexRepository } from "./repo.js";
@@ -11,7 +11,7 @@ import { DEFAULT_CONFIG } from "./types.js";
 import { classifyCommand, shouldUseFastPath } from "./util.js";
 
 function tempRepo(): string {
-  const dir = mkdtempSync(join(tmpdir(), "leanagent-"));
+  const dir = mkdtempSync(join(tmpdir(), "tidyrun-"));
   writeFileSync(join(dir, "auth.ts"), "export const x = 1;\n");
   mkdirSync(join(dir, "tests"), { recursive: true });
   writeFileSync(join(dir, "tests", "auth.test.ts"), "import { x } from '../auth.ts'\n");
@@ -22,11 +22,11 @@ function tempRepo(): string {
 describe("duplicate reads", () => {
   it("reuses unchanged content and refetches after write", async () => {
     const root = tempRepo();
-    const lean = await createLeanAgent({ repository: root, store: new FileArtifactStore(join(root, ".arts")) });
+    const lean = await createTidyRun({ repository: root, store: new FileArtifactStore(join(root, ".arts")) });
     const first = await lean.readFile("auth.ts");
     expect(first.text).toContain("export const x");
     const second = await lean.readFile("auth.ts");
-    expect(second.text).toContain("LEANAGENT: UNCHANGED");
+    expect(second.text).toContain("LEAN: unchanged");
     lean.noteWrite("auth.ts");
     writeFileSync(join(root, "auth.ts"), "export const x = 2;\n");
     const third = await lean.readFile("auth.ts");
@@ -37,16 +37,16 @@ describe("duplicate reads", () => {
 describe("large file guard", () => {
   it("redirects lockfiles", async () => {
     const root = tempRepo();
-    const lean = await createLeanAgent({ repository: root, store: new FileArtifactStore(join(root, ".arts")) });
+    const lean = await createTidyRun({ repository: root, store: new FileArtifactStore(join(root, ".arts")) });
     const result = await lean.readFile("package-lock.json");
-    expect(result.text).toContain("LEANAGENT: LARGE FILE");
+    expect(result.text).toContain("LEAN: large file");
   });
 });
 
 describe("command cache", () => {
   it("reuses likely-safe commands when fingerprint matches", async () => {
     const root = tempRepo();
-    const lean = await createLeanAgent({ repository: root, store: new FileArtifactStore(join(root, ".arts")) });
+    const lean = await createTidyRun({ repository: root, store: new FileArtifactStore(join(root, ".arts")) });
     const first = await lean.prepareCommand("pytest tests/auth");
     expect(first.some((d) => d.kind === "reuse")).toBe(false);
     lean.completeCommand("pytest tests/auth", 0, "1 passed");
@@ -56,7 +56,7 @@ describe("command cache", () => {
 
   it("does not cache destructive commands", async () => {
     const root = tempRepo();
-    const lean = await createLeanAgent({ repository: root, store: new FileArtifactStore(join(root, ".arts")) });
+    const lean = await createTidyRun({ repository: root, store: new FileArtifactStore(join(root, ".arts")) });
     lean.completeCommand("rm -rf dist", 0, "ok");
     const second = await lean.prepareCommand("rm -rf dist");
     expect(second.some((d) => d.kind === "reuse")).toBe(false);
@@ -76,7 +76,7 @@ describe("compression", () => {
 describe("loop detector", () => {
   it("warns on repeated no-progress cycles and ignores mutating debug", async () => {
     const root = tempRepo();
-    const lean = await createLeanAgent({ repository: root, store: new FileArtifactStore(join(root, ".arts")) });
+    const lean = await createTidyRun({ repository: root, store: new FileArtifactStore(join(root, ".arts")) });
     for (let i = 0; i < 6; i += 1) {
       await lean.readFile("auth.ts");
       lean.noteWrite; // no-op keep types
@@ -93,7 +93,7 @@ describe("loop detector", () => {
 describe("failed approach", () => {
   it("warns on identical retry", async () => {
     const root = tempRepo();
-    const lean = await createLeanAgent({ repository: root, store: new FileArtifactStore(join(root, ".arts")) });
+    const lean = await createTidyRun({ repository: root, store: new FileArtifactStore(join(root, ".arts")) });
     lean.completeCommand("pytest tests/auth", 1, "boom");
     await lean.prepareCommand("pytest tests/auth");
     lean.completeCommand("pytest tests/auth", 1, "boom");
@@ -153,7 +153,7 @@ describe("adaptive cost model", () => {
   it("does not persist a tiny, measured pure command", async () => {
     const root = tempRepo();
     const store = new FileArtifactStore(join(root, ".arts"));
-    const lean = await createLeanAgent({ repository: root, store });
+    const lean = await createTidyRun({ repository: root, store });
     const result = lean.completeCommand("node --version", 0, "v22.0.0\n", 1);
     expect(result.delivered).toBe("v22.0.0\n");
     expect(store.list()).toHaveLength(0);

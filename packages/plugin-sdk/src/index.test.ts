@@ -15,7 +15,7 @@ describe("plugin SDK", () => {
     // The example is intentionally JavaScript, matching how an external package
     // would be consumed. Runtime loading is the contract under test.
     // @ts-expect-error no declaration is needed for the package-style fixture
-    const module = await import("../../../examples/plugins/leanagent-example-plugin.mjs");
+    const module = await import("../../../examples/plugins/tidyrun-example-plugin.mjs");
     const plugin = module.default as { adapters?: unknown[]; rules?: unknown[]; filters?: unknown[] };
     expect(plugin.adapters).toHaveLength(1);
     expect(plugin.rules).toHaveLength(1);

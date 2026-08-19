@@ -6,17 +6,17 @@ import { fileURLToPath } from "node:url";
 
 const root = new URL("..", import.meta.url);
 const workspace = fileURLToPath(root);
-const temp = mkdtempSync(join(tmpdir(), "leanagent-package-smoke-"));
+const temp = mkdtempSync(join(tmpdir(), "tidyrun-package-smoke-"));
 const install = join(temp, "install");
 mkdirSync(install, { recursive: true });
-writeFileSync(join(install, "package.json"), JSON.stringify({ name: "leanagent-package-smoke", version: "1.0.0" }) + "\n");
+writeFileSync(join(install, "package.json"), JSON.stringify({ name: "tidyrun-package-smoke", version: "1.0.0" }) + "\n");
 
 try {
-  const packageJson = JSON.parse(readFileSync(join(workspace, "packages", "leanagent", "package.json"), "utf8"));
+  const packageJson = JSON.parse(readFileSync(join(workspace, "packages", "tidyrun", "package.json"), "utf8"));
   const tarball = join(temp, `${packageJson.name}-${packageJson.version}.tgz`);
-  runNpm(["pack", "-w", "leanagent", "--pack-destination", temp], workspace);
+  runNpm(["pack", "-w", "tidyrun", "--pack-destination", temp], workspace);
   runNpm(["install", "--ignore-scripts", "--offline", tarball], install);
-  const bin = join(install, "node_modules", "leanagent", "bin", "leanagent.mjs");
+  const bin = join(install, "node_modules", "tidyrun", "bin", "tidyrun.mjs");
   runNode([bin, "--help"], install);
   runNode([bin, "init", "--json"], install);
   runNode([bin, "doctor", "--json"], install);
@@ -27,7 +27,7 @@ try {
 }
 
 function runNode(args, cwd) {
-  const result = spawnSync(process.execPath, args, { cwd, stdio: "inherit", env: { ...process.env, LEANAGENT_HOME: join(cwd, ".leanagent-home") } });
+  const result = spawnSync(process.execPath, args, { cwd, stdio: "inherit", env: { ...process.env, TIDYRUN_HOME: join(cwd, ".tidyrun-home") } });
   if (result.status !== 0) throw new Error(`node smoke command failed with status ${result.status ?? "unknown"}`);
 }
 

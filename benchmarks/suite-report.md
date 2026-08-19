@@ -1,8 +1,8 @@
-# LeanAgent deterministic suite
+# TidyRun deterministic suite
 
-Benchmark commit: `af36cf5fd17079d84bb0925c74948a669ae74fc5`
+Benchmark commit: `230fd665047fe875b38378835c3608e8a0208e20`
 
-# LeanAgent benchmark: verbose-test-diagnostics
+# TidyRun benchmark: verbose-test-diagnostics
 
 Task: Preserve actionable failures while removing repetitive test progress output
 Agent: generic-shell
@@ -10,21 +10,21 @@ Model: not applicable
 
 | Run | Exit | Command time | End-to-end | Raw bytes | Agent-visible bytes | Cache hits |
 |---|---:|---:|---:|---:|---:|---:|
-| Baseline | 1 | 81 ms | 81 ms | 64939 | 64939 | 0 |
-| LeanAgent | 1 | 78 ms | 92 ms | 64939 | 20050 | 0 |
+| Baseline | 1 | 77 ms | 77 ms | 64939 | 64939 | 0 |
+| TidyRun | 1 | 79 ms | 94 ms | 64939 | 20037 | 0 |
 
 Observed agent-visible output reduction: **69%**
 
-LeanAgent overhead (observed): 7 ms; snapshot 0 ms; compression 1 ms; artifacts 4 ms.
+TidyRun overhead (observed): 7 ms; snapshot 0 ms; compression 1 ms; artifacts 5 ms.
 
 Quality parity: **PASS**
 
-Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.
+Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by TidyRun. Provider token usage is not inferred.
 No startingCommit supplied; use a pinned commit for agent studies.
 
 ---
 
-# LeanAgent benchmark: repeated-safe-command
+# TidyRun benchmark: repeated-safe-command
 
 Task: Run the same deterministic typecheck twice without replaying unchanged work
 Agent: generic-shell
@@ -32,21 +32,21 @@ Model: not applicable
 
 | Run | Exit | Command time | End-to-end | Raw bytes | Agent-visible bytes | Cache hits |
 |---|---:|---:|---:|---:|---:|---:|
-| Baseline | 0 | 17527 ms | 17527 ms | 1444 | 1444 | 0 |
-| LeanAgent | 0 | 8998 ms | 9169 ms | 1444 | 1444 | 1 |
+| Baseline | 0 | 19287 ms | 19287 ms | 3144 | 3144 | 0 |
+| TidyRun | 0 | 8836 ms | 9030 ms | 3144 | 3144 | 1 |
 
 Observed agent-visible output reduction: **0%**
 
-LeanAgent overhead (observed): 165 ms; snapshot 161 ms; compression 0 ms; artifacts 3 ms.
+TidyRun overhead (observed): 186 ms; snapshot 182 ms; compression 0 ms; artifacts 3 ms.
 
 Quality parity: **PASS**
 
-Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.
+Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by TidyRun. Provider token usage is not inferred.
 No startingCommit supplied; use a pinned commit for agent studies.
 
 ---
 
-# LeanAgent benchmark: python-verbose-diagnostics
+# TidyRun benchmark: python-verbose-diagnostics
 
 Task: Preserve the actionable Python failure while removing repetitive progress output
 Agent: generic-shell
@@ -54,14 +54,14 @@ Model: not applicable
 
 | Run | Exit | Command time | End-to-end | Raw bytes | Agent-visible bytes | Cache hits |
 |---|---:|---:|---:|---:|---:|---:|
-| Baseline | 1 | 134 ms | 134 ms | 19776 | 19776 | 0 |
-| LeanAgent | 1 | 128 ms | 134 ms | 19776 | 961 | 0 |
+| Baseline | 1 | 135 ms | 135 ms | 19776 | 19776 | 0 |
+| TidyRun | 1 | 129 ms | 136 ms | 19776 | 922 | 0 |
 
 Observed agent-visible output reduction: **95%**
 
-LeanAgent overhead (observed): 4 ms; snapshot 0 ms; compression 0 ms; artifacts 3 ms.
+TidyRun overhead (observed): 4 ms; snapshot 0 ms; compression 0 ms; artifacts 3 ms.
 
 Quality parity: **PASS**
 
-Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.
+Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by TidyRun. Provider token usage is not inferred.
 No startingCommit supplied; use a pinned commit for agent studies.

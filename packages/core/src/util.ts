@@ -174,10 +174,13 @@ export function shouldUseFastPath(command: string, config: Pick<LeanConfig, "per
 /** Keep cache-hit context no larger than the saved diagnostic for small results. */
 export function cachedOutputMessage(_command: string, artifact: ArtifactRecord): string {
   const compressed = artifact.compressed ?? "";
-  const handle = `\n\nFull output: LA://command/${artifact.id}\n`;
-  // Never make a cache hit larger than the result it replaces. For larger
-  // diagnostics the recovery handle is useful; for ordinary short commands,
-  // returning the exact compressed result is both quieter and cheaper.
+  const compressedBytes = Buffer.byteLength(compressed);
+  const fullBytes = artifact.fullBytes ?? compressedBytes;
+  const omittedBytes = Math.max(0, fullBytes - compressedBytes);
+  const needsRecoveryHandle =
+    compressed.includes("[truncated]") || omittedBytes > Math.min(2048, Math.floor(fullBytes * 0.2));
+  const handle = needsRecoveryHandle ? `\n\nTR://command/${artifact.id}\n` : "";
+  // Never make a cache hit larger than the result it replaces.
   if (Buffer.byteLength(compressed + handle) <= (artifact.fullBytes ?? Number.POSITIVE_INFINITY)) return compressed + handle;
   return compressed;
 }

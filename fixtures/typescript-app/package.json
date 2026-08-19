@@ -1,5 +1,5 @@
 {
-  "name": "leanagent-fixture-typescript",
+  "name": "tidyrun-fixture-typescript",
   "private": true,
   "type": "module",
   "scripts": { "test": "node tests/math.test.ts" }

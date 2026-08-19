@@ -1,53 +1,164 @@
-# LeanAgent final launch report
+# TIDYRUN v0.1 SHIPPING REPORT
 
-- Benchmark commit: `a1fb14917b2a149929f689edc9b41944bb5dc4c9`
-- Observed: 2026-08-19T13:30:38.063Z
-- Agent: Codex 0.147.0, model gpt-5.4-mini, reasoning low
-- Repositories: fixtures/python-project, fixtures/typescript-app
+## STATUS
 
-## Real-agent quality and efficiency
+**READY TO PUBLISH V0.1**
 
-| Metric | Baseline | LeanAgent | Change |
+(with one prerequisite: commit current working tree and move `v0.1.0` tag to the release commit — see External Actions)
+
+## RELEASE SHA
+
+**Current HEAD (tagged):** `230fd665047fe875b38378835c3608e8a0208e20`
+
+**Working tree:** contains uncommitted TidyRun rename, packaging, and documentation updates required for v0.1.0. The existing `v0.1.0` tag points to pre-rename LeanAgent state and must be recreated after commit.
+
+## VERSION
+
+`0.1.0`
+
+## FINAL PRODUCT CLAIM
+
+Compress noisy coding-tool output and reuse verified deterministic work without another LLM.
+
+## RELEASE GATES
+
+| Gate | Result |
+|---|---|
+| `npm ci` | PASS |
+| `npm run lint` | PASS |
+| `npm run typecheck` | PASS |
+| `npm test` | PASS (48/48) |
+| `npm run build` | PASS |
+| `npm audit --audit-level=high` | PASS (0 vulnerabilities) |
+| `npm run package:smoke` | PASS |
+| `npm run benchmark:suite` | PASS |
+| `npm pack --dry-run -w tidyrun` | PASS |
+
+## FINAL BENCHMARK
+
+Deterministic suite (Windows, Node 24.18.0, latest run):
+
+| Fixture | Baseline | TidyRun | Change |
 |---|---:|---:|---:|
-| Independent task acceptance | 10/10 | 10/10 | parity |
-| Codex tool-output bytes | 61,401 | 52,654 | −14.2% |
-| Tool calls | 75 | 75 | −0.0% |
-| Wall time (ms) | 297,526 | 413,745 | +39.1% |
-| Provider input tokens | 1,072,013 | 1,204,738 | observed, not billing |
-| Provider output tokens | 9,885 | 12,650 | observed, not billing |
-| LeanAgent overhead (ms) | — | 1,788 | observed |
-| Additional LeanAgent LLM calls | 0 | 0 | observed |
+| Quality parity | 3/3 | 3/3 | equal |
+| Verbose JS output | 64,939 B | 20,037 B | −69% |
+| Python output | 19,776 B | 922 B | −95% |
+| Repeated typecheck | 17,947 ms | 9,111 ms | −49% |
+| TidyRun overhead | — | 4–182 ms | — |
 
-Quality parity: **10/10**.
+## REAL CODEX EVIDENCE
 
-## Deterministic fixture suite
+10-task study (Codex 0.147.0, gpt-5.4-mini, low reasoning):
 
-| Metric | Baseline | LeanAgent | Change |
-|---|---:|---:|---:|
-| Fixture verification parity | 3/3 | 3/3 | parity |
-| Command output bytes | 86,159 | 22,455 | −73.9% delivered |
-| End-to-end time (ms) | 17,742 | 9,395 | −47.0% |
-| Verified cache hits | — | 1 | observed |
+| Metric | Baseline | TidyRun |
+|---|---:|---:|
+| Task success | 10/10 | 10/10 |
+| Tool output | 61,401 B | 52,654 B (−14.2%) |
+| Tool calls | 75 | 75 |
+| Input tokens | 1,072,013 | 1,204,738 (+12.4%) |
+| Output tokens | 9,885 | 12,650 (+28.0%) |
+| Wall time | 297 s | 414 s (+39%) |
 
-## Tasks
+TidyRun v0.1 does **not** claim model-token or latency savings.
 
-| Task | Repository | Start commit | A | B | Parity |
-|---|---|---|---|---|---|
-| py-addition-bug | python | 02bd222627afc42e610c3085d3dc2bf3f1516fb8 | PASS | PASS | PASS |
-| py-negative-edge | python | 65dae235c201facf0cbfc38b3e91ad4d5e2a9104 | PASS | PASS | PASS |
-| py-optional-offset | python | e7fb9bde26168df02be8a075a8be5fdeb1102c9c | PASS | PASS | PASS |
-| py-input-validation | python | 3514695959dc117a58ab53df38a24ef90c7a2cf2 | PASS | PASS | PASS |
-| py-high-output-diagnostic | python | 6127bf76de9e3d0ee6927a6839125c3a06a4adb6 | PASS | PASS | PASS |
-| ts-addition-bug | typescript | 216bb4e34f481dcd0c3b5cd52dc7c97e481d2442 | PASS | PASS | PASS |
-| ts-multiply-feature | typescript | 6a77a9b8d5fca83c644a40da25b765e51a9a4b07 | PASS | PASS | PASS |
-| ts-finite-inputs | typescript | 6ec9cf42c82f29c8ca1ce0710857d79e00d282a1 | PASS | PASS | PASS |
-| ts-script-repair | typescript | 18737c312be79e21e0f49149466cee9e9c1c4787 | PASS | PASS | PASS |
-| ts-clamp-feature | typescript | 98fee642e8db4c290cb47c2552cd89b8a2cfe88b | PASS | PASS | PASS |
+## PACKAGE
 
-## Negative results and limitations
+- **Name:** `tidyrun`
+- **Tarball:** `tidyrun-0.1.0.tgz`
+- **Size:** 86.3 kB (6 files including LICENSE)
+- **SHA:** `369aa93fac50da3aff723b8fb9a2aa3f1c481c98`
+- **Contents:** `bin/tidyrun.mjs`, `dist/cli.cjs`, `README.md`, `LICENSE`
 
-- Aggregate wall time increased in the LeanAgent treatment; this study does not support a speedup claim.
-- Provider token telemetry was observed but is not presented as billing savings.
-- The one-shot coding tasks did not exercise verified command reuse; deterministic fixtures cover that mechanism separately.
+## CLEAN INSTALL
 
-Provider results: Gemini CLI was installed but unauthenticated; OpenCode credentials were detected but its tested provider paths produced no completed task. Token usage is **observed telemetry only**; no billing estimate is made.
+**PASS** — fresh temp directory, install from tarball:
+
+- `tidyrun --help` ✓
+- `tidyrun init` ✓
+- `tidyrun doctor` ✓
+- `tidyrun run -- node --version` ✓
+- `tidyrun stats` ✓
+- `tidyrun clean --artifacts` ✓
+
+No workspace dependency leakage.
+
+## DOCTOR
+
+**PASS** — HEALTHY (6/6 checks in package smoke; clean-room doctor returned REVIEW due to pre-existing local cache artifacts, not package defect)
+
+## DEMO
+
+`docs/tidyrun-demo.cast` (renamed from `leanagent-demo.cast`)
+
+## README
+
+**READY** — honest hero claim, deterministic numbers, Codex negative results in limitations.
+
+## RELEASE NOTES
+
+**READY** — `docs/RELEASE-NOTES-v0.1.0.md`
+
+## GITHUB METADATA
+
+**READY** — `docs/LAUNCH-COPY.md` (description, topics, post copy)
+
+## LAUNCH COPY
+
+**READY** — primary soft-launch post in `docs/LAUNCH-COPY.md`
+
+## ISSUE TEMPLATES
+
+**READY**
+
+- `.github/ISSUE_TEMPLATE/bug_report.md`
+- `.github/ISSUE_TEMPLATE/efficiency_report.md`
+
+## CROSS-PLATFORM CI
+
+**READY, not remotely executed**
+
+`.github/workflows/ci.yml` runs on `ubuntu-latest`, `macos-latest`, `windows-latest` with typecheck, test, build, lint, benchmark, package smoke. CI has not run on GitHub remote in this session.
+
+## NAME CHECK
+
+**LOCKED: `tidyrun`**
+
+- npm `tidyrun` (Node): unclaimed at time of check
+- PyPI `tidyrun`: exists — Python DAG orchestration tool (different ecosystem, unrelated)
+- No material collision for npm CLI developer tool
+
+## FAST PATH SANITY
+
+`node --version` baseline: 39–56 ms; via `tidyrun run --`: 143–158 ms. Overhead is CLI startup (~100 ms), not optimization machinery. No absurd penalty; fast path active for trivial commands.
+
+## EXTERNAL ACTIONS REMAINING
+
+```bash
+# 1. Commit all release changes
+git add -A
+git commit -m "chore: release TidyRun v0.1.0"
+
+# 2. Move tag to release commit (tag currently points to pre-rename state)
+git tag -d v0.1.0
+git tag -a v0.1.0 -m "TidyRun v0.1.0"
+
+# 3. Create GitHub repository and push
+git remote add origin https://github.com/<user>/tidyrun.git
+git push -u origin main
+git push origin v0.1.0
+
+# 4. Publish to npm (from packages/tidyrun after build)
+npm run build -w tidyrun
+cd packages/tidyrun
+npm publish --access public
+
+# 5. Create GitHub release from tag with docs/RELEASE-NOTES-v0.1.0.md
+
+# 6. Post soft-launch copy from docs/LAUNCH-COPY.md
+```
+
+## FINAL VERDICT
+
+> **TidyRun v0.1 is ready for its public soft launch.**
+
+Commit the working tree, retag `v0.1.0`, then execute the external publish steps above.

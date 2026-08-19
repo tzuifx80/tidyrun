@@ -1,37 +1,20 @@
-export { createLeanAgent, LeanAgent } from "./engine.js";
-export type { CreateLeanAgentOptions, FileReadOptions, CommandResult } from "./engine.js";
-export { loadConfig, writeDefaultConfig, homeDir, parseLeanYaml, disableRule } from "./config.js";
-export { FileArtifactStore } from "./store.js";
-export { JsonCommandCache } from "./store.js";
-export { WorkCache, dependencyFingerprint } from "./work-cache.js";
-export { compressOutput } from "./compress.js";
-export { builtinRules } from "./rules.js";
-export { indexRepository, discoverRepositoryFiles, affectedTests, detectStack, detectBuildSystems, snapshotRepository } from "./repo.js";
-export { cachedOutputMessage, classifyCommand, shouldUseFastPath, redactSecrets, sha256, sha256File, environmentFingerprint, safeRepositoryPath, resolveExecutable } from "./util.js";
-export { EventBus } from "./events.js";
-export { PluginRegistry } from "./plugins.js";
-export { agentAdapters, detectAdapters, genericAdapter } from "./adapters.js";
-export { LeanMcpServer } from "./mcp.js";
-export { estimateTokens, latestSessionStats, statsSummary } from "./metrics.js";
-export { loadBenchmark, runBenchmark, benchmarkMarkdown } from "./benchmark.js";
-export { LeanAgentError, LeanAgentSecurityError } from "./errors.js";
-export { handleGeminiHook } from "./hooks.js";
-export { DEFAULT_CONFIG } from "./types.js";
+export { createTidyRun, TidyRun } from "./engine.js";
+export type { CreateTidyRunOptions, FileReadOptions, CommandResult } from "./engine.js";
+export { TidyRunError, TidyRunSecurityError } from "./errors.js";
 export type {
-  ArtifactStore,
-  LeanConfig,
-  LeanDecision,
-  LeanEvent,
-  LeanRule,
-  SessionStats,
-  AgentAdapter,
-  AgentCapabilities,
-  ArtifactRecord,
-  CommandCache,
-  CommandCacheEntry,
-  LeanPlugin,
-  OutputFilter,
-  RepositoryState,
-  LeanEventType,
-  RuleContext,
+  ArtifactRecord, CommandRecord, RepositoryState, RuleContext,
+  AgentAdapter, AgentCapabilities, LeanPlugin, LeanRule, OutputFilter,
+  LeanEvent, LeanEventType, LeanDecision, SessionStats, LeanConfig,
 } from "./types.js";
+export { FileArtifactStore, JsonCommandCache } from "./store.js";
+export { PluginRegistry } from "./plugins.js";
+export { handleGeminiHook } from "./hooks.js";
+export { runBenchmark, loadBenchmark, benchmarkMarkdown } from "./benchmark.js";
+export { compressOutput } from "./compress.js";
+export { snapshotRepository, indexRepository, affectedTests, detectStack, detectBuildSystems } from "./repo.js";
+export { homeDir, loadConfig, writeDefaultConfig, disableRule } from "./config.js";
+export { builtinRules } from "./rules.js";
+export { agentAdapters, detectAdapters } from "./adapters.js";
+export { LeanMcpServer } from "./mcp.js";
+export { latestSessionStats, statsSummary } from "./metrics.js";
+export { resolveExecutable, shouldUseFastPath } from "./util.js";

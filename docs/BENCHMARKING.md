@@ -4,7 +4,7 @@ Benchmark fixtures compare the same deterministic command and repository under t
 
 ```bash
 npm run benchmark                         # high-output diagnostic fixture
-npx leanagent benchmark benchmarks/repeated-command.json
+npx tidyrun benchmark benchmarks/repeated-command.json
 npm run benchmark:suite                   # checked-in Node, TypeScript, and Python fixtures
 ```
 
@@ -25,7 +25,7 @@ can lose to startup overhead; the suite records that rather than claiming a
 win.
 
 For agent/model studies, record the provider's real usage metadata alongside the
-report and keep baseline and LeanAgent runs identical (repository, commit, task,
+report and keep baseline and tidyrun runs identical (repository, commit, task,
 model, configuration, and environment). A saving that changes the verification
 result is a regression, not a success. Cache hits and output reductions are
 observed/derived local metrics; token equivalents remain estimates unless the

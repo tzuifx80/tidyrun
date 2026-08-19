@@ -1,4 +1,4 @@
-import { definePlugin } from "@leanagent/plugin-sdk";
+import { definePlugin } from "@tidyrun/plugin-sdk";
 
 // A package-style example: import this module from a host and pass the default
 // export to createLeanAgent({ plugins: [plugin] }). It intentionally stays small

@@ -1,6 +1,8 @@
 node_modules/
 dist/
 .leanagent/
+.tidyrun/
+*.tgz
 coverage/
 __pycache__/
 *.log

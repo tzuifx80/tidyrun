@@ -27,7 +27,7 @@ export class WorkCache {
   }
 
   put<T>(input: Omit<WorkArtifact<T>, "createdAt" | "toolVersion"> & { toolVersion?: string }): WorkArtifact<T> {
-    const row: WorkArtifact<T> = { ...input, createdAt: Date.now(), toolVersion: input.toolVersion ?? "leanagent/0.1" };
+    const row: WorkArtifact<T> = { ...input, createdAt: Date.now(), toolVersion: input.toolVersion ?? "tidyrun/0.1" };
     this.entries.set(row.id, row as WorkArtifact);
     this.persist();
     return row;

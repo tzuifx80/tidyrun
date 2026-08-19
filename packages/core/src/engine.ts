@@ -8,12 +8,12 @@ import { loadConfig } from "./config.js";
 import { FileArtifactStore, JsonCommandCache, newSessionId } from "./store.js";
 import { cachedOutputMessage, classifyCommand, commandFingerprint, environmentFingerprint, safeRepositoryPath, redactSecrets, sha256 } from "./util.js";
 import { snapshotRepository } from "./repo.js";
-import { LeanAgentSecurityError } from "./errors.js";
+import { TidyRunSecurityError } from "./errors.js";
 import { EventBus } from "./events.js";
 import { PluginRegistry } from "./plugins.js";
 import type { ArtifactStore, CommandCache, LeanConfig, LeanDecision, LeanEvent, LeanEventType, LeanRule, SessionState } from "./types.js";
 
-export interface CreateLeanAgentOptions {
+export interface CreateTidyRunOptions {
   repository: string;
   store?: ArtifactStore;
   commandCache?: CommandCache;
@@ -33,7 +33,7 @@ export interface CommandResult {
   decisions: LeanDecision[];
 }
 
-export class LeanAgent extends EventEmitter {
+export class TidyRun extends EventEmitter {
   readonly session: SessionState;
   readonly config: LeanConfig;
   readonly store: ArtifactStore;
@@ -43,7 +43,7 @@ export class LeanAgent extends EventEmitter {
   readonly plugins: PluginRegistry;
   private finished = false;
 
-  constructor(opts: CreateLeanAgentOptions) {
+  constructor(opts: CreateTidyRunOptions) {
     super();
     const requestedCwd = safeRepositoryPath(opts.repository, ".", { allowOutside: true, followSymlinks: true });
     const cwd = existsSync(requestedCwd) ? realpathSync(requestedCwd) : requestedCwd;
@@ -63,7 +63,7 @@ export class LeanAgent extends EventEmitter {
       eventLog: [],
       mutations: 0,
       failedApproaches: [],
-      bypass: Boolean(opts.bypass) || process.env.LEANAGENT_BYPASS === "1",
+      bypass: Boolean(opts.bypass) || process.env.TIDYRUN_BYPASS === "1" || process.env.TIDYRUN_BYPASS === "1",
       // Repository state is captured lazily on the first operation that needs
       // it. Constructing an agent must not scan a repository before a command
       // or file operation has even been requested.
@@ -87,7 +87,7 @@ export class LeanAgent extends EventEmitter {
 
   async decide(event: LeanEvent): Promise<LeanDecision[]> {
     if (this.session.bypass) {
-      const decision: LeanDecision = { ruleId: "bypass", kind: "allow", reason: "LeanAgent bypass enabled", evidence: [], fallback: "original operation", confidence: 1 };
+      const decision: LeanDecision = { ruleId: "bypass", kind: "allow", reason: "TidyRun bypass enabled", evidence: [], fallback: "original operation", confidence: 1 };
       try { this.emit("optimization", decision); } catch { /* observer failure is isolated */ }
       this.emitEvent("optimization.bypassed", { event: event.type });
       return [decision];
@@ -121,7 +121,7 @@ export class LeanAgent extends EventEmitter {
     try {
       abs = safeRepositoryPath(this.session.cwd, path, { allowOutside: this.config.security.allow_outside_repository, followSymlinks: this.config.security.follow_symlinks });
     } catch (error) {
-      throw new LeanAgentSecurityError(error instanceof Error ? error.message : "unsafe repository path");
+      throw new TidyRunSecurityError(error instanceof Error ? error.message : "unsafe repository path");
     }
     const rangeKey = opts.range ? `${Math.max(0, opts.range.start)}:${opts.range.end ?? ""}` : "full";
     const requested = this.emitEvent("file.read.requested", { path: abs, force: opts.force === true, range: rangeKey });
@@ -141,7 +141,7 @@ export class LeanAgent extends EventEmitter {
         this.session.stats.artifactMs += artifactElapsed;
         this.session.stats.overheadMs += artifactElapsed;
         redirect.artifactId = artifact.id;
-        redirect.message = `${redirect.message ?? "LEANAGENT: LARGE FILE"}\n\nFull source: LA://file/${artifact.id}\nFetch with: leanagent cat ${artifact.id} or force=true.`;
+        redirect.message = `${redirect.message ?? "LEAN: large file"}\n\nTR://file/${artifact.id}\nUse tidyrun cat ${artifact.id} or force=true.`;
         const rangeKey = opts.range ? `${Math.max(0, opts.range.start)}:${opts.range.end ?? ""}` : "full";
         this.session.fileReads.set(abs, { path: abs, hash: sha256(full), bytes: full.length, ranges: [rangeKey], at: Date.now() });
         this.session.stats.rawBytes += full.byteLength;
@@ -233,7 +233,7 @@ export class LeanAgent extends EventEmitter {
     if (persistent && persistent.exit === 0 && persistent.class === cls && persistent.repositoryFingerprint === repoFp && persistent.environmentFingerprint === envFp && cachedArtifact?.fingerprint === fp) {
       const decision: LeanDecision = {
         ruleId: "persistent-command-cache", kind: "reuse", reason: "Safe command result verified for the same repository and environment state.",
-        evidence: [`repository=${(repoFp ?? "none").slice(0, 12)}`, `environment=${envFp.slice(0, 12)}`, `exit=${persistent.exit}`], fallback: `leanagent cat ${persistent.artifactId}`,
+        evidence: [`repository=${(repoFp ?? "none").slice(0, 12)}`, `environment=${envFp.slice(0, 12)}`, `exit=${persistent.exit}`], fallback: `tidyrun cat ${persistent.artifactId}`,
         confidence: 0.9, artifactId: persistent.artifactId, estimatedSavings: { bytes: cachedArtifact.compressedBytes, basis: "derived" },
         message: cachedOutputMessage(command, cachedArtifact),
       };
@@ -304,11 +304,15 @@ export class LeanAgent extends EventEmitter {
     // Failures remain available as artifacts and are handled by failed-approach
     // memory, so an agent can rerun after making a hypothesis-changing edit.
     if (artifact && exit === 0 && this.config.cache.enabled && cls !== "DESTRUCTIVE" && cls !== "STATEFUL" && cls !== "UNKNOWN") {
-      try { this.commandCache.put({ fingerprint: fp, command, class: cls, exit, artifactId: artifact.id, stdoutHash: sha256(safeOutput), at: Date.now(), repositoryFingerprint: repoFp, environmentFingerprint: envFp, durationMs: elapsed, dependencies: this.session.repositoryState?.fileHashes ?? {}, toolVersion: "leanagent/0.1", valid: true }); } catch { /* optimization is best effort */ }
+      try { this.commandCache.put({ fingerprint: fp, command, class: cls, exit, artifactId: artifact.id, stdoutHash: sha256(safeOutput), at: Date.now(), repositoryFingerprint: repoFp, environmentFingerprint: envFp, durationMs: elapsed, dependencies: this.session.repositoryState?.fileHashes ?? {}, toolVersion: "tidyrun/0.1", valid: true }); } catch { /* optimization is best effort */ }
     }
     if (exit !== 0) this.session.failedApproaches.push({ operation: command, outcome: `exit ${exit}`, at: Date.now(), repositoryFingerprint: repoFp });
     this.session.stats.rawBytes += Buffer.byteLength(safeOutput);
-    const delivered = compressed === safeOutput || !artifact ? compressed : `${compressed}\n\nFull output:\nLA://command/${artifact.id}\n`;
+    const wasTruncated = compressed.includes("[truncated]");
+    const compressedBytes = Buffer.byteLength(compressed);
+    const omittedBytes = Math.max(0, outputBytes - compressedBytes);
+    const needsRecoveryHandle = wasTruncated || omittedBytes > Math.min(2048, Math.floor(outputBytes * 0.2));
+    const delivered = compressed === safeOutput || !artifact || !needsRecoveryHandle ? compressed : `${compressed}\n\nTR://command/${artifact.id}\n`;
     this.session.stats.deliveredBytes += Buffer.byteLength(delivered);
     this.session.stats.commandWallMs += elapsed;
     const completed = this.emitEvent("command.completed", { command, exit, artifactId, durationMs: elapsed });
@@ -332,12 +336,12 @@ export class LeanAgent extends EventEmitter {
     const avoided = Math.max(0, s.rawBytes - s.deliveredBytes);
     const tokenEstimate = Math.ceil(avoided / 4);
     return [
-      "LeanAgent", "────────────────────────────────────", `Session: ${this.session.id}`, "",
+      "TidyRun", "────────────────────────────────────", `Session: ${this.session.id}`, "",
       "CONTEXT  [observed bytes]", `Raw tool/file bytes            ${s.rawBytes}`, `Returned to agent              ${s.deliveredBytes}`, `Avoided                        ${avoided}`,
       `Estimated context tokens       ${tokenEstimate} [estimated: bytes/4]`, "", "OPERATIONS  [observed]",
       `File reads                     ${s.fileReads}`, `Duplicate reads reused         ${s.duplicateReadsReused}`, `Commands                       ${s.commands}`,
       `Cached commands                ${s.cachedCommands}`, `Cache misses                   ${s.cacheMisses}`, `Repeated commands warned       ${s.repeatedBlocked}`,
-      `Loops detected                 ${s.loopsDetected}`, `Command wall time (ms)         ${Math.round(s.commandWallMs)}`, "", "LEANAGENT OVERHEAD  [observed]", `Total overhead (ms)            ${Math.round(s.overheadMs)}`, `Snapshot (ms)                  ${Math.round(s.repositorySnapshotMs)}`, `Compression (ms)               ${Math.round(s.compressionMs)}`, `Artifacts (ms)                 ${Math.round(s.artifactMs)}`, "", `MODEL USAGE  [provider metadata]`, `Model calls                   ${s.modelCalls}`, `Input tokens                 ${s.modelInputTokens}`, `Output tokens                ${s.modelOutputTokens}`, "", "ADDITIONAL LLM CALLS           0  [observed]",
+      `Loops detected                 ${s.loopsDetected}`, `Command wall time (ms)         ${Math.round(s.commandWallMs)}`, "", "TIDYRUN OVERHEAD  [observed]", `Total overhead (ms)            ${Math.round(s.overheadMs)}`, `Snapshot (ms)                  ${Math.round(s.repositorySnapshotMs)}`, `Compression (ms)               ${Math.round(s.compressionMs)}`, `Artifacts (ms)                 ${Math.round(s.artifactMs)}`, "", `MODEL USAGE  [provider metadata]`, `Model calls                   ${s.modelCalls}`, `Input tokens                 ${s.modelInputTokens}`, `Output tokens                ${s.modelOutputTokens}`, "", "ADDITIONAL LLM CALLS           0  [observed]",
     ].join("\n");
   }
 }
@@ -346,8 +350,8 @@ function finiteTokens(value: number | undefined): number {
   return value !== undefined && Number.isFinite(value) && value > 0 ? Math.floor(value) : 0;
 }
 
-export async function createLeanAgent(opts: CreateLeanAgentOptions): Promise<LeanAgent> {
-  const agent = new LeanAgent(opts);
+export async function createTidyRun(opts: CreateTidyRunOptions): Promise<TidyRun> {
+  const agent = new TidyRun(opts);
   agent.emitEvent("session.started", { cwd: opts.repository, repositoryFingerprint: agent.session.repositoryState?.fingerprint });
   return agent;
 }

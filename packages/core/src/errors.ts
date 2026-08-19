@@ -1,13 +1,13 @@
-export class LeanAgentError extends Error {
-  constructor(message: string, readonly code = "LEANAGENT_ERROR") {
+export class TidyRunError extends Error {
+  constructor(message: string, readonly code = "TIDYRUN_ERROR") {
     super(message);
-    this.name = "LeanAgentError";
+    this.name = "TidyRunError";
   }
 }
 
-export class LeanAgentSecurityError extends LeanAgentError {
+export class TidyRunSecurityError extends TidyRunError {
   constructor(message: string) {
-    super(message, "LEANAGENT_SECURITY");
-    this.name = "LeanAgentSecurityError";
+    super(message, "TIDYRUN_SECURITY");
+    this.name = "TidyRunSecurityError";
   }
 }

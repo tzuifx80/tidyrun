@@ -1,7 +1,7 @@
 {
   "mcpServers": {
-    "leanagent": {
-      "command": "leanagent",
+    "tidyrun": {
+      "command": "tidyrun",
       "args": ["mcp"]
     }
   }

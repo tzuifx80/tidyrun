@@ -1,27 +1,27 @@
 # Reproducible terminal demo
 
-The checked-in [asciicast recording](leanagent-demo.cast) is a real packaged
+The checked-in [asciicast recording](TidyRun-demo.cast) is a real packaged
 run on Windows. It observed 13,140 raw bytes → 427 delivered bytes (96.8%
 derived reduction) and one verified cache hit on the repeated command. Replay
-it with `asciinema play docs/leanagent-demo.cast`.
+it with `asciinema play docs/TidyRun-demo.cast`.
 
 Run this in a repository with a test command:
 
 ```bash
-npx leanagent init
+npx tidyrun init
 npm run benchmark
-npx leanagent run -- npm test
-npx leanagent run -- npm test
-npx leanagent stats --last
+npx tidyrun run -- npm test
+npx tidyrun run -- npm test
+npx tidyrun stats --last
 ```
 
 The reproducible benchmark first shows a large failing test log compressed from
 raw output to the diagnostic view while preserving exit status. On the second
-successful deterministic command, LeanAgent can reuse a verified result when
+successful deterministic command, TidyRun can reuse a verified result when
 the repository, environment, command, and configuration fingerprints are
 unchanged. Failed commands are intentionally *not* cached; they remain
 recoverable artifacts so an agent can rerun after changing its hypothesis.
-Large output is shortened with a `LA://command/<id>` recovery handle. The exact
+Large output is shortened with a `TR://command/<id>` recovery handle. The exact
 bytes, exit status, overhead, and cache decision are visible in `stats --last`
 and `show`.
 

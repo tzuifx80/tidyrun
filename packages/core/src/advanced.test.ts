@@ -2,9 +2,9 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { createLeanAgent } from "./engine.js";
+import { createTidyRun } from "./engine.js";
 import { FileArtifactStore, JsonCommandCache } from "./store.js";
-import { LeanAgentSecurityError } from "./errors.js";
+import { TidyRunSecurityError } from "./errors.js";
 import { WorkCache } from "./work-cache.js";
 import { LeanMcpServer } from "./mcp.js";
 import { compressOutput } from "./compress.js";
@@ -13,7 +13,7 @@ import { handleGeminiHook } from "./hooks.js";
 import { EventBus } from "./events.js";
 
 function repo(): string {
-  const root = mkdtempSync(join(tmpdir(), "leanagent-advanced-"));
+  const root = mkdtempSync(join(tmpdir(), "tidyrun-advanced-"));
   mkdirSync(join(root, "tests"));
   writeFileSync(join(root, "src.ts"), "export function greet(name: string) { return `hi ${name}`; }\n");
   writeFileSync(join(root, "tests", "src.test.ts"), "import { greet } from '../src';\n");
@@ -23,14 +23,14 @@ function repo(): string {
 describe("security and context", () => {
   it("rejects traversal and supports exact range reuse", async () => {
     const root = repo();
-    const lean = await createLeanAgent({ repository: root, store: new FileArtifactStore(join(root, "arts")) });
-    await expect(lean.readFile("../outside.txt")).rejects.toBeInstanceOf(LeanAgentSecurityError);
+    const lean = await createTidyRun({ repository: root, store: new FileArtifactStore(join(root, "arts")) });
+    await expect(lean.readFile("../outside.txt")).rejects.toBeInstanceOf(TidyRunSecurityError);
     const first = await lean.readFile("src.ts", { range: { start: 0, end: 10 } });
     expect(first.text).toBe("export fun");
     const second = await lean.readFile("src.ts", { range: { start: 0, end: 10 } });
-    expect(second.text).toContain("UNCHANGED");
+    expect(second.text).toContain("unchanged");
     const different = await lean.readFile("src.ts", { range: { start: 10, end: 20 } });
-    expect(different.text).not.toContain("UNCHANGED");
+    expect(different.text).not.toContain("unchanged");
   });
 });
 
@@ -54,7 +54,7 @@ describe("event bus", () => {
 
   it("records provider usage only when explicitly supplied", async () => {
     const root = repo();
-    const lean = await createLeanAgent({ repository: root, store: new FileArtifactStore(join(root, "arts")) });
+    const lean = await createTidyRun({ repository: root, store: new FileArtifactStore(join(root, "arts")) });
     lean.recordModelUsage({ provider: "fixture", model: "local", inputTokens: 10, outputTokens: 4 });
     expect(lean.session.stats.modelCalls).toBe(1);
     expect(lean.session.stats.modelInputTokens).toBe(10);
@@ -64,11 +64,11 @@ describe("event bus", () => {
 
 describe("artifact and work caches", () => {
   it("redacts secrets and invalidates dependencies", () => {
-    const root = join(mkdtempSync(join(tmpdir(), "leanagent-store-")), "arts");
+    const root = join(mkdtempSync(join(tmpdir(), "tidyrun-store-")), "arts");
     const store = new FileArtifactStore(root);
     const row = store.put({ kind: "command-result", cwd: root, full: "token=super-secret-value", compressed: "token=super-secret-value" });
     expect(store.readFull(row.id)).toContain("[REDACTED]");
-    const cache = new WorkCache(join(mkdtempSync(join(tmpdir(), "leanagent-cache-")), "cache"));
+    const cache = new WorkCache(join(mkdtempSync(join(tmpdir(), "tidyrun-cache-")), "cache"));
     cache.put({ id: "x", type: "test", dependencies: { "src.ts": "a" }, payload: { ok: true } });
     expect(cache.get("x", { "src.ts": "a" })?.payload).toEqual({ ok: true });
     expect(cache.get("x", { "src.ts": "b" })).toBeUndefined();
@@ -77,7 +77,7 @@ describe("artifact and work caches", () => {
   it("invalidates same-repository command entries when a dependency is written", async () => {
     const root = repo();
     const commandCache = new JsonCommandCache(join(root, "cache"));
-    const lean = await createLeanAgent({ repository: root, store: new FileArtifactStore(join(root, "arts")), commandCache });
+    const lean = await createTidyRun({ repository: root, store: new FileArtifactStore(join(root, "arts")), commandCache });
     await lean.prepareCommand("pytest -q");
     lean.completeCommand("pytest -q", 0, "ok");
     writeFileSync(join(root, "src.ts"), "export const changed = true;\n");
@@ -95,10 +95,10 @@ describe("index, filters and MCP", () => {
     const store = new FileArtifactStore(join(root, "arts"));
     const artifact = store.put({ kind: "command-result", cwd: root, full: "hello failure", compressed: "failure" });
     const mcp = new LeanMcpServer({ repository: root, store });
-    const response = await mcp.handle({ jsonrpc: "2.0", id: 1, method: "tools/call", params: { name: "leanagent_get_artifact", arguments: { id: artifact.id } } });
+    const response = await mcp.handle({ jsonrpc: "2.0", id: 1, method: "tools/call", params: { name: "tidyrun_get_artifact", arguments: { id: artifact.id } } });
     expect(JSON.stringify(response)).toContain(artifact.id);
     const resources = await mcp.handle({ jsonrpc: "2.0", id: 2, method: "resources/list" });
-    expect(JSON.stringify(resources)).toContain("leanagent://repository/state");
+    expect(JSON.stringify(resources)).toContain("tidyrun://repository/state");
   });
 
   it("returns a valid JSON hook response for Gemini session start", async () => {

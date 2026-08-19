@@ -5,18 +5,18 @@ import { parse as parseYaml } from "./yaml.js";
 import { DEFAULT_CONFIG, type LeanConfig } from "./types.js";
 
 export function homeDir(override?: string): string {
-  return override || process.env.LEANAGENT_HOME || join(homedir(), ".leanagent");
+  return override || process.env.TIDYRUN_HOME || join(homedir(), ".tidyrun");
 }
 
 export function loadConfig(repoRoot: string, home = homeDir()): LeanConfig {
   const merged: LeanConfig = structuredClone(DEFAULT_CONFIG);
-  const files = [join(home, "config", "leanagent.yaml"), join(repoRoot, "leanagent.yaml")];
+  const files = [join(home, "config", "tidyrun.yaml"), join(repoRoot, "tidyrun.yaml")];
   for (const file of files) {
     if (!existsSync(file)) continue;
     const raw = readFileSync(file, "utf8");
     Object.assign(merged, parseLeanYaml(raw, merged));
   }
-  if (process.env.LEANAGENT_BYPASS === "1") {
+  if (process.env.TIDYRUN_BYPASS === "1") {
     merged.disabledRules = ["*"];
   }
   return merged;
@@ -93,7 +93,7 @@ function asBoolean(value: unknown, fallback: boolean): boolean {
 }
 
 export function writeDefaultConfig(repoRoot: string): string {
-  const path = join(repoRoot, "leanagent.yaml");
+  const path = join(repoRoot, "tidyrun.yaml");
   if (!existsSync(path)) {
     mkdirSync(dirname(path), { recursive: true });
     writeFileSync(
@@ -148,7 +148,7 @@ telemetry: false
 }
 
 export function disableRule(repoRoot: string, ruleId: string): string {
-  const path = join(repoRoot, "leanagent.yaml");
+  const path = join(repoRoot, "tidyrun.yaml");
   const raw = existsSync(path) ? readFileSync(path, "utf8") : "version: 1\npreset: balanced\n";
   const lines = raw.replace(/\r\n/g, "\n").split("\n");
   const index = lines.findIndex((line) => /^disabledRules:\s*$/.test(line.trim()));

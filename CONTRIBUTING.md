@@ -5,27 +5,34 @@
 Requirements: Node.js 22 or newer.
 
 ```bash
-npm install
+git clone <repo-url>
+cd tidyrun
+npm ci
 npm run typecheck
 npm test
 npm run build
 ```
 
-The repository uses npm workspaces. Core code lives in `packages/core`, the CLI in `packages/cli`, and the public extension surface in `packages/plugin-sdk`.
+Workspaces: `packages/core` (engine), `packages/cli` (CLI), `packages/plugin-sdk` (extensions), `packages/tidyrun` (published bundle).
 
-## Adding an output filter
+## Where to contribute
 
-Add a focused parser in `packages/core/src/compress.ts`, add representative output fixtures/tests, and ensure the fallback still returns the original result through an artifact. Do not hide failures or claim exact token savings without provider metadata.
-
-## Pull requests
-
-Include the command(s) used for verification and document provider capability assumptions. Keep changes local-first, cross-platform, and backwards-compatible where possible.
+| Area | Location |
+|---|---|
+| Output parsers | `packages/core/src/compress.ts` |
+| Optimization rules | `packages/core/src/rules.ts` |
+| Provider adapters | `packages/core/src/adapters.ts` |
+| Benchmarks | `benchmarks/`, `scripts/run-benchmark-suite.mjs` |
+| CLI | `packages/cli/src/main.ts` |
 
 ## Good first contributions
 
-- **good first issue:** add a focused parser fixture and regression test for one
-  missing compiler or test-runner output shape;
-- **help wanted:** add a provider capability note or adapter test without
-  storing credentials;
-- **help wanted:** contribute a pinned benchmark task with an independent
-  acceptance check and a documented negative result.
+- Playwright / Docker / Rust output parser fixtures
+- Cross-platform path edge-case tests
+- Provider adapter capability notes (no credentials in repo)
+- Pinned deterministic benchmark tasks with acceptance checks
+- Documented negative benchmark results
+
+## Pull requests
+
+Include verification commands. Keep changes local-first, cross-platform, and fail-open. Do not claim token savings without provider telemetry.

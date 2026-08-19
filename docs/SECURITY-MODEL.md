@@ -1,6 +1,6 @@
 # Security and privacy model
 
-LeanAgent runs beside repositories that may contain credentials and proprietary code. The default posture is local-only and conservative.
+tidyrun runs beside repositories that may contain credentials and proprietary code. The default posture is local-only and conservative.
 
 ## Implemented safeguards
 
@@ -19,8 +19,8 @@ LeanAgent runs beside repositories that may contain credentials and proprietary 
 
 ## Threats and residual risks
 
-Plugins have the same privileges as the host process. Install only trusted packages. A malicious command can still damage a repository when the user explicitly executes it; LeanAgent does not claim to be a sandbox. Secret redaction is heuristic and should not be treated as a DLP boundary. Windows ACL semantics may differ from POSIX mode bits. Compression bounds the delivered view and strips terminal control sequences; the redacted raw artifact remains the recovery source. `LEANAGENT_TIMEOUT_MS` bounds wrapper execution, but process-tree cleanup is host/OS dependent.
+Plugins have the same privileges as the host process. Install only trusted packages. A malicious command can still damage a repository when the user explicitly executes it; TidyRun does not claim to be a sandbox. Secret redaction is heuristic and should not be treated as a DLP boundary. Windows ACL semantics may differ from POSIX mode bits. Compression bounds the delivered view and strips terminal control sequences; the redacted raw artifact remains the recovery source. `TIDYRUN_TIMEOUT_MS` bounds wrapper execution, but process-tree cleanup is host/OS dependent.
 
 ## Recovery
 
-Use `LEANAGENT_BYPASS=1`, `leanagent run --raw -- <command>`, or `force=true` for a one-operation bypass. `leanagent cat <artifact>` retrieves stored raw output. `leanagent clean --artifacts` removes local artifacts.
+Use `TIDYRUN_BYPASS=1`, `tidyrun run --raw -- <command>`, or `force=true` for a one-operation bypass. `tidyrun cat <artifact>` retrieves stored raw output. `tidyrun clean --artifacts` removes local artifacts.

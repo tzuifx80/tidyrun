@@ -1,4 +1,4 @@
-/** Stable, dependency-light extension surface for LeanAgent plugins. */
+/** Stable, dependency-light extension surface for TidyRun plugins. */
 export {
   PluginRegistry,
   type AgentAdapter,
@@ -10,9 +10,9 @@ export {
   type LeanEventType,
   type LeanDecision,
   type RuleContext,
-} from "@leanagent/core";
+} from "@tidyrun/core";
 
-export function definePlugin(plugin: import("@leanagent/core").LeanPlugin): import("@leanagent/core").LeanPlugin {
+export function definePlugin(plugin: import("@tidyrun/core").LeanPlugin): import("@tidyrun/core").LeanPlugin {
   return Object.freeze({
     ...plugin,
     rules: Object.freeze([...(plugin.rules ?? [])]),

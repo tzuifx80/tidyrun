@@ -4,7 +4,7 @@ import { extname, join, relative, resolve, dirname, normalize } from "node:path"
 import { sha256, sha256File, safeRepositoryPath, globishMatch } from "./util.js";
 import type { RepositoryState } from "./types.js";
 
-const SKIP = new Set(["node_modules", "dist", "build", ".git", "coverage", ".next", ".leanagent", ".arts", "target", ".venv"]);
+const SKIP = new Set(["node_modules", "dist", "build", ".git", "coverage", ".next", ".tidyrun", ".arts", "target", ".venv"]);
 const SOURCE_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs", ".py", ".rs", ".go", ".java", ".kt", ".rb", ".php", ".c", ".h", ".cpp", ".cc", ".cs", ".json", ".md", ".yaml", ".yml", ".toml", ".ini", ".cfg", ".lock", ".txt"]);
 const IMPORTANT_FILES = new Set(["Makefile", "Dockerfile", "Gemfile", "Rakefile", "requirements.txt", "Pipfile", "Pipfile.lock", ".env", ".env.local", ".env.test", "tsconfig.json", "pyproject.toml", "Cargo.toml", "go.mod"]);
 

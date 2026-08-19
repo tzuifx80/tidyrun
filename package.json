@@ -1,5 +1,5 @@
 {
-  "name": "leanagent",
+  "name": "tidyrun",
   "version": "0.1.0",
   "private": true,
   "description": "Local-first optimization runtime for AI coding agents. No extra model.",
@@ -8,14 +8,14 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build -w @leanagent/core && npm run build -w @leanagent/plugin-sdk && npm run build -w @leanagent/cli && npm run build -w leanagent",
+    "build": "npm run build -w @tidyrun/core && npm run build -w @tidyrun/plugin-sdk && npm run build -w @tidyrun/cli && npm run build -w tidyrun",
     "benchmark": "npm run build && node packages/cli/dist/main.js benchmark benchmarks/output-reduction.json",
     "benchmark:suite": "npm run build && node scripts/run-benchmark-suite.mjs",
     "package:smoke": "npm run build && node scripts/package-smoke.mjs",
-    "test": "npm run test -w @leanagent/core && npm run test -w @leanagent/plugin-sdk && npm run test -w @leanagent/cli",
-    "typecheck": "npm run typecheck -w @leanagent/core && npm run typecheck -w @leanagent/plugin-sdk && npm run typecheck -w @leanagent/cli",
+    "test": "npm run test -w @tidyrun/core && npm run test -w @tidyrun/plugin-sdk && npm run test -w @tidyrun/cli",
+    "typecheck": "npm run typecheck -w @tidyrun/core && npm run typecheck -w @tidyrun/plugin-sdk && npm run typecheck -w @tidyrun/cli",
     "lint": "node scripts/lint.mjs",
-    "leanagent": "node packages/cli/dist/main.js"
+    "tidyrun": "node packages/cli/dist/main.js"
   },
   "engines": {
     "node": ">=22"

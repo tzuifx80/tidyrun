@@ -1,7 +1,7 @@
 {
   "hooks": {
-    "BeforeTool": [{ "matcher": "run_shell_command", "hooks": [{ "type": "command", "command": "leanagent hook gemini", "name": "leanagent-before-tool" }] }],
-    "AfterTool": [{ "matcher": "run_shell_command", "hooks": [{ "type": "command", "command": "leanagent hook gemini", "name": "leanagent-after-tool" }] }],
-    "SessionStart": [{ "hooks": [{ "type": "command", "command": "leanagent hook gemini", "name": "leanagent-session-start" }] }]
+    "BeforeTool": [{ "matcher": "run_shell_command", "hooks": [{ "type": "command", "command": "tidyrun hook gemini", "name": "tidyrun-before-tool" }] }],
+    "AfterTool": [{ "matcher": "run_shell_command", "hooks": [{ "type": "command", "command": "tidyrun hook gemini", "name": "tidyrun-after-tool" }] }],
+    "SessionStart": [{ "hooks": [{ "type": "command", "command": "tidyrun hook gemini", "name": "tidyrun-session-start" }] }]
   }
 }

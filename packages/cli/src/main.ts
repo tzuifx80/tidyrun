@@ -4,7 +4,7 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync, accessSync, constan
 import { performance } from "node:perf_hooks";
 import { join, dirname } from "node:path";
 import {
-  createLeanAgent,
+  createTidyRun,
   detectStack,
   FileArtifactStore,
   JsonCommandCache,
@@ -27,7 +27,7 @@ import {
   handleGeminiHook,
   resolveExecutable,
   shouldUseFastPath,
-} from "@leanagent/core";
+} from "@tidyrun/core";
 import { LEAN_MARK_END, LEAN_MARK_START, upsertBlock } from "./sync.js";
 
 async function main(argv = process.argv.slice(2)): Promise<number> {
@@ -62,35 +62,35 @@ async function main(argv = process.argv.slice(2)): Promise<number> {
     printHelp();
     return 2;
   } catch (error) {
-    process.stderr.write(`leanagent: ${error instanceof Error ? error.message : String(error)}\n`);
+    process.stderr.write(`tidyrun: ${error instanceof Error ? error.message : String(error)}\n`);
     return 1;
   }
 }
 
 function printHelp(): void {
-  process.stdout.write(`leanagent — local-first optimization runtime for coding agents
+  process.stdout.write(`tidyrun — local-first optimization runtime for coding agents
 
-  leanagent init
-  leanagent run -- <command>
-  leanagent status [--json]
-  leanagent tests --changed <file> [file...]
-  leanagent stats [--last] [--json]
-  leanagent doctor [--json]
-  leanagent sync
-  leanagent config
-  leanagent cache [stats|list|clear|prune]
-  leanagent show <artifact>
-  leanagent cat <artifact>
-  leanagent search <artifact> <term>
-  leanagent rules list|disable <rule>
-  leanagent adapters
-  leanagent mcp
-  leanagent hook gemini   # JSON stdin/stdout hook handler
-  leanagent benchmark <fixture.json|yaml>
-  leanagent ci
-  leanagent clean [--artifacts]
+  tidyrun init
+  tidyrun run -- <command>
+  tidyrun status [--json]
+  tidyrun tests --changed <file> [file...]
+  tidyrun stats [--last] [--json]
+  tidyrun doctor [--json]
+  tidyrun sync
+  tidyrun config
+  tidyrun cache [stats|list|clear|prune]
+  tidyrun show <artifact>
+  tidyrun cat <artifact>
+  tidyrun search <artifact> <term>
+  tidyrun rules list|disable <rule>
+  tidyrun adapters
+  tidyrun mcp
+  tidyrun hook gemini   # JSON stdin/stdout hook handler
+  tidyrun benchmark <fixture.json|yaml>
+  tidyrun ci
+  tidyrun clean [--artifacts]
 
-No API key. No extra model. LEANAGENT_BYPASS=1 disables optimizations.
+No API key. No extra model. TIDYRUN_BYPASS=1 disables optimizations.
 `);
 }
 
@@ -102,16 +102,16 @@ function initCmd(cwd: string, quiet: boolean, jsonMode: boolean): number {
   syncCmd(cwd, true, false);
   const payload = { configPath, detected: stack, adapters: adapters.map((adapter) => adapter.id), indexedFiles: index.files.length, indexedTests: index.tests.length, telemetry: false, enabled: ["duplicate-read", "large-file", "repeated-command", "loop-detection", "output-compression", "incremental-test-impact"] };
   if (jsonMode) { process.stdout.write(`${JSON.stringify(payload, null, 2)}\n`); return 0; }
-  if (!quiet) process.stdout.write(`LeanAgent Setup\n\nConfiguration\n✓ configuration installed\n✓ repository indexed (${payload.indexedFiles} files, ${payload.indexedTests} tests)\n${adapters.length ? adapters.map((adapter) => `✓ ${adapter.name} detected`).join("\n") : "✓ generic wrapper available"}\n\nEnabled\n${payload.enabled.map((item) => `✓ ${item}`).join("\n")}\n\nNo API key required.\nNo telemetry enabled.\n\nYou're ready.\n`);
+  if (!quiet) process.stdout.write(`TidyRun Setup\n\nConfiguration\n✓ configuration installed\n✓ repository indexed (${payload.indexedFiles} files, ${payload.indexedTests} tests)\n${adapters.length ? adapters.map((adapter) => `✓ ${adapter.name} detected`).join("\n") : "✓ generic wrapper available"}\n\nEnabled\n${payload.enabled.map((item) => `✓ ${item}`).join("\n")}\n\nNo API key required.\nNo telemetry enabled.\n\nYou're ready.\n`);
   return 0;
 }
 
 async function runCmd(cwd: string, rest: string[], raw: boolean): Promise<number> {
   const rawParts = rest[0] === "--" ? rest.slice(1) : rest;
   const parts = rawParts.length === 1 ? tokenize(rawParts[0]) : rawParts;
-  if (!parts.length || !parts[0]) { process.stderr.write("usage: leanagent run -- <command>\n"); return 2; }
+  if (!parts.length || !parts[0]) { process.stderr.write("usage: tidyrun run -- <command>\n"); return 2; }
   const command = parts.join(" ");
-  // Classify before constructing LeanAgent. Pure version/help/echo commands
+  // Classify before constructing TidyRun. Pure version/help/echo commands
   // are too cheap to repay a repository snapshot and artifact roundtrip.
   const config = loadConfig(cwd);
   if (shouldUseFastPath(command, config)) {
@@ -119,7 +119,7 @@ async function runCmd(cwd: string, rest: string[], raw: boolean): Promise<number
     process.stdout.write(result.output + (result.output.endsWith("\n") ? "" : "\n"));
     return result.exit;
   }
-  const lean = await createLeanAgent({ repository: cwd });
+  const lean = await createTidyRun({ repository: cwd });
   const identity = JSON.stringify(parts);
   const prepared = await lean.prepareCommand(command, { identity });
   const reuse = prepared.find((decision) => decision.kind === "reuse");
@@ -146,13 +146,13 @@ function spawnCapture(argv: string[], cwd: string): Promise<{ exit: number; outp
     const child = spawn(resolved.file, [...resolved.prefix, ...argv.slice(1)], { cwd, shell: false, windowsHide: true, env: process.env });
     let output = "";
     let settled = false;
-    const timeoutMs = Number(process.env.LEANAGENT_TIMEOUT_MS ?? 0);
+    const timeoutMs = Number(process.env.TIDYRUN_TIMEOUT_MS ?? 0);
     child.stdout.on("data", (chunk: Buffer) => { output += chunk.toString(); });
     child.stderr.on("data", (chunk: Buffer) => { output += chunk.toString(); });
     const stop = () => { if (!child.killed) child.kill(); };
     process.once("SIGINT", stop);
     process.once("SIGTERM", stop);
-    const timer = timeoutMs > 0 ? setTimeout(() => { stop(); settle(124, `${output}\nLeanAgent command timeout after ${timeoutMs}ms`); }, timeoutMs) : undefined;
+    const timer = timeoutMs > 0 ? setTimeout(() => { stop(); settle(124, `${output}\nTidyRun command timeout after ${timeoutMs}ms`); }, timeoutMs) : undefined;
     const settle = (exit: number, finalOutput = output) => {
       if (settled) return;
       settled = true;
@@ -169,13 +169,13 @@ function spawnCapture(argv: string[], cwd: string): Promise<{ exit: number; outp
 function statusCmd(cwd: string, jsonMode: boolean): number {
   const idx = indexRepository(cwd);
   const payload = { cwd, files: idx.files.length, tests: idx.tests.length, languages: idx.languages, packages: idx.packages, generated: idx.generated.length, buildSystems: detectBuildSystems(cwd), home: homeDir() };
-  process.stdout.write(jsonMode ? `${JSON.stringify(payload, null, 2)}\n` : `LeanAgent repo ${cwd}\nfiles ${payload.files} tests ${payload.tests} langs ${payload.languages.join(",") || "unknown"} packages ${payload.packages.length} build ${payload.buildSystems.join(",") || "unknown"}\n`);
+  process.stdout.write(jsonMode ? `${JSON.stringify(payload, null, 2)}\n` : `TidyRun repo ${cwd}\nfiles ${payload.files} tests ${payload.tests} langs ${payload.languages.join(",") || "unknown"} packages ${payload.packages.length} build ${payload.buildSystems.join(",") || "unknown"}\n`);
   return 0;
 }
 
 function affectedTestsCmd(cwd: string, rest: string[], jsonMode: boolean): number {
   const changed = rest[0] === "--changed" ? rest.slice(1) : rest;
-  if (!changed.length) { process.stderr.write("usage: leanagent tests --changed <file> [file...]\n"); return 2; }
+  if (!changed.length) { process.stderr.write("usage: tidyrun tests --changed <file> [file...]\n"); return 2; }
   const result = affectedTests(indexRepository(cwd), changed);
   process.stdout.write(jsonMode ? `${JSON.stringify(result, null, 2)}\n` : `${result.tests.map((test) => `✓ ${test} — ${result.why[test]}`).join("\n")}\n`);
   return 0;
@@ -183,7 +183,7 @@ function affectedTestsCmd(cwd: string, rest: string[], jsonMode: boolean): numbe
 
 function statsCmd(jsonMode: boolean, _last: boolean): number {
   const latest = latestSessionStats(new FileArtifactStore());
-  if (!latest) { process.stdout.write("No completed LeanAgent sessions recorded.\n"); return 0; }
+  if (!latest) { process.stdout.write("No completed TidyRun sessions recorded.\n"); return 0; }
   if (jsonMode) { process.stdout.write(`${JSON.stringify({ artifact: latest.id, stats: latest.stats, summary: latest.stats ? statsSummary(latest.stats) : undefined }, null, 2)}\n`); return 0; }
   process.stdout.write(latest.raw + "\n");
   return 0;
@@ -199,19 +199,19 @@ function doctorCmd(cwd: string, jsonMode: boolean): number {
   const checks: Array<{ id: string; status: "PASS" | "WARN" | "FAIL"; detail: string; fix?: string }> = [];
   const cfg = loadConfig(cwd);
   try { accessSync(homeDir(), constants.W_OK); checks.push({ id: "home-writable", status: "PASS", detail: homeDir() }); }
-  catch { checks.push({ id: "home-writable", status: "FAIL", detail: homeDir(), fix: `Create a writable LEANAGENT_HOME (currently ${homeDir()}).` }); }
+  catch { checks.push({ id: "home-writable", status: "FAIL", detail: homeDir(), fix: `Create a writable TIDYRUN_HOME (currently ${homeDir()}).` }); }
   const store = new FileArtifactStore();
   const artifacts = store.list();
   const corruptArtifacts = artifacts.filter((row) => !store.readFull(row.id));
-  checks.push(corruptArtifacts.length ? { id: "artifacts", status: "WARN", detail: `${corruptArtifacts.length} unreadable of ${artifacts.length}`, fix: "Run `leanagent cache prune` or `leanagent clean --artifacts`." } : { id: "artifacts", status: "PASS", detail: `${artifacts.length} readable artifact(s)` });
+  checks.push(corruptArtifacts.length ? { id: "artifacts", status: "WARN", detail: `${corruptArtifacts.length} unreadable of ${artifacts.length}`, fix: "Run `tidyrun cache prune` or `tidyrun clean --artifacts`." } : { id: "artifacts", status: "PASS", detail: `${artifacts.length} readable artifact(s)` });
   const commandCache = new JsonCommandCache();
   const missingCachedArtifacts = commandCache.list().filter((row) => row.valid !== false && !store.get(row.artifactId));
-  checks.push(missingCachedArtifacts.length ? { id: "command-cache", status: "WARN", detail: `${missingCachedArtifacts.length} entry(s) reference missing artifacts`, fix: "Run `leanagent cache clear` to rebuild safely." } : { id: "command-cache", status: "PASS", detail: `${commandCache.list().length} entry(s)` });
+  checks.push(missingCachedArtifacts.length ? { id: "command-cache", status: "WARN", detail: `${missingCachedArtifacts.length} entry(s) reference missing artifacts`, fix: "Run `tidyrun cache clear` to rebuild safely." } : { id: "command-cache", status: "PASS", detail: `${commandCache.list().length} entry(s)` });
   const idx = indexRepository(cwd);
   checks.push(idx.files.length ? { id: "repository", status: "PASS", detail: `${idx.files.length} indexed file(s), ${idx.tests.length} test(s)` } : { id: "repository", status: "WARN", detail: "No supported source files detected", fix: "Run doctor from the repository root or use the generic wrapper." });
   const managedTargets = [join(cwd, "AGENTS.md"), join(cwd, "CLAUDE.md"), join(cwd, "GEMINI.md")].filter((path) => existsSync(path));
   const staleRules = managedTargets.filter((path) => !readFileSync(path, "utf8").includes(LEAN_MARK_START) || !readFileSync(path, "utf8").includes(LEAN_MARK_END));
-  checks.push(staleRules.length ? { id: "managed-rules", status: "WARN", detail: `${staleRules.length} managed file(s) missing markers`, fix: "Run `leanagent sync`." } : { id: "managed-rules", status: "PASS", detail: managedTargets.length ? `${managedTargets.length} managed file(s)` : "No managed provider rules detected" });
+  checks.push(staleRules.length ? { id: "managed-rules", status: "WARN", detail: `${staleRules.length} managed file(s) missing markers`, fix: "Run `tidyrun sync`." } : { id: "managed-rules", status: "PASS", detail: managedTargets.length ? `${managedTargets.length} managed file(s)` : "No managed provider rules detected" });
   checks.push(cfg.telemetry === false ? { id: "telemetry", status: "PASS", detail: "disabled" } : { id: "telemetry", status: "FAIL", detail: "configuration attempted to enable telemetry", fix: "Telemetry is intentionally disabled; remove the invalid override." });
   const status = checks.some((check) => check.status === "FAIL") ? "FAIL" : checks.some((check) => check.status === "WARN") ? "REVIEW" : "HEALTHY";
   const report = { telemetry: cfg.telemetry, artifactCount: artifacts.length, rules: builtinRules.map((rule) => rule.id), preset: cfg.preset, platform: process.platform, node: process.version, status, checks, fixes: checks.filter((check) => check.fix).map((check) => check.fix) };
@@ -220,8 +220,8 @@ function doctorCmd(cwd: string, jsonMode: boolean): number {
 }
 
 function syncCmd(cwd: string, quiet: boolean, jsonMode: boolean): number {
-  const block = `${LEAN_MARK_START}\n\n## LeanAgent efficiency rules\n\n- Avoid rereading unchanged files; LeanAgent returns a content-hash notice.\n- Prefer targeted searches over repository-wide dumps.\n- Do not repeat identical failed commands; fetch stored LA:// artifacts instead.\n- Use incremental verification while iterating and complete final verification at task completion.\n- Retrieve full LeanAgent artifacts only when necessary: leanagent cat <id>.\n- Wrap commands with leanagent run -- <cmd> when native hooks are unavailable.\n- Extra LLM calls required by LeanAgent: 0.\n\n${LEAN_MARK_END}`;
-  const targets = [join(cwd, "AGENTS.md"), join(cwd, "CLAUDE.md"), join(cwd, "GEMINI.md"), join(cwd, ".cursor", "rules", "leanagent.mdc"), join(cwd, ".clinerules", "leanagent.md"), join(cwd, ".roo", "leanagent.md")];
+  const block = `${LEAN_MARK_START}\n\n## TidyRun\n\n- Reuse unchanged file reads.\n- Reuse verified safe commands; avoid reruns.\n- For omitted outputs, fetch full artifact (TR://...) or use force=true.\n- Deterministic only; 0 extra LLM.\n\n${LEAN_MARK_END}`;
+  const targets = [join(cwd, "AGENTS.md"), join(cwd, "CLAUDE.md"), join(cwd, "GEMINI.md"), join(cwd, ".cursor", "rules", "tidyrun.mdc"), join(cwd, ".clinerules", "tidyrun.md"), join(cwd, ".roo", "tidyrun.md")];
   const updated: string[] = [];
   for (const path of targets) {
     const optionalTarget = path.includes(".cursor") || path.includes(".clinerules") || path.includes(".roo");
@@ -232,7 +232,7 @@ function syncCmd(cwd: string, quiet: boolean, jsonMode: boolean): number {
     if (next !== prev) { writeFileSync(path, next, "utf8"); updated.push(path); }
   }
   if (jsonMode) process.stdout.write(`${JSON.stringify({ updated }, null, 2)}\n`);
-  else if (!quiet) process.stdout.write(`Synced LeanAgent managed sections into ${updated.length} instruction file(s).\n`);
+  else if (!quiet) process.stdout.write(`Synced TidyRun managed sections into ${updated.length} instruction file(s).\n`);
   return 0;
 }
 
@@ -250,7 +250,7 @@ function cacheCmd(rest: string[], jsonMode: boolean): number {
 
 function artifactCmd(cmd: string, rest: string[]): number {
   const id = rest[0];
-  if (!id) { process.stderr.write(`usage: leanagent ${cmd} <artifact>\n`); return 2; }
+  if (!id) { process.stderr.write(`usage: tidyrun ${cmd} <artifact>\n`); return 2; }
   const store = new FileArtifactStore();
   if (cmd === "search") {
     const hits = store.search(id, rest.slice(1).join(" "));
@@ -284,7 +284,7 @@ function adaptersCmd(cwd: string, jsonMode: boolean): number {
 async function mcpCmd(cwd: string): Promise<number> { await new LeanMcpServer({ repository: cwd }).serve(); return 0; }
 
 async function hookCmd(kind: string, cwd: string): Promise<number> {
-  if (kind !== "gemini") { process.stderr.write("usage: leanagent hook gemini\n"); return 2; }
+  if (kind !== "gemini") { process.stderr.write("usage: tidyrun hook gemini\n"); return 2; }
   const input = await readStdin();
   const payload = await handleGeminiHook({ ...(JSON.parse(input) as Record<string, unknown>), cwd });
   process.stdout.write(`${JSON.stringify(payload)}\n`);
@@ -297,7 +297,7 @@ function readStdin(): Promise<string> {
 }
 
 async function benchmarkCmd(cwd: string, file: string | undefined, jsonMode: boolean): Promise<number> {
-  if (!file) { process.stderr.write("usage: leanagent benchmark <fixture.json|yaml>\n"); return 2; }
+  if (!file) { process.stderr.write("usage: tidyrun benchmark <fixture.json|yaml>\n"); return 2; }
   const spec = loadBenchmark(file);
   if (!spec.repository) spec.repository = cwd;
   const report = await runBenchmark(spec);
@@ -312,12 +312,12 @@ function ciCmd(cwd: string, jsonMode: boolean): number {
   const cfg = loadConfig(cwd);
   const idx = indexRepository(cwd);
   const payload = { configValid: cfg.telemetry === false, telemetry: cfg.telemetry, files: idx.files.length, tests: idx.tests.length, localOnly: true };
-  process.stdout.write(jsonMode ? `${JSON.stringify(payload, null, 2)}\n` : `leanagent ci: config=${payload.configValid ? "ok" : "invalid"} files=${payload.files} tests=${payload.tests} telemetry=off\n`);
+  process.stdout.write(jsonMode ? `${JSON.stringify(payload, null, 2)}\n` : `tidyrun ci: config=${payload.configValid ? "ok" : "invalid"} files=${payload.files} tests=${payload.tests} telemetry=off\n`);
   return payload.configValid ? 0 : 1;
 }
 
 function cleanCmd(rest: string[], jsonMode: boolean): number {
-  if (!rest.includes("--artifacts")) { process.stdout.write("No files deleted. Use --artifacts to prune local LeanAgent artifacts.\n"); return 0; }
+  if (!rest.includes("--artifacts")) { process.stdout.write("No files deleted. Use --artifacts to prune local TidyRun artifacts.\n"); return 0; }
   const result = new FileArtifactStore().prune({ maxArtifacts: 0 });
   new JsonCommandCache().clear();
   process.stdout.write(jsonMode ? `${JSON.stringify(result)}\n` : `removed ${result.removed} artifacts (${result.bytes} bytes)\n`);

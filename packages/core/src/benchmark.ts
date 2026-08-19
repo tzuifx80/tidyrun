@@ -4,7 +4,7 @@ import { mkdtempSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { parseLeanYaml } from "./config.js";
-import { createLeanAgent } from "./engine.js";
+import { createTidyRun } from "./engine.js";
 import { FileArtifactStore, JsonCommandCache } from "./store.js";
 import { resolveExecutable } from "./util.js";
 import type { SessionStats } from "./types.js";
@@ -17,7 +17,7 @@ export interface BenchmarkCase {
   agent?: string;
   model?: string;
   baselineCommand: string[];
-  leanagentCommand?: string[];
+  tidyrunCommand?: string[];
   verification?: string[];
   timeoutMs?: number;
   repetitions?: number;
@@ -38,16 +38,16 @@ export interface BenchmarkRun {
 }
 
 export interface BenchmarkReport {
-  schema: "leanagent.benchmark/v1";
+  schema: "tidyrun.benchmark/v1";
   name: string;
   repository: string;
   task?: string;
   agent?: string;
   model?: string;
   baseline: BenchmarkRun;
-  leanagent: BenchmarkRun;
-  leanagentStats?: SessionStats;
-  quality: { baselineVerification?: BenchmarkRun; leanagentVerification?: BenchmarkRun; equalExit: boolean };
+  tidyrun: BenchmarkRun;
+  tidyrunStats?: SessionStats;
+  quality: { baselineVerification?: BenchmarkRun; tidyrunVerification?: BenchmarkRun; equalExit: boolean };
   notes: string[];
 }
 
@@ -56,7 +56,7 @@ export function loadBenchmark(path: string): BenchmarkCase {
   try { return JSON.parse(raw) as BenchmarkCase; }
   catch {
     const parsed = parseLeanYaml(raw) as unknown as Record<string, unknown>;
-    return { name: String(parsed.name ?? path), repository: String(parsed.repository ?? process.cwd()), startingCommit: parsed.startingCommit ? String(parsed.startingCommit) : undefined, task: parsed.task ? String(parsed.task) : undefined, agent: parsed.agent ? String(parsed.agent) : undefined, model: parsed.model ? String(parsed.model) : undefined, baselineCommand: Array.isArray(parsed.baselineCommand) ? parsed.baselineCommand.map(String) : ["node", "--version"], leanagentCommand: Array.isArray(parsed.leanagentCommand) ? parsed.leanagentCommand.map(String) : undefined, verification: Array.isArray(parsed.verification) ? parsed.verification.map(String) : undefined, repetitions: parsed.repetitions ? Number(parsed.repetitions) : undefined };
+    return { name: String(parsed.name ?? path), repository: String(parsed.repository ?? process.cwd()), startingCommit: parsed.startingCommit ? String(parsed.startingCommit) : undefined, task: parsed.task ? String(parsed.task) : undefined, agent: parsed.agent ? String(parsed.agent) : undefined, model: parsed.model ? String(parsed.model) : undefined, baselineCommand: Array.isArray(parsed.baselineCommand) ? parsed.baselineCommand.map(String) : ["node", "--version"], tidyrunCommand: Array.isArray(parsed.tidyrunCommand) ? parsed.tidyrunCommand.map(String) : undefined, verification: Array.isArray(parsed.verification) ? parsed.verification.map(String) : undefined, repetitions: parsed.repetitions ? Number(parsed.repetitions) : undefined };
   }
 }
 
@@ -72,10 +72,10 @@ export async function runBenchmark(spec: BenchmarkCase): Promise<BenchmarkReport
   // Never let a previous developer session or another benchmark contaminate a
   // measurement. The temporary store also makes the report safe to reproduce.
   const leanStarted = performance.now();
-  const stateRoot = mkdtempSync(join(tmpdir(), "leanagent-benchmark-"));
+  const stateRoot = mkdtempSync(join(tmpdir(), "tidyrun-benchmark-"));
   const store = new FileArtifactStore(join(stateRoot, "artifacts"));
-  const lean = await createLeanAgent({ repository: spec.repository, store, commandCache: new JsonCommandCache(join(stateRoot, "cache")) });
-  const leanCommand = spec.leanagentCommand ?? spec.baselineCommand;
+  const lean = await createTidyRun({ repository: spec.repository, store, commandCache: new JsonCommandCache(join(stateRoot, "cache")) });
+  const leanCommand = spec.tidyrunCommand ?? spec.baselineCommand;
   const identity = JSON.stringify(leanCommand);
   const leanRuns: BenchmarkRun[] = [];
   for (let i = 0; i < repetitions; i += 1) {
@@ -94,13 +94,13 @@ export async function runBenchmark(spec: BenchmarkCase): Promise<BenchmarkReport
     });
     leanRuns.push({ ...run, rawOutputBytes: run.outputBytes, deliveredOutputBytes: delivered || run.outputBytes, cacheHits: 0, cacheMisses: 1, repetitions: 1 });
   }
-  const leanagent = { ...aggregateRuns(leanCommand, leanRuns, true), endToEndMs: performance.now() - leanStarted };
-  const leanagentStats = { ...lean.session.stats };
+  const tidyrun = { ...aggregateRuns(leanCommand, leanRuns, true), endToEndMs: performance.now() - leanStarted };
+  const tidyrunStats = { ...lean.session.stats };
   lean.finish();
   const baselineVerification = spec.verification ? await runCommand(spec.verification, spec.repository, spec.timeoutMs) : undefined;
-  const leanagentVerification = spec.verification ? await runCommand(spec.verification, spec.repository, spec.timeoutMs) : undefined;
-  const avoided = Math.max(0, (leanagent.rawOutputBytes ?? leanagent.outputBytes) - (leanagent.deliveredOutputBytes ?? leanagent.outputBytes));
-  return { schema: "leanagent.benchmark/v1", name: spec.name, repository: spec.repository, task: spec.task, agent: spec.agent, model: spec.model, baseline, leanagent: { ...leanagent, avoidedOutputBytes: avoided }, leanagentStats, quality: { baselineVerification, leanagentVerification, equalExit: baseline.exit === leanagent.exit && (!baselineVerification || baselineVerification.exit === leanagentVerification?.exit) }, notes: ["Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.", spec.startingCommit ? `Starting commit verified: ${spec.startingCommit}` : "No startingCommit supplied; use a pinned commit for agent studies."] };
+  const tidyrunVerification = spec.verification ? await runCommand(spec.verification, spec.repository, spec.timeoutMs) : undefined;
+  const avoided = Math.max(0, (tidyrun.rawOutputBytes ?? tidyrun.outputBytes) - (tidyrun.deliveredOutputBytes ?? tidyrun.outputBytes));
+  return { schema: "tidyrun.benchmark/v1", name: spec.name, repository: spec.repository, task: spec.task, agent: spec.agent, model: spec.model, baseline, tidyrun: { ...tidyrun, avoidedOutputBytes: avoided }, tidyrunStats, quality: { baselineVerification, tidyrunVerification, equalExit: baseline.exit === tidyrun.exit && (!baselineVerification || baselineVerification.exit === tidyrunVerification?.exit) }, notes: ["Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by TidyRun. Provider token usage is not inferred.", spec.startingCommit ? `Starting commit verified: ${spec.startingCommit}` : "No startingCommit supplied; use a pinned commit for agent studies."] };
 }
 
 function currentCommit(repository: string): string | undefined {
@@ -127,10 +127,10 @@ function aggregateRuns(command: string[], runs: BenchmarkRun[], lean: boolean): 
 
 export function benchmarkMarkdown(report: BenchmarkReport): string {
   const baselineBytes = report.baseline.outputBytes;
-  const delivered = report.leanagent.deliveredOutputBytes ?? report.leanagent.outputBytes;
+  const delivered = report.tidyrun.deliveredOutputBytes ?? report.tidyrun.outputBytes;
   const reduction = baselineBytes ? Math.round((1 - delivered / baselineBytes) * 100) : 0;
-  const stats = report.leanagentStats;
-  return `# LeanAgent benchmark: ${report.name}\n\nTask: ${report.task ?? "not specified"}\nAgent: ${report.agent ?? "not specified"}\nModel: ${report.model ?? "not specified"}\n\n| Run | Exit | Command time | End-to-end | Raw bytes | Agent-visible bytes | Cache hits |\n|---|---:|---:|---:|---:|---:|---:|\n| Baseline | ${report.baseline.exit} | ${Math.round(report.baseline.durationMs)} ms | ${Math.round(report.baseline.endToEndMs ?? report.baseline.durationMs)} ms | ${report.baseline.outputBytes} | ${report.baseline.outputBytes} | 0 |\n| LeanAgent | ${report.leanagent.exit} | ${Math.round(report.leanagent.durationMs)} ms | ${Math.round(report.leanagent.endToEndMs ?? report.leanagent.durationMs)} ms | ${report.leanagent.rawOutputBytes ?? report.leanagent.outputBytes} | ${delivered} | ${report.leanagent.cacheHits ?? 0} |\n\nObserved agent-visible output reduction: **${reduction}%**\n\nLeanAgent overhead (observed): ${Math.round(stats?.overheadMs ?? 0)} ms; snapshot ${Math.round(stats?.repositorySnapshotMs ?? 0)} ms; compression ${Math.round(stats?.compressionMs ?? 0)} ms; artifacts ${Math.round(stats?.artifactMs ?? 0)} ms.\n\nQuality parity: **${report.quality.equalExit ? "PASS" : "REVIEW"}**\n\n${report.notes.join("\n")}`;
+  const stats = report.tidyrunStats;
+  return `# TidyRun benchmark: ${report.name}\n\nTask: ${report.task ?? "not specified"}\nAgent: ${report.agent ?? "not specified"}\nModel: ${report.model ?? "not specified"}\n\n| Run | Exit | Command time | End-to-end | Raw bytes | Agent-visible bytes | Cache hits |\n|---|---:|---:|---:|---:|---:|---:|\n| Baseline | ${report.baseline.exit} | ${Math.round(report.baseline.durationMs)} ms | ${Math.round(report.baseline.endToEndMs ?? report.baseline.durationMs)} ms | ${report.baseline.outputBytes} | ${report.baseline.outputBytes} | 0 |\n| TidyRun | ${report.tidyrun.exit} | ${Math.round(report.tidyrun.durationMs)} ms | ${Math.round(report.tidyrun.endToEndMs ?? report.tidyrun.durationMs)} ms | ${report.tidyrun.rawOutputBytes ?? report.tidyrun.outputBytes} | ${delivered} | ${report.tidyrun.cacheHits ?? 0} |\n\nObserved agent-visible output reduction: **${reduction}%**\n\nTidyRun overhead (observed): ${Math.round(stats?.overheadMs ?? 0)} ms; snapshot ${Math.round(stats?.repositorySnapshotMs ?? 0)} ms; compression ${Math.round(stats?.compressionMs ?? 0)} ms; artifacts ${Math.round(stats?.artifactMs ?? 0)} ms.\n\nQuality parity: **${report.quality.equalExit ? "PASS" : "REVIEW"}**\n\n${report.notes.join("\n")}`;
 }
 
 async function runCommand(command: string[], cwd: string, timeoutMs = 120_000, onComplete?: (result: BenchmarkRun & { output: string }) => Promise<void> | void): Promise<BenchmarkRun> {
@@ -141,7 +141,7 @@ async function runCommand(command: string[], cwd: string, timeoutMs = 120_000, o
     let output = "";
     let settled = false;
     const finish = (value: { exit: number; output: string }) => { if (settled) return; settled = true; clearTimeout(timer); resolve(value); };
-    const timer = setTimeout(() => { child.kill(); finish({ exit: 124, output: `${output}\nLeanAgent benchmark timeout` }); }, timeoutMs);
+    const timer = setTimeout(() => { child.kill(); finish({ exit: 124, output: `${output}\nTidyRun benchmark timeout` }); }, timeoutMs);
     child.stdout.on("data", (chunk: Buffer) => { output += chunk.toString(); });
     child.stderr.on("data", (chunk: Buffer) => { output += chunk.toString(); });
     child.on("error", (error) => finish({ exit: 1, output: String(error) }));

@@ -1,9 +1,9 @@
 {
-  "schema": "leanagent.benchmark-suite/v1",
-  "commitSha": "af36cf5fd17079d84bb0925c74948a669ae74fc5",
+  "schema": "tidyrun.benchmark-suite/v1",
+  "commitSha": "230fd665047fe875b38378835c3608e8a0208e20",
   "reports": [
     {
-      "schema": "leanagent.benchmark/v1",
+      "schema": "tidyrun.benchmark/v1",
       "name": "verbose-test-diagnostics",
       "repository": ".",
       "task": "Preserve actionable failures while removing repetitive test progress output",
@@ -15,7 +15,7 @@
           "scripts/benchmark-verbose-output.mjs"
         ],
         "exit": 1,
-        "durationMs": 80.84230000000001,
+        "durationMs": 77.0865,
         "outputBytes": 64939,
         "rawOutputBytes": 64939,
         "deliveredOutputBytes": 64939,
@@ -23,25 +23,25 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "repetitions": 1,
-        "endToEndMs": 80.84230000000001
+        "endToEndMs": 77.0865
       },
-      "leanagent": {
+      "tidyrun": {
         "command": [
           "node",
           "scripts/benchmark-verbose-output.mjs"
         ],
         "exit": 1,
-        "durationMs": 78.24970000000002,
-        "outputBytes": 20050,
+        "durationMs": 78.72820000000002,
+        "outputBytes": 20037,
         "rawOutputBytes": 64939,
-        "deliveredOutputBytes": 20050,
-        "avoidedOutputBytes": 44889,
+        "deliveredOutputBytes": 20037,
+        "avoidedOutputBytes": 44902,
         "cacheHits": 0,
         "cacheMisses": 1,
         "repetitions": 1,
-        "endToEndMs": 91.93889999999999
+        "endToEndMs": 93.59659999999997
       },
-      "leanagentStats": {
+      "tidyrunStats": {
         "fileReads": 0,
         "duplicateReadsReused": 0,
         "commands": 1,
@@ -50,21 +50,21 @@
         "loopsDetected": 0,
         "loopCycles": 0,
         "rawBytes": 64939,
-        "deliveredBytes": 20050,
+        "deliveredBytes": 20037,
         "cacheHits": 0,
         "cacheMisses": 1,
         "cacheInvalidations": 0,
-        "commandWallMs": 78.24970000000002,
+        "commandWallMs": 78.72820000000002,
         "avoidedCommandMs": 0,
         "modelCalls": 0,
         "modelInputTokens": 0,
         "modelOutputTokens": 0,
         "extraLlmCalls": 0,
-        "overheadMs": 6.529300000000006,
-        "ruleEvaluationMs": 1.3356000000000563,
+        "overheadMs": 6.840900000000033,
+        "ruleEvaluationMs": 1.1519999999999868,
         "repositorySnapshotMs": 0,
-        "compressionMs": 1.141999999999996,
-        "artifactMs": 4.050899999999956
+        "compressionMs": 1.1643000000000256,
+        "artifactMs": 4.523500000000013
       },
       "quality": {
         "baselineVerification": {
@@ -73,27 +73,27 @@
             "test"
           ],
           "exit": 0,
-          "durationMs": 5682.925800000001,
-          "outputBytes": 1929
+          "durationMs": 6117.843699999999,
+          "outputBytes": 1793
         },
-        "leanagentVerification": {
+        "tidyrunVerification": {
           "command": [
             "npm",
             "test"
           ],
           "exit": 0,
-          "durationMs": 5508.2795,
-          "outputBytes": 1929
+          "durationMs": 5766.161300000001,
+          "outputBytes": 1793
         },
         "equalExit": true
       },
       "notes": [
-        "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.",
+        "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by TidyRun. Provider token usage is not inferred.",
         "No startingCommit supplied; use a pinned commit for agent studies."
       ]
     },
     {
-      "schema": "leanagent.benchmark/v1",
+      "schema": "tidyrun.benchmark/v1",
       "name": "repeated-safe-command",
       "repository": ".",
       "task": "Run the same deterministic typecheck twice without replaying unchanged work",
@@ -106,34 +106,34 @@
           "typecheck"
         ],
         "exit": 0,
-        "durationMs": 17526.7033,
-        "outputBytes": 1444,
-        "rawOutputBytes": 1444,
-        "deliveredOutputBytes": 1444,
+        "durationMs": 19286.9358,
+        "outputBytes": 3144,
+        "rawOutputBytes": 3144,
+        "deliveredOutputBytes": 3144,
         "avoidedOutputBytes": 0,
         "cacheHits": 0,
         "cacheMisses": 2,
         "repetitions": 2,
-        "endToEndMs": 17526.7033
+        "endToEndMs": 19286.9358
       },
-      "leanagent": {
+      "tidyrun": {
         "command": [
           "npm",
           "run",
           "typecheck"
         ],
         "exit": 0,
-        "durationMs": 8998.411499999998,
-        "outputBytes": 1444,
-        "rawOutputBytes": 1444,
-        "deliveredOutputBytes": 1444,
+        "durationMs": 8836.111700000005,
+        "outputBytes": 3144,
+        "rawOutputBytes": 3144,
+        "deliveredOutputBytes": 3144,
         "avoidedOutputBytes": 0,
         "cacheHits": 1,
         "cacheMisses": 1,
         "repetitions": 2,
-        "endToEndMs": 9168.989399999999
+        "endToEndMs": 9030.262399999996
       },
-      "leanagentStats": {
+      "tidyrunStats": {
         "fileReads": 0,
         "duplicateReadsReused": 0,
         "commands": 2,
@@ -141,22 +141,22 @@
         "repeatedBlocked": 0,
         "loopsDetected": 0,
         "loopCycles": 0,
-        "rawBytes": 2166,
-        "deliveredBytes": 2166,
+        "rawBytes": 4716,
+        "deliveredBytes": 4716,
         "cacheHits": 2,
         "cacheMisses": 1,
         "cacheInvalidations": 0,
-        "commandWallMs": 8998.411499999998,
-        "avoidedCommandMs": 8998.411499999998,
+        "commandWallMs": 8836.111700000005,
+        "avoidedCommandMs": 8836.111700000005,
         "modelCalls": 0,
         "modelInputTokens": 0,
         "modelOutputTokens": 0,
         "extraLlmCalls": 0,
-        "overheadMs": 164.82070000000022,
-        "ruleEvaluationMs": 0.6110000000007858,
-        "repositorySnapshotMs": 160.86019999999917,
-        "compressionMs": 0.020400000001245644,
-        "artifactMs": 3.2793000000019674
+        "overheadMs": 186.39760000000388,
+        "ruleEvaluationMs": 0.7276999999958207,
+        "repositorySnapshotMs": 182.45080000000598,
+        "compressionMs": 0.027099999999336433,
+        "artifactMs": 3.1231000000043423
       },
       "quality": {
         "baselineVerification": {
@@ -165,27 +165,27 @@
             "test"
           ],
           "exit": 0,
-          "durationMs": 5573.941299999999,
-          "outputBytes": 1929
+          "durationMs": 5789.702700000002,
+          "outputBytes": 1793
         },
-        "leanagentVerification": {
+        "tidyrunVerification": {
           "command": [
             "npm",
             "test"
           ],
           "exit": 0,
-          "durationMs": 5490.254800000002,
-          "outputBytes": 1929
+          "durationMs": 5803.9882,
+          "outputBytes": 1793
         },
         "equalExit": true
       },
       "notes": [
-        "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.",
+        "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by TidyRun. Provider token usage is not inferred.",
         "No startingCommit supplied; use a pinned commit for agent studies."
       ]
     },
     {
-      "schema": "leanagent.benchmark/v1",
+      "schema": "tidyrun.benchmark/v1",
       "name": "python-verbose-diagnostics",
       "repository": "fixtures/python-project",
       "task": "Preserve the actionable Python failure while removing repetitive progress output",
@@ -197,7 +197,7 @@
           "noisy_check.py"
         ],
         "exit": 1,
-        "durationMs": 134.49659999999858,
+        "durationMs": 135.03100000000268,
         "outputBytes": 19776,
         "rawOutputBytes": 19776,
         "deliveredOutputBytes": 19776,
@@ -205,25 +205,25 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "repetitions": 1,
-        "endToEndMs": 134.49659999999858
+        "endToEndMs": 135.03100000000268
       },
-      "leanagent": {
+      "tidyrun": {
         "command": [
           "python",
           "noisy_check.py"
         ],
         "exit": 1,
-        "durationMs": 127.81530000000203,
-        "outputBytes": 961,
+        "durationMs": 129.34659999999712,
+        "outputBytes": 922,
         "rawOutputBytes": 19776,
-        "deliveredOutputBytes": 961,
-        "avoidedOutputBytes": 18815,
+        "deliveredOutputBytes": 922,
+        "avoidedOutputBytes": 18854,
         "cacheHits": 0,
         "cacheMisses": 1,
         "repetitions": 1,
-        "endToEndMs": 134.06010000000242
+        "endToEndMs": 135.50160000000324
       },
-      "leanagentStats": {
+      "tidyrunStats": {
         "fileReads": 0,
         "duplicateReadsReused": 0,
         "commands": 1,
@@ -232,21 +232,21 @@
         "loopsDetected": 0,
         "loopCycles": 0,
         "rawBytes": 19776,
-        "deliveredBytes": 961,
+        "deliveredBytes": 922,
         "cacheHits": 0,
         "cacheMisses": 1,
         "cacheInvalidations": 0,
-        "commandWallMs": 127.81530000000203,
+        "commandWallMs": 129.34659999999712,
         "avoidedCommandMs": 0,
         "modelCalls": 0,
         "modelInputTokens": 0,
         "modelOutputTokens": 0,
         "extraLlmCalls": 0,
-        "overheadMs": 3.8179999999920256,
-        "ruleEvaluationMs": 0.39579999999841675,
+        "overheadMs": 3.6618000000089523,
+        "ruleEvaluationMs": 0.36810000000696164,
         "repositorySnapshotMs": 0,
-        "compressionMs": 0.38629999999830034,
-        "artifactMs": 3.0349999999962165
+        "compressionMs": 0.35740000000078,
+        "artifactMs": 2.9354000000021188
       },
       "quality": {
         "baselineVerification": {
@@ -255,22 +255,22 @@
             "test_app.py"
           ],
           "exit": 0,
-          "durationMs": 127.40679999999702,
+          "durationMs": 149.17749999999796,
           "outputBytes": 0
         },
-        "leanagentVerification": {
+        "tidyrunVerification": {
           "command": [
             "python",
             "test_app.py"
           ],
           "exit": 0,
-          "durationMs": 126.75189999999566,
+          "durationMs": 129.72929999999906,
           "outputBytes": 0
         },
         "equalExit": true
       },
       "notes": [
-        "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.",
+        "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by TidyRun. Provider token usage is not inferred.",
         "No startingCommit supplied; use a pinned commit for agent studies."
       ]
     }

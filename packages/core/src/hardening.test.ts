@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { createLeanAgent } from "./engine.js";
+import { createTidyRun } from "./engine.js";
 import { FileArtifactStore, JsonCommandCache } from "./store.js";
 import { WorkCache } from "./work-cache.js";
 import { compressOutput } from "./compress.js";
@@ -13,7 +13,7 @@ import { DEFAULT_CONFIG } from "./types.js";
 import type { ArtifactStore } from "./types.js";
 
 function rootWithSource(): string {
-  const root = mkdtempSync(join(tmpdir(), "leanagent-hardening-"));
+  const root = mkdtempSync(join(tmpdir(), "tidyrun-hardening-"));
   mkdirSync(join(root, "tests"));
   writeFileSync(join(root, "src.ts"), "export const value = 1;\n");
   writeFileSync(join(root, "tests", "src.test.ts"), "import { value } from '../src';\nconsole.log(value);\n");
@@ -23,31 +23,31 @@ function rootWithSource(): string {
 describe("persistent cache safety", () => {
   it("survives a restart but invalidates a newly changed source file", async () => {
     const root = rootWithSource();
-    const state = mkdtempSync(join(tmpdir(), "leanagent-state-"));
+    const state = mkdtempSync(join(tmpdir(), "tidyrun-state-"));
     const storeRoot = join(state, "artifacts");
     const cacheRoot = join(state, "cache");
-    const first = await createLeanAgent({ repository: root, store: new FileArtifactStore(storeRoot), commandCache: new JsonCommandCache(cacheRoot) });
+    const first = await createTidyRun({ repository: root, store: new FileArtifactStore(storeRoot), commandCache: new JsonCommandCache(cacheRoot) });
     await first.prepareCommand("tsc --noEmit");
     first.completeCommand("tsc --noEmit", 0, "Found 0 errors");
     first.finish();
-    const restarted = await createLeanAgent({ repository: root, store: new FileArtifactStore(storeRoot), commandCache: new JsonCommandCache(cacheRoot) });
+    const restarted = await createTidyRun({ repository: root, store: new FileArtifactStore(storeRoot), commandCache: new JsonCommandCache(cacheRoot) });
     expect((await restarted.prepareCommand("tsc --noEmit")).some((row) => row.kind === "reuse")).toBe(true);
     writeFileSync(join(root, "src.ts"), "export const value = 2;\n");
-    const changed = await createLeanAgent({ repository: root, store: new FileArtifactStore(storeRoot), commandCache: new JsonCommandCache(cacheRoot) });
+    const changed = await createTidyRun({ repository: root, store: new FileArtifactStore(storeRoot), commandCache: new JsonCommandCache(cacheRoot) });
     expect((await changed.prepareCommand("tsc --noEmit")).some((row) => row.kind === "reuse")).toBe(false);
   });
 
   it("never persists a failed command as a reusable result", async () => {
     const root = rootWithSource();
-    const state = mkdtempSync(join(tmpdir(), "leanagent-state-"));
-    const agent = await createLeanAgent({ repository: root, store: new FileArtifactStore(join(state, "artifacts")), commandCache: new JsonCommandCache(join(state, "cache")) });
+    const state = mkdtempSync(join(tmpdir(), "tidyrun-state-"));
+    const agent = await createTidyRun({ repository: root, store: new FileArtifactStore(join(state, "artifacts")), commandCache: new JsonCommandCache(join(state, "cache")) });
     await agent.prepareCommand("tsc --noEmit");
     agent.completeCommand("tsc --noEmit", 1, "error TS2322");
     expect((await agent.prepareCommand("tsc --noEmit")).some((row) => row.kind === "reuse")).toBe(false);
   });
 
   it("normalizes invalid provider usage metadata to zero", async () => {
-    const agent = await createLeanAgent({ repository: rootWithSource(), store: new FileArtifactStore(join(mkdtempSync(join(tmpdir(), "leanagent-usage-")), "arts")) });
+    const agent = await createTidyRun({ repository: rootWithSource(), store: new FileArtifactStore(join(mkdtempSync(join(tmpdir(), "tidyrun-usage-")), "arts")) });
     agent.recordModelUsage({ inputTokens: Number.NaN, outputTokens: -10 });
     expect(agent.session.stats.modelInputTokens).toBe(0);
     expect(agent.session.stats.modelOutputTokens).toBe(0);
@@ -55,15 +55,15 @@ describe("persistent cache safety", () => {
 
   it("misses safely when a cached artifact is deleted", async () => {
     const root = rootWithSource();
-    const state = mkdtempSync(join(tmpdir(), "leanagent-state-"));
+    const state = mkdtempSync(join(tmpdir(), "tidyrun-state-"));
     const store = new FileArtifactStore(join(state, "artifacts"));
     const cache = new JsonCommandCache(join(state, "cache"));
-    const agent = await createLeanAgent({ repository: root, store, commandCache: cache });
+    const agent = await createTidyRun({ repository: root, store, commandCache: cache });
     await agent.prepareCommand("tsc --noEmit");
     const completed = agent.completeCommand("tsc --noEmit", 0, "ok");
     expect(completed.artifactId).toBeTruthy();
     store.prune({ maxArtifacts: 0 });
-    const restarted = await createLeanAgent({ repository: root, store: new FileArtifactStore(join(state, "artifacts")), commandCache: new JsonCommandCache(join(state, "cache")) });
+    const restarted = await createTidyRun({ repository: root, store: new FileArtifactStore(join(state, "artifacts")), commandCache: new JsonCommandCache(join(state, "cache")) });
     expect((await restarted.prepareCommand("tsc --noEmit")).some((row) => row.kind === "reuse")).toBe(false);
   });
 
@@ -71,25 +71,25 @@ describe("persistent cache safety", () => {
     expect(environmentFingerprint({ PATH: "a" })).not.toBe(environmentFingerprint({ PATH: "b" }));
     const root = rootWithSource();
     const other = rootWithSource();
-    const state = mkdtempSync(join(tmpdir(), "leanagent-identity-"));
-    const configPath = join(root, "leanagent.yaml");
+    const state = mkdtempSync(join(tmpdir(), "tidyrun-identity-"));
+    const configPath = join(root, "tidyrun.yaml");
     writeFileSync(configPath, "version: 1\npreset: balanced\n");
     const storeRoot = join(state, "artifacts");
     const cacheRoot = join(state, "cache");
-    const first = await createLeanAgent({ repository: root, store: new FileArtifactStore(storeRoot), commandCache: new JsonCommandCache(cacheRoot) });
+    const first = await createTidyRun({ repository: root, store: new FileArtifactStore(storeRoot), commandCache: new JsonCommandCache(cacheRoot) });
     await first.prepareCommand("node --version");
     first.completeCommand("node --version", 0, "v1");
     writeFileSync(configPath, "version: 1\npreset: safe\n");
-    const changedConfig = await createLeanAgent({ repository: root, store: new FileArtifactStore(storeRoot), commandCache: new JsonCommandCache(cacheRoot) });
+    const changedConfig = await createTidyRun({ repository: root, store: new FileArtifactStore(storeRoot), commandCache: new JsonCommandCache(cacheRoot) });
     expect((await changedConfig.prepareCommand("node --version")).some((row) => row.kind === "reuse")).toBe(false);
-    const differentCwd = await createLeanAgent({ repository: other, store: new FileArtifactStore(storeRoot), commandCache: new JsonCommandCache(cacheRoot) });
+    const differentCwd = await createTidyRun({ repository: other, store: new FileArtifactStore(storeRoot), commandCache: new JsonCommandCache(cacheRoot) });
     expect((await differentCwd.prepareCommand("node --version")).some((row) => row.kind === "reuse")).toBe(false);
   });
 });
 
 describe("artifact integrity and recovery", () => {
   it("rejects tampered content and merges independent writers", () => {
-    const root = mkdtempSync(join(tmpdir(), "leanagent-artifacts-"));
+    const root = mkdtempSync(join(tmpdir(), "tidyrun-artifacts-"));
     const one = new FileArtifactStore(root);
     const first = one.put({ kind: "command-result", cwd: root, command: "one", full: "first", compressed: "first" });
     const two = new FileArtifactStore(root);
@@ -100,9 +100,9 @@ describe("artifact integrity and recovery", () => {
   });
 
   it("rejects an artifact index path escape", () => {
-    const root = mkdtempSync(join(tmpdir(), "leanagent-artifact-index-"));
-    writeFileSync(join(root, "index.json"), JSON.stringify([{ id: "la_evil", fullPath: join(tmpdir(), "secret.txt"), sha256: "x", kind: "x", cwd: root, ts: Date.now(), compressed: "" }]));
-    expect(new FileArtifactStore(root).get("la_evil")).toBeUndefined();
+    const root = mkdtempSync(join(tmpdir(), "tidyrun-artifact-index-"));
+    writeFileSync(join(root, "index.json"), JSON.stringify([{ id: "tr_evil", fullPath: join(tmpdir(), "secret.txt"), sha256: "x", kind: "x", cwd: root, ts: Date.now(), compressed: "" }]));
+    expect(new FileArtifactStore(root).get("tr_evil")).toBeUndefined();
   });
 
   it("fails open when artifact persistence is unavailable", async () => {
@@ -114,7 +114,7 @@ describe("artifact integrity and recovery", () => {
       search: () => [],
       list: () => [],
     };
-    const agent = await createLeanAgent({ repository: root, store: unavailable });
+    const agent = await createTidyRun({ repository: root, store: unavailable });
     const result = agent.completeCommand("tsc --noEmit", 0, "ok");
     expect(result.delivered).toBe("ok");
     expect(result.artifactId).toBe("");
@@ -122,9 +122,9 @@ describe("artifact integrity and recovery", () => {
   });
 
   it("clears caches instead of re-merging stale on-disk rows", () => {
-    const root = mkdtempSync(join(tmpdir(), "leanagent-clear-"));
+    const root = mkdtempSync(join(tmpdir(), "tidyrun-clear-"));
     const cache = new JsonCommandCache(root);
-    cache.put({ fingerprint: "a", command: "tsc", class: "LIKELY_SAFE", exit: 0, artifactId: "la_a", stdoutHash: "x", at: Date.now(), dependencies: {}, toolVersion: "test", valid: true });
+    cache.put({ fingerprint: "a", command: "tsc", class: "LIKELY_SAFE", exit: 0, artifactId: "tr_a", stdoutHash: "x", at: Date.now(), dependencies: {}, toolVersion: "test", valid: true });
     cache.clear();
     expect(new JsonCommandCache(root).list()).toHaveLength(0);
     const work = new WorkCache(root);
@@ -134,7 +134,7 @@ describe("artifact integrity and recovery", () => {
   });
 
   it("treats malformed cache metadata as a miss", () => {
-    const root = mkdtempSync(join(tmpdir(), "leanagent-corrupt-cache-"));
+    const root = mkdtempSync(join(tmpdir(), "tidyrun-corrupt-cache-"));
     writeFileSync(join(root, "commands.json"), "{not-json");
     writeFileSync(join(root, "work.json"), "[not-json");
     expect(new JsonCommandCache(root).list()).toHaveLength(0);
@@ -142,7 +142,7 @@ describe("artifact integrity and recovery", () => {
   });
 
   it("does not resurrect pruned artifact metadata", () => {
-    const root = mkdtempSync(join(tmpdir(), "leanagent-prune-"));
+    const root = mkdtempSync(join(tmpdir(), "tidyrun-prune-"));
     const store = new FileArtifactStore(root);
     const row = store.put({ kind: "command-result", cwd: root, command: "one", full: "one", compressed: "one" });
     expect(store.prune({ maxArtifacts: 0 }).removed).toBe(1);
@@ -171,11 +171,11 @@ describe("duplicate read accounting", () => {
   it("reuses a guarded large-file read on the next identical request", async () => {
     const root = rootWithSource();
     writeFileSync(join(root, "large.log"), "x\n".repeat(100_000));
-    const agent = await createLeanAgent({ repository: root, store: new FileArtifactStore(join(mkdtempSync(join(tmpdir(), "leanagent-large-")), "arts")) });
+    const agent = await createTidyRun({ repository: root, store: new FileArtifactStore(join(mkdtempSync(join(tmpdir(), "tidyrun-large-")), "arts")) });
     const first = await agent.readFile("large.log");
     const second = await agent.readFile("large.log");
-    expect(first.text).toContain("LARGE FILE");
-    expect(second.text).toContain("UNCHANGED");
+    expect(first.text).toContain("large file");
+    expect(second.text).toContain("unchanged");
     expect(agent.session.stats.duplicateReadsReused).toBe(1);
   });
 });
@@ -206,7 +206,7 @@ describe("security and command policy", () => {
     expect(() => safeRepositoryPath(root, "..\\outside")).toThrow();
     expect(() => safeRepositoryPath(root, "bad\0name")).toThrow();
     try {
-      const outside = mkdtempSync(join(tmpdir(), "leanagent-outside-"));
+      const outside = mkdtempSync(join(tmpdir(), "tidyrun-outside-"));
       symlinkSync(outside, join(root, "escape"), "junction");
       expect(() => safeRepositoryPath(root, "escape", { followSymlinks: true })).toThrow();
     } catch {
@@ -218,7 +218,7 @@ describe("security and command policy", () => {
 
 describe("repository intelligence", () => {
   it("selects transitive dependents and broad configuration changes", () => {
-    const root = mkdtempSync(join(tmpdir(), "leanagent-index-"));
+    const root = mkdtempSync(join(tmpdir(), "tidyrun-index-"));
     mkdirSync(join(root, "src"));
     mkdirSync(join(root, "tests"));
     writeFileSync(join(root, "src", "leaf.ts"), "export const leaf = 1;\n");
@@ -242,7 +242,7 @@ describe("repository intelligence", () => {
 describe("loop evidence", () => {
   it("does not warn when repeated debugging produces different artifacts", async () => {
     const root = rootWithSource();
-    const agent = await createLeanAgent({ repository: root, store: new FileArtifactStore(join(mkdtempSync(join(tmpdir(), "leanagent-loop-")), "arts")) });
+    const agent = await createTidyRun({ repository: root, store: new FileArtifactStore(join(mkdtempSync(join(tmpdir(), "tidyrun-loop-")), "arts")) });
     for (let i = 0; i < 6; i += 1) {
       await agent.prepareCommand("tsc --noEmit");
       agent.completeCommand("tsc --noEmit", 1, `error TS2322 at line ${i}`);
@@ -263,17 +263,17 @@ describe("configuration hardening", () => {
 
 describe("Windows command resolution", () => {
   it.skipIf(process.platform !== "win32")("runs a local npm .cmd bin through its Node script without a shell", () => {
-    const root = mkdtempSync(join(tmpdir(), "leanagent-bin-"));
+    const root = mkdtempSync(join(tmpdir(), "tidyrun-bin-"));
     const bin = join(root, "node_modules", ".bin");
-    const target = join(root, "node_modules", "leanagent", "bin", "leanagent.mjs");
+    const target = join(root, "node_modules", "tidyrun", "bin", "tidyrun.mjs");
     mkdirSync(bin, { recursive: true });
-    mkdirSync(join(root, "node_modules", "leanagent", "bin"), { recursive: true });
+    mkdirSync(join(root, "node_modules", "tidyrun", "bin"), { recursive: true });
     writeFileSync(target, "process.exit(0);\n");
-    writeFileSync(join(bin, "leanagent.cmd"), "@echo off\n\"%dp0%\\..\\leanagent\\bin\\leanagent.mjs\" %*\n");
+    writeFileSync(join(bin, "tidyrun.cmd"), "@echo off\n\"%dp0%\\..\\tidyrun\\bin\\tidyrun.mjs\" %*\n");
     const previous = process.env.PATH;
     process.env.PATH = `${bin};${previous ?? ""}`;
     try {
-      const resolved = resolveExecutable("leanagent");
+      const resolved = resolveExecutable("tidyrun");
       expect(resolved.file).toBe(process.execPath);
       expect(resolved.prefix[0]).toBe(target);
     } finally {

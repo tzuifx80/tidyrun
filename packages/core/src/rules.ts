@@ -28,7 +28,7 @@ export const duplicateReadRule: LeanRule = {
       "Same path and content hash already read this session.",
       [`path=${path}`, `hash=${hash.slice(0, 12)}`],
       "Use force=true to retrieve full content again.",
-      `LEANAGENT: UNCHANGED\n\n${path}\n\nAlready read during this session (${requestedRange}).\nContent hash: ${hash.slice(0, 12)}…\n\nNo changes detected.\n\nUse force=true to retrieve full content again.`,
+      `LEAN: unchanged ${path} (${requestedRange}); force=true for full`,
     );
   },
 };
@@ -60,8 +60,8 @@ export const largeFileRule: LeanRule = {
       "redirect",
       `Full contents are almost never useful (${reason}).`,
       [`bytes=${st.size}`, `reason=${reason}`],
-      "leanagent cat <handle> or force=true",
-      `LEANAGENT: LARGE FILE\n\n${path}\n${st.size} bytes (${reason})\n\n${summary}\n\nNot returned in full.\nFetch with: leanagent cat <artifact> or force=true.`,
+      "tidyrun cat <handle> or force=true",
+      `LEAN: large file ${path} (${st.size} bytes ${reason})\n${summary}\nNot returned in full.`,
     );
   },
 };
@@ -95,7 +95,7 @@ export const repeatedCommandRule: LeanRule = {
       kind: "reuse",
       reason: "Same safe command fingerprint with unchanged session inputs.",
       evidence: [`command=${command}`, `class=${rec.class}`, `exit=${rec.exit}`],
-      fallback: `leanagent cat ${rec.artifactId}`,
+      fallback: `tidyrun cat ${rec.artifactId}`,
       confidence: 0.8,
       artifactId: rec.artifactId,
       estimatedSavings: { bytes: artifact?.compressed.length, basis: "derived" },
@@ -122,8 +122,8 @@ export const loopRule: LeanRule = {
       "warn",
       "Repeated tool sequence with no repository mutation or new evidence.",
       [`pattern=${cycles.pattern}`, `cycles=${cycles.count}`],
-      "Change hypothesis or bypass with LEANAGENT_BYPASS=1.",
-      `LEANAGENT LOOP DETECTED\n\nRepeated sequence:\n${cycles.pattern}\n\nCycles: ${cycles.count}\nRepository changes in window: 0\nNew evidence: 0\n\nDo not repeat this sequence unchanged.`,
+      "Change hypothesis or bypass with TIDYRUN_BYPASS=1.",
+      `LEAN: loop detected (${cycles.count}x)`,
     );
   },
 };
@@ -145,7 +145,7 @@ export const failedApproachRule: LeanRule = {
       "Identical command already failed under unchanged conditions.",
       [`previous=${hit.outcome}`, `identicalFailures=${attempts.length}`],
       "Edit the command or repository first.",
-      `LEANAGENT: PREVIOUS FAILURE\n\n${command}\n\n${hit.outcome}\n`,
+      `LEAN: previous failure ${command} (${hit.outcome})`,
     );
   },
 };

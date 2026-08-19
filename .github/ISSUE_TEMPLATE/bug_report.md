@@ -1,18 +1,30 @@
 ---
 name: Bug report
-about: Report a reproducible LeanAgent problem
+about: Report a reproducible TidyRun problem
 ---
 
 ## Summary
 
 ## Environment
-- OS:
+- TidyRun version:
 - Node version:
-- LeanAgent version:
-- Agent / adapter:
+- OS:
+- Coding agent / adapter:
 
 ## Reproduction
 
-## Expected and observed behavior
+```bash
+# command that triggered the issue
+```
 
-Please remove secrets and proprietary source from logs before attaching them.
+## Expected behavior
+
+## Actual behavior
+
+## `tidyrun doctor` output
+
+```text
+(paste output here)
+```
+
+Please redact secrets, tokens, and proprietary source before attaching logs.

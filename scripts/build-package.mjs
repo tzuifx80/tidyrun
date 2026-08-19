@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const outputDir = resolve(root, "packages/leanagent/dist");
+const outputDir = resolve(root, "packages/tidyrun/dist");
 rmSync(outputDir, { recursive: true, force: true });
 mkdirSync(outputDir, { recursive: true });
 
@@ -19,4 +19,4 @@ await build({
   legalComments: "none",
 });
 
-process.stdout.write(`LeanAgent package bundle written to ${outputDir}\n`);
+process.stdout.write(`TidyRun package bundle written to ${outputDir}\n`);

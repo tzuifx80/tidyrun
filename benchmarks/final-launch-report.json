@@ -1,5 +1,5 @@
 {
-  "schema": "leanagent.final-launch-report/v1",
+  "schema": "tidyrun.final-launch-report/v1",
   "commitSha": "a1fb14917b2a149929f689edc9b41944bb5dc4c9",
   "observedAt": "2026-08-19T13:30:38.063Z",
   "environment": {
@@ -34,7 +34,7 @@
     "fixtures/typescript-app"
   ],
   "realAgentStudy": {
-    "methodology": "Fresh A/B repositories from the same generated source commit; identical task prompt and Codex model; B adds only LeanAgent wrapper instructions and a local package install; acceptance commands run independently after the agent.",
+    "methodology": "Fresh A/B repositories from the same generated source commit; identical task prompt and Codex model; B adds only TidyRun wrapper instructions and a local package install; acceptance commands run independently after the agent.",
     "tasks": [
       {
         "id": "py-addition-bug",
@@ -57,7 +57,7 @@
           "cachedInputTokens": 68992,
           "outputTokens": 659
         },
-        "leanagent": {
+        "tidyrun": {
           "status": "COMPLETE",
           "exit": 0,
           "quality": {
@@ -108,7 +108,7 @@
           "cachedInputTokens": 99072,
           "outputTokens": 1115
         },
-        "leanagent": {
+        "tidyrun": {
           "status": "COMPLETE",
           "exit": 0,
           "quality": {
@@ -159,7 +159,7 @@
           "cachedInputTokens": 99072,
           "outputTokens": 989
         },
-        "leanagent": {
+        "tidyrun": {
           "status": "COMPLETE",
           "exit": 0,
           "quality": {
@@ -210,7 +210,7 @@
           "cachedInputTokens": 98048,
           "outputTokens": 843
         },
-        "leanagent": {
+        "tidyrun": {
           "status": "COMPLETE",
           "exit": 0,
           "quality": {
@@ -261,7 +261,7 @@
           "cachedInputTokens": 177024,
           "outputTokens": 1260
         },
-        "leanagent": {
+        "tidyrun": {
           "status": "COMPLETE",
           "exit": 0,
           "quality": {
@@ -312,7 +312,7 @@
           "cachedInputTokens": 98560,
           "outputTokens": 1006
         },
-        "leanagent": {
+        "tidyrun": {
           "status": "COMPLETE",
           "exit": 0,
           "quality": {
@@ -363,7 +363,7 @@
           "cachedInputTokens": 99584,
           "outputTokens": 1084
         },
-        "leanagent": {
+        "tidyrun": {
           "status": "COMPLETE",
           "exit": 0,
           "quality": {
@@ -414,7 +414,7 @@
           "cachedInputTokens": 98560,
           "outputTokens": 1017
         },
-        "leanagent": {
+        "tidyrun": {
           "status": "COMPLETE",
           "exit": 0,
           "quality": {
@@ -465,7 +465,7 @@
           "cachedInputTokens": 81792,
           "outputTokens": 947
         },
-        "leanagent": {
+        "tidyrun": {
           "status": "COMPLETE",
           "exit": 0,
           "quality": {
@@ -516,7 +516,7 @@
           "cachedInputTokens": 81792,
           "outputTokens": 965
         },
-        "leanagent": {
+        "tidyrun": {
           "status": "COMPLETE",
           "exit": 0,
           "quality": {
@@ -549,39 +549,39 @@
     ],
     "aggregate": {
       "baselinePass": 10,
-      "leanagentPass": 10,
+      "tidyrunPass": 10,
       "parity": 10,
       "baselineToolOutputBytes": 61401,
-      "leanagentToolOutputBytes": 52654,
+      "tidyrunToolOutputBytes": 52654,
       "baselineToolCalls": 75,
-      "leanagentToolCalls": 75,
+      "tidyrunToolCalls": 75,
       "baselineWallMs": 297526,
-      "leanagentWallMs": 413745,
+      "tidyrunWallMs": 413745,
       "baselineInputTokens": 1072013,
-      "leanagentInputTokens": 1204738,
+      "tidyrunInputTokens": 1204738,
       "baselineCachedInputTokens": 1002496,
-      "leanagentCachedInputTokens": 1130240,
+      "tidyrunCachedInputTokens": 1130240,
       "baselineOutputTokens": 9885,
-      "leanagentOutputTokens": 12650,
-      "leanagentRawBytes": 56274,
-      "leanagentDeliveredBytes": 28441,
-      "leanagentOverheadMs": 1788.2829999999994,
-      "leanagentCacheHits": 0,
-      "leanagentDuplicateReads": 0,
-      "leanagentExtraLlmCalls": 0
+      "tidyrunOutputTokens": 12650,
+      "tidyrunRawBytes": 56274,
+      "tidyrunDeliveredBytes": 28441,
+      "tidyrunOverheadMs": 1788.2829999999994,
+      "tidyrunCacheHits": 0,
+      "tidyrunDuplicateReads": 0,
+      "tidyrunExtraLlmCalls": 0
     },
     "negativeResults": [
-      "Aggregate wall time increased in the LeanAgent treatment; this study does not support a speedup claim.",
+      "Aggregate wall time increased in the TidyRun treatment; this study does not support a speedup claim.",
       "Provider token telemetry was observed but is not presented as billing savings.",
       "The one-shot coding tasks did not exercise verified command reuse; deterministic fixtures cover that mechanism separately."
     ]
   },
   "deterministicSuite": {
-    "schema": "leanagent.benchmark-suite/v1",
+    "schema": "tidyrun.benchmark-suite/v1",
     "commitSha": "af36cf5fd17079d84bb0925c74948a669ae74fc5",
     "reports": [
       {
-        "schema": "leanagent.benchmark/v1",
+        "schema": "tidyrun.benchmark/v1",
         "name": "verbose-test-diagnostics",
         "repository": ".",
         "task": "Preserve actionable failures while removing repetitive test progress output",
@@ -603,7 +603,7 @@
           "repetitions": 1,
           "endToEndMs": 80.84230000000001
         },
-        "leanagent": {
+        "tidyrun": {
           "command": [
             "node",
             "scripts/benchmark-verbose-output.mjs"
@@ -619,7 +619,7 @@
           "repetitions": 1,
           "endToEndMs": 91.93889999999999
         },
-        "leanagentStats": {
+        "tidyrunStats": {
           "fileReads": 0,
           "duplicateReadsReused": 0,
           "commands": 1,
@@ -654,7 +654,7 @@
             "durationMs": 5682.925800000001,
             "outputBytes": 1929
           },
-          "leanagentVerification": {
+          "tidyrunVerification": {
             "command": [
               "npm",
               "test"
@@ -666,12 +666,12 @@
           "equalExit": true
         },
         "notes": [
-          "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.",
+          "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by TidyRun. Provider token usage is not inferred.",
           "No startingCommit supplied; use a pinned commit for agent studies."
         ]
       },
       {
-        "schema": "leanagent.benchmark/v1",
+        "schema": "tidyrun.benchmark/v1",
         "name": "repeated-safe-command",
         "repository": ".",
         "task": "Run the same deterministic typecheck twice without replaying unchanged work",
@@ -694,7 +694,7 @@
           "repetitions": 2,
           "endToEndMs": 17526.7033
         },
-        "leanagent": {
+        "tidyrun": {
           "command": [
             "npm",
             "run",
@@ -711,7 +711,7 @@
           "repetitions": 2,
           "endToEndMs": 9168.989399999999
         },
-        "leanagentStats": {
+        "tidyrunStats": {
           "fileReads": 0,
           "duplicateReadsReused": 0,
           "commands": 2,
@@ -746,7 +746,7 @@
             "durationMs": 5573.941299999999,
             "outputBytes": 1929
           },
-          "leanagentVerification": {
+          "tidyrunVerification": {
             "command": [
               "npm",
               "test"
@@ -758,12 +758,12 @@
           "equalExit": true
         },
         "notes": [
-          "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.",
+          "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by TidyRun. Provider token usage is not inferred.",
           "No startingCommit supplied; use a pinned commit for agent studies."
         ]
       },
       {
-        "schema": "leanagent.benchmark/v1",
+        "schema": "tidyrun.benchmark/v1",
         "name": "python-verbose-diagnostics",
         "repository": "fixtures/python-project",
         "task": "Preserve the actionable Python failure while removing repetitive progress output",
@@ -785,7 +785,7 @@
           "repetitions": 1,
           "endToEndMs": 134.49659999999858
         },
-        "leanagent": {
+        "tidyrun": {
           "command": [
             "python",
             "noisy_check.py"
@@ -801,7 +801,7 @@
           "repetitions": 1,
           "endToEndMs": 134.06010000000242
         },
-        "leanagentStats": {
+        "tidyrunStats": {
           "fileReads": 0,
           "duplicateReadsReused": 0,
           "commands": 1,
@@ -836,7 +836,7 @@
             "durationMs": 127.40679999999702,
             "outputBytes": 0
           },
-          "leanagentVerification": {
+          "tidyrunVerification": {
             "command": [
               "python",
               "test_app.py"
@@ -848,7 +848,7 @@
           "equalExit": true
         },
         "notes": [
-          "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.",
+          "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by TidyRun. Provider token usage is not inferred.",
           "No startingCommit supplied; use a pinned commit for agent studies."
         ]
       }
@@ -857,9 +857,9 @@
   "deterministicSummary": {
     "fixtures": 3,
     "baselineRawBytes": 86159,
-    "leanagentDeliveredBytes": 22455,
+    "tidyrunDeliveredBytes": 22455,
     "baselineEndToEndMs": 17742.0422,
-    "leanagentEndToEndMs": 9394.9884,
+    "tidyrunEndToEndMs": 9394.9884,
     "cacheHits": 1,
     "parity": 3
   },
@@ -871,6 +871,6 @@
   "limitations": [
     "Codex was the only provider with completed real-agent evidence in this environment.",
     "Native interception remains host-dependent; generic wrapper is the reliable fallback.",
-    "GitHub search found a separate Lean Dojo formal-theorem-proving project named LeanAgent; npm package names were unclaimed on the observation date."
+    "GitHub search found a separate Lean Dojo formal-theorem-proving project named TidyRun; npm package names were unclaimed on the observation date."
   ]
 }

@@ -1,10 +1,10 @@
-# LeanAgent product contract
+# TidyRun product contract
 
-Canonical engineering spec distilled from the LeanAgent OS brief. Implementation must remain local-first, deterministic, agent-neutral, reversible, and honest about metrics.
+Canonical engineering spec distilled from the TidyRun OS brief. Implementation must remain local-first, deterministic, agent-neutral, reversible, and honest about metrics.
 
 ## Product
 
-LeanAgent automatically removes wasted work from AI coding agents without requiring another AI model. Quality beats savings. If an optimization is not safe, allow the original operation.
+TidyRun automatically removes wasted work from AI coding agents without requiring another AI model. Quality beats savings. If an optimization is not safe, allow the original operation.
 
 ## Hard rules
 
@@ -17,7 +17,7 @@ LeanAgent automatically removes wasted work from AI coding agents without requir
 
 ## Required systems
 
-Event bus; session + repository state; rule/decision engine; artifact store; dependency-aware work cache; output filters; loop detector; failed-approach memory; incremental test selection; repo index; `leanagent.yaml`; `leanagent sync`; generic `leanagent run`; optional MCP; profiler/stats; benchmark harness; plugin boundaries; CLI; Apache-2.0; Windows/macOS/Linux.
+Event bus; session + repository state; rule/decision engine; artifact store; dependency-aware work cache; output filters; loop detector; failed-approach memory; incremental test selection; repo index; `tidyrun.yaml`; `tidyrun sync`; generic `tidyrun run`; optional MCP; profiler/stats; benchmark harness; plugin boundaries; CLI; Apache-2.0; Windows/macOS/Linux.
 
 ## Success
 

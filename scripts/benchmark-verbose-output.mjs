@@ -1,7 +1,7 @@
 // Deterministic high-output fixture used to prove that agent-visible output,
 // rather than command execution time alone, is reduced. It intentionally emits
 // realistic diagnostics interleaved with progress and warning chatter.
-const failures = Number(process.env.LEANAGENT_FIXTURE_FAILURES ?? 18);
+const failures = Number(process.env.TIDYRUN_FIXTURE_FAILURES ?? 18);
 const lines = [];
 for (let i = 0; i < 1200; i += 1) {
   lines.push(`PASS [${i + 1}/1200] unrelated fixture case ${i + 1}`);

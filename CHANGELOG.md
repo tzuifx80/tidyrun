@@ -16,7 +16,7 @@
 - Added an adaptive cost model and direct fast path for trivial pure commands;
   output compression and artifact persistence now bypass work that cannot repay
   its own overhead.
-- The `leanagent` workspace now builds a standalone CLI bundle for clean tarball
+- The `tidyrun` workspace now builds a standalone CLI bundle for clean tarball
   installs, and `npm run lint` performs source hygiene checks plus typechecking.
 
 ## 0.1.0

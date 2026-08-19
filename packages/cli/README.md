@@ -1,4 +1,4 @@
-# @leanagent/cli
+# @tidyrun/cli
 
-The LeanAgent command-line interface. Most users should install the standalone
-`leanagent` package, which bundles this CLI with the core runtime.
+The TidyRun command-line interface. Most users should install the standalone
+`tidyrun` package, which bundles this CLI with the core runtime.

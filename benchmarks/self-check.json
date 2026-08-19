@@ -1,11 +1,11 @@
 {
-  "name": "leanagent-self-check",
+  "name": "tidyrun-self-check",
   "repository": ".",
   "task": "Verify the local TypeScript build",
   "agent": "generic-shell",
   "model": "not applicable",
   "baselineCommand": ["npm", "run", "typecheck"],
-  "leanagentCommand": ["npm", "run", "typecheck"],
+  "tidyrunCommand": ["npm", "run", "typecheck"],
   "verification": ["npm", "test"],
   "timeoutMs": 120000
 }
