@@ -2,13 +2,36 @@
   "name": "@tidyrun/plugin-sdk",
   "version": "0.1.0",
   "license": "Apache-2.0",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
-  "files": ["dist", "README.md", "LICENSE"],
-  "scripts": { "build": "node ../../scripts/clean-dist.mjs dist && tsc -p tsconfig.build.json", "pretypecheck": "npm run build -w @tidyrun/core", "typecheck": "tsc -p tsconfig.json --noEmit", "test": "vitest run" },
-  "dependencies": { "@tidyrun/core": "0.1.0" },
-  "devDependencies": { "@types/node": "^24.3.0", "typescript": "^5.9.2", "vitest": "^3.2.4" }
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/clean-dist.mjs dist && tsc -p tsconfig.build.json",
+    "pretypecheck": "npm run build -w @tidyrun/core",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "pretest": "npm run build -w @tidyrun/core && npm run build"
+  },
+  "dependencies": {
+    "@tidyrun/core": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
 }
