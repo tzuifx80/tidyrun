@@ -10,7 +10,7 @@
 
 ## Current measurements
 
-### Deterministic fixtures (Windows, Node 24, commit `230fd66`)
+### Deterministic fixtures (Windows, Node 24)
 
 | Fixture | Result |
 |---|---|
@@ -56,3 +56,4 @@ Requires Node.js 22+.
 ## Contributing
 
 See [CONTRIBUTING.md](../CONTRIBUTING.md).
+
