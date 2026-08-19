@@ -1,7 +1,7 @@
 {
   "schema": "leanagent.final-launch-report/v1",
-  "commitSha": "d74ae8670dedf79f94e136202ea853dacd82535f",
-  "observedAt": "2026-08-19T13:07:20.046Z",
+  "commitSha": "a1fb14917b2a149929f689edc9b41944bb5dc4c9",
+  "observedAt": "2026-08-19T13:26:09.654Z",
   "environment": {
     "os": "Windows",
     "platform": "win32",
@@ -39,7 +39,7 @@
       {
         "id": "py-addition-bug",
         "repository": "python",
-        "startingCommit": "9ea35ffca4ce44cfe68ba0a6c6bffed0bf974d2f",
+        "startingCommit": "02bd222627afc42e610c3085d3dc2bf3f1516fb8",
         "baseline": {
           "status": "COMPLETE",
           "exit": 0,
@@ -48,14 +48,14 @@
             "exit": 0,
             "outputBytes": 0
           },
-          "wallMs": 26467,
+          "wallMs": 22967,
           "toolCalls": 6,
           "commandExecutions": 5,
           "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 1239,
-          "inputTokens": 86268,
-          "cachedInputTokens": 72064,
-          "outputTokens": 833
+          "agentVisibleToolOutputBytes": 1173,
+          "inputTokens": 85276,
+          "cachedInputTokens": 68992,
+          "outputTokens": 659
         },
         "leanagent": {
           "status": "COMPLETE",
@@ -65,22 +65,22 @@
             "exit": 0,
             "outputBytes": 0
           },
-          "wallMs": 38032,
-          "toolCalls": 6,
-          "commandExecutions": 5,
+          "wallMs": 26028,
+          "toolCalls": 4,
+          "commandExecutions": 3,
           "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 1714,
-          "inputTokens": 105362,
-          "cachedInputTokens": 90368,
-          "outputTokens": 1034,
+          "agentVisibleToolOutputBytes": 1489,
+          "inputTokens": 86387,
+          "cachedInputTokens": 82304,
+          "outputTokens": 717,
           "stats": {
-            "sessions": 5,
-            "rawBytes": 1713,
-            "deliveredBytes": 1713,
-            "overheadMs": 129.9458000000001,
+            "sessions": 3,
+            "rawBytes": 1488,
+            "deliveredBytes": 1488,
+            "overheadMs": 15.00760000000016,
             "cacheHits": 0,
             "duplicateReadsReused": 0,
-            "commands": 5,
+            "commands": 3,
             "avoidedCommandMs": 0,
             "extraLlmCalls": 0
           }
@@ -90,7 +90,7 @@
       {
         "id": "py-negative-edge",
         "repository": "python",
-        "startingCommit": "f3f7230e3121f6154bdfcd997e3e167c3d858f48",
+        "startingCommit": "65dae235c201facf0cbfc38b3e91ad4d5e2a9104",
         "baseline": {
           "status": "COMPLETE",
           "exit": 0,
@@ -99,14 +99,14 @@
             "exit": 0,
             "outputBytes": 0
           },
-          "wallMs": 35759,
-          "toolCalls": 12,
-          "commandExecutions": 11,
+          "wallMs": 30662,
+          "toolCalls": 8,
+          "commandExecutions": 7,
           "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 1588,
-          "inputTokens": 105929,
-          "cachedInputTokens": 100608,
-          "outputTokens": 1502
+          "agentVisibleToolOutputBytes": 1373,
+          "inputTokens": 103746,
+          "cachedInputTokens": 99072,
+          "outputTokens": 1115
         },
         "leanagent": {
           "status": "COMPLETE",
@@ -116,22 +116,22 @@
             "exit": 0,
             "outputBytes": 0
           },
-          "wallMs": 38362,
+          "wallMs": 46112,
           "toolCalls": 8,
           "commandExecutions": 7,
           "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 9768,
-          "inputTokens": 119838,
-          "cachedInputTokens": 101120,
-          "outputTokens": 1293,
+          "agentVisibleToolOutputBytes": 1400,
+          "inputTokens": 156848,
+          "cachedInputTokens": 150400,
+          "outputTokens": 1179,
           "stats": {
-            "sessions": 7,
-            "rawBytes": 9766,
-            "deliveredBytes": 9766,
-            "overheadMs": 163.14439999999996,
+            "sessions": 6,
+            "rawBytes": 1398,
+            "deliveredBytes": 1398,
+            "overheadMs": 110.07270000000008,
             "cacheHits": 0,
             "duplicateReadsReused": 0,
-            "commands": 7,
+            "commands": 6,
             "avoidedCommandMs": 0,
             "extraLlmCalls": 0
           }
@@ -141,7 +141,7 @@
       {
         "id": "py-optional-offset",
         "repository": "python",
-        "startingCommit": "9dce7b99c1ed4f609976728327ab72037b02bdd4",
+        "startingCommit": "e7fb9bde26168df02be8a075a8be5fdeb1102c9c",
         "baseline": {
           "status": "COMPLETE",
           "exit": 0,
@@ -150,14 +150,14 @@
             "exit": 0,
             "outputBytes": 0
           },
-          "wallMs": 27827,
-          "toolCalls": 6,
-          "commandExecutions": 5,
+          "wallMs": 31815,
+          "toolCalls": 7,
+          "commandExecutions": 6,
           "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 1155,
-          "inputTokens": 68541,
-          "cachedInputTokens": 65024,
-          "outputTokens": 889
+          "agentVisibleToolOutputBytes": 1725,
+          "inputTokens": 103993,
+          "cachedInputTokens": 99072,
+          "outputTokens": 989
         },
         "leanagent": {
           "status": "COMPLETE",
@@ -167,19 +167,172 @@
             "exit": 0,
             "outputBytes": 0
           },
-          "wallMs": 39655,
+          "wallMs": 26740,
+          "toolCalls": 4,
+          "commandExecutions": 3,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 1238,
+          "inputTokens": 87063,
+          "cachedInputTokens": 82304,
+          "outputTokens": 836,
+          "stats": {
+            "sessions": 1,
+            "rawBytes": 6,
+            "deliveredBytes": 6,
+            "overheadMs": 4.438000000000002,
+            "cacheHits": 0,
+            "duplicateReadsReused": 0,
+            "commands": 1,
+            "avoidedCommandMs": 0,
+            "extraLlmCalls": 0
+          }
+        },
+        "qualityParity": true
+      },
+      {
+        "id": "py-input-validation",
+        "repository": "python",
+        "startingCommit": "3514695959dc117a58ab53df38a24ef90c7a2cf2",
+        "baseline": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 27808,
           "toolCalls": 5,
           "commandExecutions": 4,
           "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 2719,
-          "inputTokens": 106274,
-          "cachedInputTokens": 100608,
-          "outputTokens": 1072,
+          "agentVisibleToolOutputBytes": 1333,
+          "inputTokens": 102488,
+          "cachedInputTokens": 98048,
+          "outputTokens": 843
+        },
+        "leanagent": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 84458,
+          "toolCalls": 15,
+          "commandExecutions": 14,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 4509,
+          "inputTokens": 209391,
+          "cachedInputTokens": 199808,
+          "outputTokens": 3003,
+          "stats": {
+            "sessions": 12,
+            "rawBytes": 1725,
+            "deliveredBytes": 1725,
+            "overheadMs": 603.6547999999997,
+            "cacheHits": 0,
+            "duplicateReadsReused": 0,
+            "commands": 12,
+            "avoidedCommandMs": 0,
+            "extraLlmCalls": 0
+          }
+        },
+        "qualityParity": true
+      },
+      {
+        "id": "py-high-output-diagnostic",
+        "repository": "python",
+        "startingCommit": "6127bf76de9e3d0ee6927a6839125c3a06a4adb6",
+        "baseline": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 38084,
+          "toolCalls": 10,
+          "commandExecutions": 9,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 46891,
+          "inputTokens": 191012,
+          "cachedInputTokens": 177024,
+          "outputTokens": 1260
+        },
+        "leanagent": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 57225,
+          "toolCalls": 14,
+          "commandExecutions": 13,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 30181,
+          "inputTokens": 154042,
+          "cachedInputTokens": 140416,
+          "outputTokens": 2106,
+          "stats": {
+            "sessions": 12,
+            "rawBytes": 28906,
+            "deliveredBytes": 10091,
+            "overheadMs": 295.2677,
+            "cacheHits": 0,
+            "duplicateReadsReused": 0,
+            "commands": 12,
+            "avoidedCommandMs": 0,
+            "extraLlmCalls": 0
+          }
+        },
+        "qualityParity": true
+      },
+      {
+        "id": "ts-addition-bug",
+        "repository": "typescript",
+        "startingCommit": "216bb4e34f481dcd0c3b5cd52dc7c97e481d2442",
+        "baseline": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 57
+          },
+          "wallMs": 32303,
+          "toolCalls": 9,
+          "commandExecutions": 8,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 1989,
+          "inputTokens": 103934,
+          "cachedInputTokens": 98560,
+          "outputTokens": 1006
+        },
+        "leanagent": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 57
+          },
+          "wallMs": 33337,
+          "toolCalls": 5,
+          "commandExecutions": 4,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 2993,
+          "inputTokens": 105521,
+          "cachedInputTokens": 88832,
+          "outputTokens": 803,
           "stats": {
             "sessions": 4,
-            "rawBytes": 1389,
-            "deliveredBytes": 1389,
-            "overheadMs": 118.27539999999993,
+            "rawBytes": 2993,
+            "deliveredBytes": 2993,
+            "overheadMs": 111.40059999999995,
             "cacheHits": 0,
             "duplicateReadsReused": 0,
             "commands": 4,
@@ -190,76 +343,25 @@
         "qualityParity": true
       },
       {
-        "id": "py-input-validation",
-        "repository": "python",
-        "startingCommit": "d7e1d208928b9b4855f7e1ed675fcc58c6b165c7",
+        "id": "ts-multiply-feature",
+        "repository": "typescript",
+        "startingCommit": "6a77a9b8d5fca83c644a40da25b765e51a9a4b07",
         "baseline": {
           "status": "COMPLETE",
           "exit": 0,
           "quality": {
             "status": "PASS",
             "exit": 0,
-            "outputBytes": 0
+            "outputBytes": 484
           },
-          "wallMs": 27362,
-          "toolCalls": 6,
-          "commandExecutions": 5,
-          "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 1218,
-          "inputTokens": 86116,
-          "cachedInputTokens": 81792,
-          "outputTokens": 1036
-        },
-        "leanagent": {
-          "status": "COMPLETE",
-          "exit": 0,
-          "quality": {
-            "status": "PASS",
-            "exit": 0,
-            "outputBytes": 0
-          },
-          "wallMs": 89470,
-          "toolCalls": 12,
-          "commandExecutions": 11,
-          "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 5164,
-          "inputTokens": 255941,
-          "cachedInputTokens": 234880,
-          "outputTokens": 3390,
-          "stats": {
-            "sessions": 10,
-            "rawBytes": 1731,
-            "deliveredBytes": 1731,
-            "overheadMs": 556.4766000000002,
-            "cacheHits": 0,
-            "duplicateReadsReused": 0,
-            "commands": 10,
-            "avoidedCommandMs": 0,
-            "extraLlmCalls": 0
-          }
-        },
-        "qualityParity": true
-      },
-      {
-        "id": "py-high-output-diagnostic",
-        "repository": "python",
-        "startingCommit": "af6ca240735299f6f7ec5ed14bd09a7864ca2f97",
-        "baseline": {
-          "status": "COMPLETE",
-          "exit": 0,
-          "quality": {
-            "status": "PASS",
-            "exit": 0,
-            "outputBytes": 0
-          },
-          "wallMs": 36275,
+          "wallMs": 31126,
           "toolCalls": 9,
           "commandExecutions": 8,
           "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 31561,
-          "inputTokens": 149068,
-          "cachedInputTokens": 127104,
-          "outputTokens": 1542
+          "agentVisibleToolOutputBytes": 2192,
+          "inputTokens": 105629,
+          "cachedInputTokens": 99584,
+          "outputTokens": 1084
         },
         "leanagent": {
           "status": "COMPLETE",
@@ -267,126 +369,24 @@
           "quality": {
             "status": "PASS",
             "exit": 0,
-            "outputBytes": 0
+            "outputBytes": 484
           },
-          "wallMs": 30698,
-          "toolCalls": 6,
-          "commandExecutions": 5,
+          "wallMs": 39438,
+          "toolCalls": 9,
+          "commandExecutions": 8,
           "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 3711,
-          "inputTokens": 88672,
-          "cachedInputTokens": 83840,
-          "outputTokens": 953,
+          "agentVisibleToolOutputBytes": 1832,
+          "inputTokens": 106524,
+          "cachedInputTokens": 101632,
+          "outputTokens": 1244,
           "stats": {
-            "sessions": 5,
-            "rawBytes": 22525,
-            "deliveredBytes": 3710,
-            "overheadMs": 134.16339999999983,
+            "sessions": 7,
+            "rawBytes": 1728,
+            "deliveredBytes": 1728,
+            "overheadMs": 138.20899999999983,
             "cacheHits": 0,
             "duplicateReadsReused": 0,
-            "commands": 5,
-            "avoidedCommandMs": 0,
-            "extraLlmCalls": 0
-          }
-        },
-        "qualityParity": true
-      },
-      {
-        "id": "ts-addition-bug",
-        "repository": "typescript",
-        "startingCommit": "28794d8ffcbd51c0cc271b41ea705c2f2be9cd9e",
-        "baseline": {
-          "status": "COMPLETE",
-          "exit": 0,
-          "quality": {
-            "status": "PASS",
-            "exit": 0,
-            "outputBytes": 57
-          },
-          "wallMs": 22614,
-          "toolCalls": 6,
-          "commandExecutions": 5,
-          "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 1863,
-          "inputTokens": 86347,
-          "cachedInputTokens": 82304,
-          "outputTokens": 749
-        },
-        "leanagent": {
-          "status": "COMPLETE",
-          "exit": 0,
-          "quality": {
-            "status": "PASS",
-            "exit": 0,
-            "outputBytes": 57
-          },
-          "wallMs": 26122,
-          "toolCalls": 4,
-          "commandExecutions": 3,
-          "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 3148,
-          "inputTokens": 88032,
-          "cachedInputTokens": 72576,
-          "outputTokens": 788,
-          "stats": {
-            "sessions": 3,
-            "rawBytes": 3148,
-            "deliveredBytes": 3148,
-            "overheadMs": 203.19799999999995,
-            "cacheHits": 0,
-            "duplicateReadsReused": 0,
-            "commands": 3,
-            "avoidedCommandMs": 0,
-            "extraLlmCalls": 0
-          }
-        },
-        "qualityParity": true
-      },
-      {
-        "id": "ts-multiply-feature",
-        "repository": "typescript",
-        "startingCommit": "24b6e3652861f1acecc4c231a3c962f54e9c0494",
-        "baseline": {
-          "status": "COMPLETE",
-          "exit": 0,
-          "quality": {
-            "status": "PASS",
-            "exit": 0,
-            "outputBytes": 516
-          },
-          "wallMs": 22087,
-          "toolCalls": 4,
-          "commandExecutions": 3,
-          "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 1935,
-          "inputTokens": 86461,
-          "cachedInputTokens": 82304,
-          "outputTokens": 724
-        },
-        "leanagent": {
-          "status": "COMPLETE",
-          "exit": 0,
-          "quality": {
-            "status": "PASS",
-            "exit": 0,
-            "outputBytes": 516
-          },
-          "wallMs": 30206,
-          "toolCalls": 5,
-          "commandExecutions": 4,
-          "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 825,
-          "inputTokens": 103000,
-          "cachedInputTokens": 98560,
-          "outputTokens": 923,
-          "stats": {
-            "sessions": 3,
-            "rawBytes": 721,
-            "deliveredBytes": 721,
-            "overheadMs": 114.91669999999999,
-            "cacheHits": 0,
-            "duplicateReadsReused": 0,
-            "commands": 3,
+            "commands": 7,
             "avoidedCommandMs": 0,
             "extraLlmCalls": 0
           }
@@ -396,23 +396,23 @@
       {
         "id": "ts-finite-inputs",
         "repository": "typescript",
-        "startingCommit": "2bf0760c9e237ea1418931af456e45e3e92be541",
+        "startingCommit": "6ec9cf42c82f29c8ca1ce0710857d79e00d282a1",
         "baseline": {
           "status": "COMPLETE",
           "exit": 0,
           "quality": {
             "status": "PASS",
             "exit": 0,
-            "outputBytes": 513
+            "outputBytes": 481
           },
-          "wallMs": 20352,
-          "toolCalls": 2,
-          "commandExecutions": 2,
-          "fileChanges": 0,
-          "agentVisibleToolOutputBytes": 11936,
-          "inputTokens": 53060,
-          "cachedInputTokens": 47744,
-          "outputTokens": 852
+          "wallMs": 29599,
+          "toolCalls": 5,
+          "commandExecutions": 4,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 1440,
+          "inputTokens": 103061,
+          "cachedInputTokens": 98560,
+          "outputTokens": 1017
         },
         "leanagent": {
           "status": "COMPLETE",
@@ -420,24 +420,24 @@
           "quality": {
             "status": "PASS",
             "exit": 0,
-            "outputBytes": 513
+            "outputBytes": 481
           },
-          "wallMs": 23747,
-          "toolCalls": 3,
-          "commandExecutions": 2,
+          "wallMs": 29369,
+          "toolCalls": 4,
+          "commandExecutions": 3,
           "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 663,
-          "inputTokens": 67753,
-          "cachedInputTokens": 53760,
-          "outputTokens": 705,
+          "agentVisibleToolOutputBytes": 2395,
+          "inputTokens": 86934,
+          "cachedInputTokens": 82304,
+          "outputTokens": 729,
           "stats": {
-            "sessions": 2,
-            "rawBytes": 663,
-            "deliveredBytes": 663,
-            "overheadMs": 199.9457000000001,
+            "sessions": 3,
+            "rawBytes": 2395,
+            "deliveredBytes": 2395,
+            "overheadMs": 110.78609999999986,
             "cacheHits": 0,
             "duplicateReadsReused": 0,
-            "commands": 2,
+            "commands": 3,
             "avoidedCommandMs": 0,
             "extraLlmCalls": 0
           }
@@ -447,7 +447,7 @@
       {
         "id": "ts-script-repair",
         "repository": "typescript",
-        "startingCommit": "f44bf7541dcfa909c339407d7eba7dd7a87a0043",
+        "startingCommit": "18737c312be79e21e0f49149466cee9e9c1c4787",
         "baseline": {
           "status": "COMPLETE",
           "exit": 0,
@@ -456,14 +456,14 @@
             "exit": 0,
             "outputBytes": 62
           },
-          "wallMs": 32450,
-          "toolCalls": 9,
-          "commandExecutions": 8,
+          "wallMs": 27803,
+          "toolCalls": 8,
+          "commandExecutions": 7,
           "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 3143,
-          "inputTokens": 106798,
-          "cachedInputTokens": 101120,
-          "outputTokens": 1301
+          "agentVisibleToolOutputBytes": 1926,
+          "inputTokens": 86651,
+          "cachedInputTokens": 81792,
+          "outputTokens": 947
         },
         "leanagent": {
           "status": "COMPLETE",
@@ -473,22 +473,22 @@
             "exit": 0,
             "outputBytes": 62
           },
-          "wallMs": 39792,
-          "toolCalls": 6,
-          "commandExecutions": 5,
+          "wallMs": 36433,
+          "toolCalls": 7,
+          "commandExecutions": 6,
           "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 2090,
-          "inputTokens": 123451,
-          "cachedInputTokens": 117888,
-          "outputTokens": 1110,
+          "agentVisibleToolOutputBytes": 2235,
+          "inputTokens": 104945,
+          "cachedInputTokens": 100608,
+          "outputTokens": 1035,
           "stats": {
-            "sessions": 5,
-            "rawBytes": 2090,
-            "deliveredBytes": 2090,
-            "overheadMs": 229.05550000000022,
+            "sessions": 6,
+            "rawBytes": 2235,
+            "deliveredBytes": 2235,
+            "overheadMs": 241.64200000000017,
             "cacheHits": 0,
             "duplicateReadsReused": 0,
-            "commands": 5,
+            "commands": 6,
             "avoidedCommandMs": 0,
             "extraLlmCalls": 0
           }
@@ -498,23 +498,23 @@
       {
         "id": "ts-clamp-feature",
         "repository": "typescript",
-        "startingCommit": "d8a03e761dab498137f46d47c0f1d2b60dc28d90",
+        "startingCommit": "98fee642e8db4c290cb47c2552cd89b8a2cfe88b",
         "baseline": {
           "status": "COMPLETE",
           "exit": 0,
           "quality": {
             "status": "PASS",
             "exit": 0,
-            "outputBytes": 512
+            "outputBytes": 481
           },
-          "wallMs": 26201,
-          "toolCalls": 7,
-          "commandExecutions": 6,
+          "wallMs": 25359,
+          "toolCalls": 8,
+          "commandExecutions": 7,
           "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 1561,
-          "inputTokens": 86640,
-          "cachedInputTokens": 82304,
-          "outputTokens": 903
+          "agentVisibleToolOutputBytes": 1359,
+          "inputTokens": 86223,
+          "cachedInputTokens": 81792,
+          "outputTokens": 965
         },
         "leanagent": {
           "status": "COMPLETE",
@@ -522,24 +522,24 @@
           "quality": {
             "status": "PASS",
             "exit": 0,
-            "outputBytes": 513
+            "outputBytes": 481
           },
-          "wallMs": 30807,
-          "toolCalls": 4,
-          "commandExecutions": 3,
+          "wallMs": 34605,
+          "toolCalls": 5,
+          "commandExecutions": 4,
           "fileChanges": 1,
-          "agentVisibleToolOutputBytes": 1433,
-          "inputTokens": 86649,
-          "cachedInputTokens": 72064,
-          "outputTokens": 814,
+          "agentVisibleToolOutputBytes": 4382,
+          "inputTokens": 107083,
+          "cachedInputTokens": 101632,
+          "outputTokens": 998,
           "stats": {
-            "sessions": 3,
-            "rawBytes": 1433,
-            "deliveredBytes": 1433,
-            "overheadMs": 112.17860000000007,
+            "sessions": 4,
+            "rawBytes": 13400,
+            "deliveredBytes": 4382,
+            "overheadMs": 157.8044999999998,
             "cacheHits": 0,
             "duplicateReadsReused": 0,
-            "commands": 3,
+            "commands": 4,
             "avoidedCommandMs": 0,
             "extraLlmCalls": 0
           }
@@ -551,21 +551,21 @@
       "baselinePass": 10,
       "leanagentPass": 10,
       "parity": 10,
-      "baselineToolOutputBytes": 57199,
-      "leanagentToolOutputBytes": 31235,
-      "baselineToolCalls": 67,
-      "leanagentToolCalls": 59,
-      "baselineWallMs": 277394,
-      "leanagentWallMs": 386891,
-      "baselineInputTokens": 915228,
-      "leanagentInputTokens": 1144972,
-      "baselineCachedInputTokens": 842368,
-      "leanagentCachedInputTokens": 1025664,
-      "baselineOutputTokens": 10331,
-      "leanagentOutputTokens": 12082,
-      "leanagentRawBytes": 45179,
-      "leanagentDeliveredBytes": 26364,
-      "leanagentOverheadMs": 1961.3001000000004,
+      "baselineToolOutputBytes": 61401,
+      "leanagentToolOutputBytes": 52654,
+      "baselineToolCalls": 75,
+      "leanagentToolCalls": 75,
+      "baselineWallMs": 297526,
+      "leanagentWallMs": 413745,
+      "baselineInputTokens": 1072013,
+      "leanagentInputTokens": 1204738,
+      "baselineCachedInputTokens": 1002496,
+      "leanagentCachedInputTokens": 1130240,
+      "baselineOutputTokens": 9885,
+      "leanagentOutputTokens": 12650,
+      "leanagentRawBytes": 56274,
+      "leanagentDeliveredBytes": 28441,
+      "leanagentOverheadMs": 1788.2829999999994,
       "leanagentCacheHits": 0,
       "leanagentDuplicateReads": 0,
       "leanagentExtraLlmCalls": 0

@@ -1,7 +1,7 @@
 # LeanAgent final launch report
 
-- Benchmark commit: `d74ae8670dedf79f94e136202ea853dacd82535f`
-- Observed: 2026-08-19T13:07:20.046Z
+- Benchmark commit: `a1fb14917b2a149929f689edc9b41944bb5dc4c9`
+- Observed: 2026-08-19T13:26:09.654Z
 - Agent: Codex 0.147.0, model gpt-5.4-mini, reasoning low
 - Repositories: fixtures/python-project, fixtures/typescript-app
 
@@ -10,12 +10,12 @@
 | Metric | Baseline | LeanAgent | Change |
 |---|---:|---:|---:|
 | Independent task acceptance | 10/10 | 10/10 | parity |
-| Codex tool-output bytes | 57,199 | 31,235 | −45.4% |
-| Tool calls | 67 | 59 | −11.9% |
-| Wall time (ms) | 277,394 | 386,891 | +39.5% |
-| Provider input tokens | 915,228 | 1,144,972 | observed, not billing |
-| Provider output tokens | 10,331 | 12,082 | observed, not billing |
-| LeanAgent overhead (ms) | — | 1,961 | observed |
+| Codex tool-output bytes | 61,401 | 52,654 | −14.2% |
+| Tool calls | 75 | 75 | −0.0% |
+| Wall time (ms) | 297,526 | 413,745 | +39.1% |
+| Provider input tokens | 1,072,013 | 1,204,738 | observed, not billing |
+| Provider output tokens | 9,885 | 12,650 | observed, not billing |
+| LeanAgent overhead (ms) | — | 1,788 | observed |
 | Additional LeanAgent LLM calls | 0 | 0 | observed |
 
 Quality parity: **10/10**.
@@ -33,16 +33,16 @@ Quality parity: **10/10**.
 
 | Task | Repository | Start commit | A | B | Parity |
 |---|---|---|---|---|---|
-| py-addition-bug | python | 9ea35ffca4ce44cfe68ba0a6c6bffed0bf974d2f | PASS | PASS | PASS |
-| py-negative-edge | python | f3f7230e3121f6154bdfcd997e3e167c3d858f48 | PASS | PASS | PASS |
-| py-optional-offset | python | 9dce7b99c1ed4f609976728327ab72037b02bdd4 | PASS | PASS | PASS |
-| py-input-validation | python | d7e1d208928b9b4855f7e1ed675fcc58c6b165c7 | PASS | PASS | PASS |
-| py-high-output-diagnostic | python | af6ca240735299f6f7ec5ed14bd09a7864ca2f97 | PASS | PASS | PASS |
-| ts-addition-bug | typescript | 28794d8ffcbd51c0cc271b41ea705c2f2be9cd9e | PASS | PASS | PASS |
-| ts-multiply-feature | typescript | 24b6e3652861f1acecc4c231a3c962f54e9c0494 | PASS | PASS | PASS |
-| ts-finite-inputs | typescript | 2bf0760c9e237ea1418931af456e45e3e92be541 | PASS | PASS | PASS |
-| ts-script-repair | typescript | f44bf7541dcfa909c339407d7eba7dd7a87a0043 | PASS | PASS | PASS |
-| ts-clamp-feature | typescript | d8a03e761dab498137f46d47c0f1d2b60dc28d90 | PASS | PASS | PASS |
+| py-addition-bug | python | 02bd222627afc42e610c3085d3dc2bf3f1516fb8 | PASS | PASS | PASS |
+| py-negative-edge | python | 65dae235c201facf0cbfc38b3e91ad4d5e2a9104 | PASS | PASS | PASS |
+| py-optional-offset | python | e7fb9bde26168df02be8a075a8be5fdeb1102c9c | PASS | PASS | PASS |
+| py-input-validation | python | 3514695959dc117a58ab53df38a24ef90c7a2cf2 | PASS | PASS | PASS |
+| py-high-output-diagnostic | python | 6127bf76de9e3d0ee6927a6839125c3a06a4adb6 | PASS | PASS | PASS |
+| ts-addition-bug | typescript | 216bb4e34f481dcd0c3b5cd52dc7c97e481d2442 | PASS | PASS | PASS |
+| ts-multiply-feature | typescript | 6a77a9b8d5fca83c644a40da25b765e51a9a4b07 | PASS | PASS | PASS |
+| ts-finite-inputs | typescript | 6ec9cf42c82f29c8ca1ce0710857d79e00d282a1 | PASS | PASS | PASS |
+| ts-script-repair | typescript | 18737c312be79e21e0f49149466cee9e9c1c4787 | PASS | PASS | PASS |
+| ts-clamp-feature | typescript | 98fee642e8db4c290cb47c2552cd89b8a2cfe88b | PASS | PASS | PASS |
 
 ## Negative results and limitations
 
