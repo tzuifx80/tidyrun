@@ -1,7 +1,7 @@
 {
   "schema": "leanagent.final-launch-report/v1",
   "commitSha": "a1fb14917b2a149929f689edc9b41944bb5dc4c9",
-  "observedAt": "2026-08-19T13:26:09.654Z",
+  "observedAt": "2026-08-19T13:30:38.063Z",
   "environment": {
     "os": "Windows",
     "platform": "win32",
@@ -578,6 +578,7 @@
   },
   "deterministicSuite": {
     "schema": "leanagent.benchmark-suite/v1",
+    "commitSha": "af36cf5fd17079d84bb0925c74948a669ae74fc5",
     "reports": [
       {
         "schema": "leanagent.benchmark/v1",
@@ -592,7 +593,7 @@
             "scripts/benchmark-verbose-output.mjs"
           ],
           "exit": 1,
-          "durationMs": 72.2491,
+          "durationMs": 80.84230000000001,
           "outputBytes": 64939,
           "rawOutputBytes": 64939,
           "deliveredOutputBytes": 64939,
@@ -600,7 +601,7 @@
           "cacheHits": 0,
           "cacheMisses": 1,
           "repetitions": 1,
-          "endToEndMs": 72.2491
+          "endToEndMs": 80.84230000000001
         },
         "leanagent": {
           "command": [
@@ -608,7 +609,7 @@
             "scripts/benchmark-verbose-output.mjs"
           ],
           "exit": 1,
-          "durationMs": 71.4603,
+          "durationMs": 78.24970000000002,
           "outputBytes": 20050,
           "rawOutputBytes": 64939,
           "deliveredOutputBytes": 20050,
@@ -616,7 +617,7 @@
           "cacheHits": 0,
           "cacheMisses": 1,
           "repetitions": 1,
-          "endToEndMs": 85.01800000000001
+          "endToEndMs": 91.93889999999999
         },
         "leanagentStats": {
           "fileReads": 0,
@@ -631,17 +632,17 @@
           "cacheHits": 0,
           "cacheMisses": 1,
           "cacheInvalidations": 0,
-          "commandWallMs": 71.4603,
+          "commandWallMs": 78.24970000000002,
           "avoidedCommandMs": 0,
           "modelCalls": 0,
           "modelInputTokens": 0,
           "modelOutputTokens": 0,
           "extraLlmCalls": 0,
-          "overheadMs": 6.539399999999972,
-          "ruleEvaluationMs": 1.088399999999993,
+          "overheadMs": 6.529300000000006,
+          "ruleEvaluationMs": 1.3356000000000563,
           "repositorySnapshotMs": 0,
-          "compressionMs": 1.087600000000009,
-          "artifactMs": 4.36239999999998
+          "compressionMs": 1.141999999999996,
+          "artifactMs": 4.050899999999956
         },
         "quality": {
           "baselineVerification": {
@@ -650,7 +651,7 @@
               "test"
             ],
             "exit": 0,
-            "durationMs": 5820.706099999999,
+            "durationMs": 5682.925800000001,
             "outputBytes": 1929
           },
           "leanagentVerification": {
@@ -659,7 +660,7 @@
               "test"
             ],
             "exit": 0,
-            "durationMs": 5724.1678999999995,
+            "durationMs": 5508.2795,
             "outputBytes": 1929
           },
           "equalExit": true
@@ -683,7 +684,7 @@
             "typecheck"
           ],
           "exit": 0,
-          "durationMs": 17351.2427,
+          "durationMs": 17526.7033,
           "outputBytes": 1444,
           "rawOutputBytes": 1444,
           "deliveredOutputBytes": 1444,
@@ -691,7 +692,7 @@
           "cacheHits": 0,
           "cacheMisses": 2,
           "repetitions": 2,
-          "endToEndMs": 17351.2427
+          "endToEndMs": 17526.7033
         },
         "leanagent": {
           "command": [
@@ -700,7 +701,7 @@
             "typecheck"
           ],
           "exit": 0,
-          "durationMs": 8636.992599999998,
+          "durationMs": 8998.411499999998,
           "outputBytes": 1444,
           "rawOutputBytes": 1444,
           "deliveredOutputBytes": 1444,
@@ -708,7 +709,7 @@
           "cacheHits": 1,
           "cacheMisses": 1,
           "repetitions": 2,
-          "endToEndMs": 8803.574599999996
+          "endToEndMs": 9168.989399999999
         },
         "leanagentStats": {
           "fileReads": 0,
@@ -723,17 +724,17 @@
           "cacheHits": 2,
           "cacheMisses": 1,
           "cacheInvalidations": 0,
-          "commandWallMs": 8636.992599999998,
-          "avoidedCommandMs": 8636.992599999998,
+          "commandWallMs": 8998.411499999998,
+          "avoidedCommandMs": 8998.411499999998,
           "modelCalls": 0,
           "modelInputTokens": 0,
           "modelOutputTokens": 0,
           "extraLlmCalls": 0,
-          "overheadMs": 160.16310000000522,
-          "ruleEvaluationMs": 0.6526000000012573,
-          "repositorySnapshotMs": 156.65939999999682,
-          "compressionMs": 0.02629999999771826,
-          "artifactMs": 2.7741000000023632
+          "overheadMs": 164.82070000000022,
+          "ruleEvaluationMs": 0.6110000000007858,
+          "repositorySnapshotMs": 160.86019999999917,
+          "compressionMs": 0.020400000001245644,
+          "artifactMs": 3.2793000000019674
         },
         "quality": {
           "baselineVerification": {
@@ -742,7 +743,7 @@
               "test"
             ],
             "exit": 0,
-            "durationMs": 5785.844799999999,
+            "durationMs": 5573.941299999999,
             "outputBytes": 1929
           },
           "leanagentVerification": {
@@ -751,7 +752,7 @@
               "test"
             ],
             "exit": 0,
-            "durationMs": 6023.115100000003,
+            "durationMs": 5490.254800000002,
             "outputBytes": 1929
           },
           "equalExit": true
@@ -774,7 +775,7 @@
             "noisy_check.py"
           ],
           "exit": 1,
-          "durationMs": 133.59300000000076,
+          "durationMs": 134.49659999999858,
           "outputBytes": 19776,
           "rawOutputBytes": 19776,
           "deliveredOutputBytes": 19776,
@@ -782,7 +783,7 @@
           "cacheHits": 0,
           "cacheMisses": 1,
           "repetitions": 1,
-          "endToEndMs": 133.59300000000076
+          "endToEndMs": 134.49659999999858
         },
         "leanagent": {
           "command": [
@@ -790,7 +791,7 @@
             "noisy_check.py"
           ],
           "exit": 1,
-          "durationMs": 131.24629999999888,
+          "durationMs": 127.81530000000203,
           "outputBytes": 961,
           "rawOutputBytes": 19776,
           "deliveredOutputBytes": 961,
@@ -798,7 +799,7 @@
           "cacheHits": 0,
           "cacheMisses": 1,
           "repetitions": 1,
-          "endToEndMs": 137.31570000000647
+          "endToEndMs": 134.06010000000242
         },
         "leanagentStats": {
           "fileReads": 0,
@@ -813,17 +814,17 @@
           "cacheHits": 0,
           "cacheMisses": 1,
           "cacheInvalidations": 0,
-          "commandWallMs": 131.24629999999888,
+          "commandWallMs": 127.81530000000203,
           "avoidedCommandMs": 0,
           "modelCalls": 0,
           "modelInputTokens": 0,
           "modelOutputTokens": 0,
           "extraLlmCalls": 0,
-          "overheadMs": 3.5962000000072294,
-          "ruleEvaluationMs": 0.3660000000090804,
+          "overheadMs": 3.8179999999920256,
+          "ruleEvaluationMs": 0.39579999999841675,
           "repositorySnapshotMs": 0,
-          "compressionMs": 0.3562999999994645,
-          "artifactMs": 2.8729999999995925
+          "compressionMs": 0.38629999999830034,
+          "artifactMs": 3.0349999999962165
         },
         "quality": {
           "baselineVerification": {
@@ -832,7 +833,7 @@
               "test_app.py"
             ],
             "exit": 0,
-            "durationMs": 128.0827999999965,
+            "durationMs": 127.40679999999702,
             "outputBytes": 0
           },
           "leanagentVerification": {
@@ -841,7 +842,7 @@
               "test_app.py"
             ],
             "exit": 0,
-            "durationMs": 124.50950000000012,
+            "durationMs": 126.75189999999566,
             "outputBytes": 0
           },
           "equalExit": true
@@ -857,8 +858,8 @@
     "fixtures": 3,
     "baselineRawBytes": 86159,
     "leanagentDeliveredBytes": 22455,
-    "baselineEndToEndMs": 17557.0848,
-    "leanagentEndToEndMs": 9025.908300000003,
+    "baselineEndToEndMs": 17742.0422,
+    "leanagentEndToEndMs": 9394.9884,
     "cacheHits": 1,
     "parity": 3
   },

@@ -1,7 +1,7 @@
 # LeanAgent final launch report
 
 - Benchmark commit: `a1fb14917b2a149929f689edc9b41944bb5dc4c9`
-- Observed: 2026-08-19T13:26:09.654Z
+- Observed: 2026-08-19T13:30:38.063Z
 - Agent: Codex 0.147.0, model gpt-5.4-mini, reasoning low
 - Repositories: fixtures/python-project, fixtures/typescript-app
 
@@ -26,7 +26,7 @@ Quality parity: **10/10**.
 |---|---:|---:|---:|
 | Fixture verification parity | 3/3 | 3/3 | parity |
 | Command output bytes | 86,159 | 22,455 | −73.9% delivered |
-| End-to-end time (ms) | 17,557 | 9,026 | −48.6% |
+| End-to-end time (ms) | 17,742 | 9,395 | −47.0% |
 | Verified cache hits | — | 1 | observed |
 
 ## Tasks

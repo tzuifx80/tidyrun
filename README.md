@@ -49,13 +49,13 @@ For this deliberately tiny high-output process, end-to-end wrapper time was
 The checked-in deterministic suite now covers three shell fixtures (Node
 diagnostics, repeated TypeScript typecheck, and Python diagnostics). In the
 latest Windows run, the suite delivered **86,159 raw bytes → 22,455 agent-visible
-bytes (−74%)** and **17,557 ms baseline end-to-end → 9,026 ms LeanAgent
+bytes (−74%)** and **17,742 ms baseline end-to-end → 9,395 ms LeanAgent
 end-to-end (−49%)**. All three fixtures had equal command exits and verification
 parity (`3/3`). The Python fixture is intentionally small and reproducible; it
 is not a claim about arbitrary Python repositories or model-token billing.
 
-The repeated-work fixture alone ran the same typecheck twice: **17,351 ms
-baseline end-to-end vs 8,804 ms LeanAgent (−49%)**, with one cache hit and 160 ms
+The repeated-work fixture alone ran the same typecheck twice: **17,527 ms
+baseline end-to-end vs 9,169 ms LeanAgent (−48%)**, with one cache hit and 165 ms
 observed LeanAgent overhead. These numbers are fixture measurements, not a
 promise for short commands or every repository.
 

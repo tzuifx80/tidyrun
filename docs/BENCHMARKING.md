@@ -17,10 +17,10 @@ agent or token guarantee.
 
 The latest checked-in suite report (`benchmarks/suite-report.json`) contains
 three deterministic fixtures. That Windows run measured 86,159 raw bytes versus
-22,455 delivered (74% derived reduction) and 17,557 ms versus 9,026 ms total
-end-to-end (49% lower), with equal verification parity for all three fixtures.
-The repeated-work fixture alone measured 17,351 ms versus 8,804 ms with one
-verified cache hit and 160 ms observed local optimizer overhead. Short commands
+22,455 delivered (74% derived reduction) and 17,742 ms versus 9,395 ms total
+end-to-end (47% lower), with equal verification parity for all three fixtures.
+The repeated-work fixture alone measured 17,527 ms versus 9,169 ms with one
+verified cache hit and 165 ms observed local optimizer overhead. Short commands
 can lose to startup overhead; the suite records that rather than claiming a
 win.
 
