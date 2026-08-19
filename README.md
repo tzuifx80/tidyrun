@@ -64,9 +64,8 @@ promise for short commands or every repository.
 We ran ten fresh TypeScript/Python tasks with Codex `0.147.0` using
 `gpt-5.4-mini` (low reasoning), pinned task commits, identical prompts, and
 independent acceptance commands. Both runs passed all ten tasks (`10/10` vs
-`10/10`). Codex tool output was **57,199 B baseline → 31,235 B with LeanAgent
-(−45.4%)** and tool calls were **67 → 59 (−11.9%)**. Aggregate wall time was
-**277,393 ms → 386,890 ms**, a negative result: LeanAgent did not make these
+`10/10`). Codex tool output was **61,401 B baseline → 52,654 B with LeanAgent (−14.2%)** and tool calls were **75 → 75 (0.0%)**. Aggregate wall time was
+**297,526 ms → 413,745 ms**, a negative result: LeanAgent did not make these
 short tasks faster. Provider input/output token telemetry is included in the
 final report but is not treated as billing savings.
 

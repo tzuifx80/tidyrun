@@ -11,9 +11,8 @@ and records recoverable artifacts without another LLM.
 - Deterministic Windows fixture suite: latest checked-in report is the source of
   truth for output bytes, cache hits, wall time, and verification parity.
 - Controlled Codex study: 10/10 baseline tasks and 10/10 LeanAgent tasks passed
-  independent acceptance checks. Codex tool output was 57,199 B baseline versus
-  31,235 B with LeanAgent (−45.4%); tool calls were 67 versus 59 (−11.9%).
-- Wall time was slower in this study (277,393 ms versus 386,890 ms aggregate),
+  independent acceptance checks. Codex tool output was 61,401 B baseline versus 52,654 B with LeanAgent (−14.2%); tool calls were 75 versus 75 (0.0%).
+- Wall time was slower in this study (297,526 ms versus 413,745 ms aggregate),
   so the launch claim is context/tool-work reduction, not universal speedup.
 - Provider token telemetry is recorded where Codex supplied it; it is not
   converted into billing claims.

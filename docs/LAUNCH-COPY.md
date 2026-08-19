@@ -10,7 +10,7 @@ LeanAgent is a local-first runtime for coding agents. It compresses noisy test
 output and reuses verified deterministic commands without another model, API
 key, or telemetry service. In a controlled Codex study, 10/10 tasks passed
 independent acceptance checks in both runs; observed Codex tool output fell from
-57,199 B to 31,235 B (−45.4%), and tool calls from 67 to 59 (−11.9%). The raw
+61,401 B to 52,654 B (−14.2%), and tool calls from 75 to 75 (0.0%). The raw
 methodology and deterministic fixture reports are in `benchmarks/`.
 
 ## Reddit
@@ -26,7 +26,7 @@ not a promise of faster execution.
 
 LeanAgent removes deterministic waste around coding agents: compressed diagnostics
 and verified command reuse, locally, with no second LLM. Real Codex study:
-−45.4% observed tool-output bytes, 67 → 59 tool calls, 10/10 acceptance parity.
+−14.2% observed tool-output bytes, 75 → 75 tool calls, 10/10 acceptance parity.
 Token billing claims are intentionally omitted.
 
 ## GitHub release notes
