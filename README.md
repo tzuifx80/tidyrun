@@ -2,6 +2,12 @@
 
 **Stop paying your coding agent to do the same work twice.**
 
+```bash
+npx leanagent init
+```
+
+Local-first. No additional LLM. No API key required for LeanAgent itself.
+
 LeanAgent is a local-first optimization runtime for AI coding agents. It removes repeated reads, redundant safe commands, huge irrelevant output, and no-progress loops **without another AI model, API key, account, or telemetry service**.
 
 ```text
@@ -14,7 +20,6 @@ LeanAgent is a local-first optimization runtime for AI coding agents. It removes
 ## Install and use
 
 ```bash
-npx leanagent init
 leanagent run -- npm test
 ```
 
