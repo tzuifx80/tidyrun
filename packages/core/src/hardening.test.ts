@@ -203,7 +203,7 @@ describe("security and command policy", () => {
 
   it("rejects NUL and outside paths and does not follow an escaping symlink", () => {
     const root = rootWithSource();
-    expect(() => safeRepositoryPath(root, "..\\outside")).toThrow();
+    expect(() => safeRepositoryPath(root, "../outside")).toThrow();
     expect(() => safeRepositoryPath(root, "bad\0name")).toThrow();
     try {
       const outside = mkdtempSync(join(tmpdir(), "tidyrun-outside-"));

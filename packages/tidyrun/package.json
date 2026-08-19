@@ -1,12 +1,18 @@
 {
   "name": "tidyrun",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Local tool-output optimization and verified deterministic command reuse for AI coding workflows.",
   "license": "Apache-2.0",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "type": "module",
-  "bin": { "tidyrun": "./bin/tidyrun.mjs" },
-  "files": ["bin", "dist", "README.md", "LICENSE"],
+  "files": [
+    "bin",
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "keywords": [
     "ai",
     "coding-agents",
@@ -16,5 +22,10 @@
     "codex",
     "gemini-cli"
   ],
-  "scripts": { "build": "node ../../scripts/build-package.mjs" }
+  "scripts": {
+    "build": "node ../../scripts/build-package.mjs"
+  },
+  "bin": {
+    "tidyrun": "bin/tidyrun.mjs"
+  }
 }

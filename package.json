@@ -1,6 +1,6 @@
 {
   "name": "tidyrun",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Local-first optimization runtime for AI coding agents. No extra model.",
   "license": "Apache-2.0",

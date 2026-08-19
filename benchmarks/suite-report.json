@@ -1,6 +1,6 @@
 {
   "schema": "tidyrun.benchmark-suite/v1",
-  "commitSha": "230fd665047fe875b38378835c3608e8a0208e20",
+  "commitSha": "c0e0e3e2ea156ba77a7a7ad8054e1003e4b1e952",
   "reports": [
     {
       "schema": "tidyrun.benchmark/v1",
@@ -15,7 +15,7 @@
           "scripts/benchmark-verbose-output.mjs"
         ],
         "exit": 1,
-        "durationMs": 77.0865,
+        "durationMs": 79.6433,
         "outputBytes": 64939,
         "rawOutputBytes": 64939,
         "deliveredOutputBytes": 64939,
@@ -23,7 +23,7 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "repetitions": 1,
-        "endToEndMs": 77.0865
+        "endToEndMs": 79.6433
       },
       "tidyrun": {
         "command": [
@@ -31,7 +31,7 @@
           "scripts/benchmark-verbose-output.mjs"
         ],
         "exit": 1,
-        "durationMs": 78.72820000000002,
+        "durationMs": 76.89179999999999,
         "outputBytes": 20037,
         "rawOutputBytes": 64939,
         "deliveredOutputBytes": 20037,
@@ -39,7 +39,7 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "repetitions": 1,
-        "endToEndMs": 93.59659999999997
+        "endToEndMs": 92.65190000000001
       },
       "tidyrunStats": {
         "fileReads": 0,
@@ -54,17 +54,17 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "cacheInvalidations": 0,
-        "commandWallMs": 78.72820000000002,
+        "commandWallMs": 76.89179999999999,
         "avoidedCommandMs": 0,
         "modelCalls": 0,
         "modelInputTokens": 0,
         "modelOutputTokens": 0,
         "extraLlmCalls": 0,
-        "overheadMs": 6.840900000000033,
-        "ruleEvaluationMs": 1.1519999999999868,
+        "overheadMs": 8.202399999999983,
+        "ruleEvaluationMs": 1.1319000000000017,
         "repositorySnapshotMs": 0,
-        "compressionMs": 1.1643000000000256,
-        "artifactMs": 4.523500000000013
+        "compressionMs": 1.155900000000031,
+        "artifactMs": 5.913699999999949
       },
       "quality": {
         "baselineVerification": {
@@ -73,8 +73,8 @@
             "test"
           ],
           "exit": 0,
-          "durationMs": 6117.843699999999,
-          "outputBytes": 1793
+          "durationMs": 6172.3243,
+          "outputBytes": 1915
         },
         "tidyrunVerification": {
           "command": [
@@ -82,8 +82,8 @@
             "test"
           ],
           "exit": 0,
-          "durationMs": 5766.161300000001,
-          "outputBytes": 1793
+          "durationMs": 6180.090300000001,
+          "outputBytes": 1915
         },
         "equalExit": true
       },
@@ -106,15 +106,15 @@
           "typecheck"
         ],
         "exit": 0,
-        "durationMs": 19286.9358,
-        "outputBytes": 3144,
-        "rawOutputBytes": 3144,
-        "deliveredOutputBytes": 3144,
+        "durationMs": 19451.321300000003,
+        "outputBytes": 1392,
+        "rawOutputBytes": 1392,
+        "deliveredOutputBytes": 1392,
         "avoidedOutputBytes": 0,
         "cacheHits": 0,
         "cacheMisses": 2,
         "repetitions": 2,
-        "endToEndMs": 19286.9358
+        "endToEndMs": 19451.321300000003
       },
       "tidyrun": {
         "command": [
@@ -123,15 +123,15 @@
           "typecheck"
         ],
         "exit": 0,
-        "durationMs": 8836.111700000005,
-        "outputBytes": 3144,
-        "rawOutputBytes": 3144,
-        "deliveredOutputBytes": 3144,
+        "durationMs": 10464.834599999998,
+        "outputBytes": 1392,
+        "rawOutputBytes": 1392,
+        "deliveredOutputBytes": 1392,
         "avoidedOutputBytes": 0,
         "cacheHits": 1,
         "cacheMisses": 1,
         "repetitions": 2,
-        "endToEndMs": 9030.262399999996
+        "endToEndMs": 10709.575100000002
       },
       "tidyrunStats": {
         "fileReads": 0,
@@ -141,22 +141,22 @@
         "repeatedBlocked": 0,
         "loopsDetected": 0,
         "loopCycles": 0,
-        "rawBytes": 4716,
-        "deliveredBytes": 4716,
+        "rawBytes": 2088,
+        "deliveredBytes": 2088,
         "cacheHits": 2,
         "cacheMisses": 1,
         "cacheInvalidations": 0,
-        "commandWallMs": 8836.111700000005,
-        "avoidedCommandMs": 8836.111700000005,
+        "commandWallMs": 10464.834599999998,
+        "avoidedCommandMs": 10464.834599999998,
         "modelCalls": 0,
         "modelInputTokens": 0,
         "modelOutputTokens": 0,
         "extraLlmCalls": 0,
-        "overheadMs": 186.39760000000388,
-        "ruleEvaluationMs": 0.7276999999958207,
-        "repositorySnapshotMs": 182.45080000000598,
-        "compressionMs": 0.027099999999336433,
-        "artifactMs": 3.1231000000043423
+        "overheadMs": 233.6630999999834,
+        "ruleEvaluationMs": 1.4344999999884749,
+        "repositorySnapshotMs": 225.58089999999356,
+        "compressionMs": 0.03149999999732245,
+        "artifactMs": 6.542500000003201
       },
       "quality": {
         "baselineVerification": {
@@ -165,8 +165,8 @@
             "test"
           ],
           "exit": 0,
-          "durationMs": 5789.702700000002,
-          "outputBytes": 1793
+          "durationMs": 6394.347300000001,
+          "outputBytes": 1915
         },
         "tidyrunVerification": {
           "command": [
@@ -174,8 +174,8 @@
             "test"
           ],
           "exit": 0,
-          "durationMs": 5803.9882,
-          "outputBytes": 1793
+          "durationMs": 6490.232400000001,
+          "outputBytes": 1915
         },
         "equalExit": true
       },
@@ -197,7 +197,7 @@
           "noisy_check.py"
         ],
         "exit": 1,
-        "durationMs": 135.03100000000268,
+        "durationMs": 153.90899999999965,
         "outputBytes": 19776,
         "rawOutputBytes": 19776,
         "deliveredOutputBytes": 19776,
@@ -205,7 +205,7 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "repetitions": 1,
-        "endToEndMs": 135.03100000000268
+        "endToEndMs": 153.90899999999965
       },
       "tidyrun": {
         "command": [
@@ -213,7 +213,7 @@
           "noisy_check.py"
         ],
         "exit": 1,
-        "durationMs": 129.34659999999712,
+        "durationMs": 134.0153000000064,
         "outputBytes": 922,
         "rawOutputBytes": 19776,
         "deliveredOutputBytes": 922,
@@ -221,7 +221,7 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "repetitions": 1,
-        "endToEndMs": 135.50160000000324
+        "endToEndMs": 140.54869999999937
       },
       "tidyrunStats": {
         "fileReads": 0,
@@ -236,17 +236,17 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "cacheInvalidations": 0,
-        "commandWallMs": 129.34659999999712,
+        "commandWallMs": 134.0153000000064,
         "avoidedCommandMs": 0,
         "modelCalls": 0,
         "modelInputTokens": 0,
         "modelOutputTokens": 0,
         "extraLlmCalls": 0,
-        "overheadMs": 3.6618000000089523,
-        "ruleEvaluationMs": 0.36810000000696164,
+        "overheadMs": 3.8942000000024564,
+        "ruleEvaluationMs": 0.419000000001688,
         "repositorySnapshotMs": 0,
-        "compressionMs": 0.35740000000078,
-        "artifactMs": 2.9354000000021188
+        "compressionMs": 0.39869999999791617,
+        "artifactMs": 3.0754999999990105
       },
       "quality": {
         "baselineVerification": {
@@ -255,7 +255,7 @@
             "test_app.py"
           ],
           "exit": 0,
-          "durationMs": 149.17749999999796,
+          "durationMs": 137.22759999999835,
           "outputBytes": 0
         },
         "tidyrunVerification": {
@@ -264,7 +264,7 @@
             "test_app.py"
           ],
           "exit": 0,
-          "durationMs": 129.72929999999906,
+          "durationMs": 136.21379999999772,
           "outputBytes": 0
         },
         "equalExit": true

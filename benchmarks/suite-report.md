@@ -1,6 +1,6 @@
 # TidyRun deterministic suite
 
-Benchmark commit: `230fd665047fe875b38378835c3608e8a0208e20`
+Benchmark commit: `c0e0e3e2ea156ba77a7a7ad8054e1003e4b1e952`
 
 # TidyRun benchmark: verbose-test-diagnostics
 
@@ -10,12 +10,12 @@ Model: not applicable
 
 | Run | Exit | Command time | End-to-end | Raw bytes | Agent-visible bytes | Cache hits |
 |---|---:|---:|---:|---:|---:|---:|
-| Baseline | 1 | 77 ms | 77 ms | 64939 | 64939 | 0 |
-| TidyRun | 1 | 79 ms | 94 ms | 64939 | 20037 | 0 |
+| Baseline | 1 | 80 ms | 80 ms | 64939 | 64939 | 0 |
+| TidyRun | 1 | 77 ms | 93 ms | 64939 | 20037 | 0 |
 
 Observed agent-visible output reduction: **69%**
 
-TidyRun overhead (observed): 7 ms; snapshot 0 ms; compression 1 ms; artifacts 5 ms.
+TidyRun overhead (observed): 8 ms; snapshot 0 ms; compression 1 ms; artifacts 6 ms.
 
 Quality parity: **PASS**
 
@@ -32,12 +32,12 @@ Model: not applicable
 
 | Run | Exit | Command time | End-to-end | Raw bytes | Agent-visible bytes | Cache hits |
 |---|---:|---:|---:|---:|---:|---:|
-| Baseline | 0 | 19287 ms | 19287 ms | 3144 | 3144 | 0 |
-| TidyRun | 0 | 8836 ms | 9030 ms | 3144 | 3144 | 1 |
+| Baseline | 0 | 19451 ms | 19451 ms | 1392 | 1392 | 0 |
+| TidyRun | 0 | 10465 ms | 10710 ms | 1392 | 1392 | 1 |
 
 Observed agent-visible output reduction: **0%**
 
-TidyRun overhead (observed): 186 ms; snapshot 182 ms; compression 0 ms; artifacts 3 ms.
+TidyRun overhead (observed): 234 ms; snapshot 226 ms; compression 0 ms; artifacts 7 ms.
 
 Quality parity: **PASS**
 
@@ -54,8 +54,8 @@ Model: not applicable
 
 | Run | Exit | Command time | End-to-end | Raw bytes | Agent-visible bytes | Cache hits |
 |---|---:|---:|---:|---:|---:|---:|
-| Baseline | 1 | 135 ms | 135 ms | 19776 | 19776 | 0 |
-| TidyRun | 1 | 129 ms | 136 ms | 19776 | 922 | 0 |
+| Baseline | 1 | 154 ms | 154 ms | 19776 | 19776 | 0 |
+| TidyRun | 1 | 134 ms | 141 ms | 19776 | 922 | 0 |
 
 Observed agent-visible output reduction: **95%**
 
