@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { normalize, resolve, sep, relative, dirname, join, delimiter } from "node:path";
-import { realpathSync, lstatSync, existsSync, openSync, readSync, closeSync } from "node:fs";
+import { realpathSync, lstatSync, existsSync, openSync, readSync, closeSync, readFileSync } from "node:fs";
 import type { ArtifactRecord, LeanConfig } from "./types.js";
 
 export function sha256(text: string | Buffer): string {
@@ -80,9 +80,20 @@ export function resolveExecutable(name: string): { file: string; prefix: string[
   for (const dir of (process.env.PATH ?? "").split(delimiter).filter(Boolean)) {
     const candidate = join(dir, `${name}.exe`);
     if (existsSync(candidate)) return { file: candidate, prefix: [] };
+    // npm exposes local package bins as .cmd shims on Windows. Avoid shell
+    // parsing by resolving the Node script embedded in a trusted shim.
+    const shim = join(dir, `${name}.cmd`);
+    if (existsSync(shim)) {
+      try {
+        const match = readFileSync(shim, "utf8").match(/%dp0%\\([^"'\r\n]+\.(?:m?js|cjs))/i);
+        if (match) {
+          const script = resolve(dir, ...match[1].split("\\"));
+          if (existsSync(script)) return { file: process.execPath, prefix: [script] };
+        }
+      } catch { /* fall through to the fail-closed executable path */ }
+    }
   }
-  // .cmd files cannot be spawned with shell:false without reintroducing shell
-  // parsing. Refuse rather than turning arbitrary agent text into a shell line.
+  // Unknown shims remain fail-closed rather than reintroducing shell parsing.
   return { file: `${name}.exe`, prefix: [] };
 }
 

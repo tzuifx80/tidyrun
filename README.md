@@ -27,6 +27,12 @@ reported as observed overhead in benchmark reports.
 
 ## Measured result
 
+### Demo
+
+Replay the real Windows terminal recording with [asciinema](https://asciinema.org/):
+[docs/leanagent-demo.cast](docs/leanagent-demo.cast). It uses a real packaged
+LeanAgent run and records the observed compression and verified repeat.
+
 The checked-in high-output fixture (`benchmarks/output-reduction.json`) emits 64,939 bytes of mixed test noise and failures. On this Windows workspace run:
 
 | Metric | Baseline | LeanAgent | Difference |
@@ -43,15 +49,30 @@ For this deliberately tiny high-output process, end-to-end wrapper time was
 The checked-in deterministic suite now covers three shell fixtures (Node
 diagnostics, repeated TypeScript typecheck, and Python diagnostics). In the
 latest Windows run, the suite delivered **86,159 raw bytes → 22,455 agent-visible
-bytes (−74%)** and **17,969 ms baseline end-to-end → 8,495 ms LeanAgent
-end-to-end (−53%)**. All three fixtures had equal command exits and verification
+bytes (−74%)** and **17,557 ms baseline end-to-end → 9,026 ms LeanAgent
+end-to-end (−49%)**. All three fixtures had equal command exits and verification
 parity (`3/3`). The Python fixture is intentionally small and reproducible; it
 is not a claim about arbitrary Python repositories or model-token billing.
 
-The repeated-work fixture alone ran the same typecheck twice: **17,759 ms
-baseline end-to-end vs 8,274 ms LeanAgent (−53%)**, with one cache hit and 78 ms
+The repeated-work fixture alone ran the same typecheck twice: **17,351 ms
+baseline end-to-end vs 8,804 ms LeanAgent (−49%)**, with one cache hit and 160 ms
 observed LeanAgent overhead. These numbers are fixture measurements, not a
 promise for short commands or every repository.
+
+### Controlled real-agent study
+
+We ran ten fresh TypeScript/Python tasks with Codex `0.147.0` using
+`gpt-5.4-mini` (low reasoning), pinned task commits, identical prompts, and
+independent acceptance commands. Both runs passed all ten tasks (`10/10` vs
+`10/10`). Codex tool output was **57,199 B baseline → 31,235 B with LeanAgent
+(−45.4%)** and tool calls were **67 → 59 (−11.9%)**. Aggregate wall time was
+**277,393 ms → 386,890 ms**, a negative result: LeanAgent did not make these
+short tasks faster. Provider input/output token telemetry is included in the
+final report but is not treated as billing savings.
+
+The full manifest and caveats are in
+[`benchmarks/final-launch-report.md`](benchmarks/final-launch-report.md) and
+[`benchmarks/final-launch-report.json`](benchmarks/final-launch-report.json).
 
 ## What is implemented
 
@@ -91,10 +112,10 @@ Draft launch copy is collected in [docs/LAUNCH-COPY.md](docs/LAUNCH-COPY.md); it
 
 ## Limitations
 
-- The checked-in evidence is deterministic shell/fixture work, not a 20–40 task
-  external coding-agent study. Gemini CLI, Codex, and OpenCode binaries were
-  present in the validation environment, but provider credentials were not, so
-  no model-session result is claimed.
+- The real-agent evidence is a ten-task Codex study on two small fixture
+  repositories, not a universal 20–40 task claim. Gemini CLI was installed but
+  unauthenticated; OpenCode was installed but its tested provider paths did not
+  produce a completed task.
 - Provider token billing is reported only when an adapter supplies real usage
   metadata. Byte/4 context figures are estimates, never billing measurements.
 - Native interception is deepest for the documented Gemini hook contract;

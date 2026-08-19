@@ -7,7 +7,7 @@ import { FileArtifactStore, JsonCommandCache } from "./store.js";
 import { WorkCache } from "./work-cache.js";
 import { compressOutput } from "./compress.js";
 import { affectedTests, indexRepository, snapshotRepository } from "./repo.js";
-import { classifyCommand, environmentFingerprint, redactSecrets, safeRepositoryPath, sha256 } from "./util.js";
+import { classifyCommand, environmentFingerprint, redactSecrets, resolveExecutable, safeRepositoryPath, sha256 } from "./util.js";
 import { parseLeanYaml } from "./config.js";
 import { DEFAULT_CONFIG } from "./types.js";
 import type { ArtifactStore } from "./types.js";
@@ -258,5 +258,26 @@ describe("configuration hardening", () => {
     expect(cfg.context.duplicate_reads).toBe("reuse");
     expect(cfg.loops.enabled).toBe(true);
     expect(cfg.security.allow_outside_repository).toBe(false);
+  });
+});
+
+describe("Windows command resolution", () => {
+  it.skipIf(process.platform !== "win32")("runs a local npm .cmd bin through its Node script without a shell", () => {
+    const root = mkdtempSync(join(tmpdir(), "leanagent-bin-"));
+    const bin = join(root, "node_modules", ".bin");
+    const target = join(root, "node_modules", "leanagent", "bin", "leanagent.mjs");
+    mkdirSync(bin, { recursive: true });
+    mkdirSync(join(root, "node_modules", "leanagent", "bin"), { recursive: true });
+    writeFileSync(target, "process.exit(0);\n");
+    writeFileSync(join(bin, "leanagent.cmd"), "@echo off\n\"%dp0%\\..\\leanagent\\bin\\leanagent.mjs\" %*\n");
+    const previous = process.env.PATH;
+    process.env.PATH = `${bin};${previous ?? ""}`;
+    try {
+      const resolved = resolveExecutable("leanagent");
+      expect(resolved.file).toBe(process.execPath);
+      expect(resolved.prefix[0]).toBe(target);
+    } finally {
+      process.env.PATH = previous;
+    }
   });
 });

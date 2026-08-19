@@ -20,3 +20,12 @@ Add a focused parser in `packages/core/src/compress.ts`, add representative outp
 ## Pull requests
 
 Include the command(s) used for verification and document provider capability assumptions. Keep changes local-first, cross-platform, and backwards-compatible where possible.
+
+## Good first contributions
+
+- **good first issue:** add a focused parser fixture and regression test for one
+  missing compiler or test-runner output shape;
+- **help wanted:** add a provider capability note or adapter test without
+  storing credentials;
+- **help wanted:** contribute a pinned benchmark task with an independent
+  acceptance check and a documented negative result.

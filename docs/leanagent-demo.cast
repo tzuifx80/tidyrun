@@ -1,0 +1,7 @@
+{"version":2,"width":100,"height":30,"timestamp":1787143960,"env":{"SHELL":"powershell","TERM":"xterm-256color"}}
+[0.0,"o","$ npx --no-install leanagent run -- npm test\r\n"]
+[0.8,"o","package manager output compressed\r\nPASS fixture case 586\r\nPASS fixture case 587\r\nPASS fixture case 588\r\n… 597 repetitive pass lines omitted …\r\nPASS acceptance\r\n\r\nFull output:\r\nLA://command/la_0b93c4d729ddd053\r\n"]
+[1.8,"o","$ npx --no-install leanagent run -- npm test\r\n"]
+[2.5,"o","package manager output compressed\r\nPASS fixture case 586\r\nPASS fixture case 587\r\nPASS fixture case 588\r\n… verified unchanged result reused …\r\nPASS acceptance\r\n"]
+[3.5,"o","$ npx --no-install leanagent stats --json\r\n"]
+[4.0,"o","rawBytes       13,140\r\ndeliveredBytes     427\r\ncacheHits            1\r\ncachedCommands      1\r\noverheadMs          11\r\nadditional LLM calls 0\r\n\r\nLeanAgent\r\nTask result       PASS\r\nOutput delivered  −96.8%\r\nVerified reuse    1 hit\r\n"]

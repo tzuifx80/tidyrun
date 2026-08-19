@@ -1,32 +1,33 @@
-# Launch copy (draft)
+# Launch copy
 
-Prepared for review only. No external posting is authorized by this repository.
+Prepared copy; posting still requires a maintainer's normal release decision.
 
 ## Hacker News
 
-**Show HN: LeanAgent – stop coding agents from repeating deterministic work**
+**Show HN: LeanAgent – a local optimizer that removes deterministic waste from coding agents**
 
 LeanAgent is a local-first runtime for coding agents. It compresses noisy test
-output, reuses verified deterministic commands, protects against duplicate
-reads, and detects no-progress loops without another model, API key, or
-telemetry service. The checked-in deterministic suite reduced agent-visible
-output by 74% across three Node/TypeScript/Python fixtures with 3/3 verification
-parity; the raw reports and methodology are in `benchmarks/`.
+output and reuses verified deterministic commands without another model, API
+key, or telemetry service. In a controlled Codex study, 10/10 tasks passed
+independent acceptance checks in both runs; observed Codex tool output fell from
+57,199 B to 31,235 B (−45.4%), and tool calls from 67 to 59 (−11.9%). The raw
+methodology and deterministic fixture reports are in `benchmarks/`.
 
 ## Reddit
 
-I built a local optimizer that stops coding agents rereading unchanged files and
-rerunning unchanged safe commands. It also keeps full redacted artifacts
-recoverable when it compresses terminal noise. Current evidence is deterministic
-fixture work rather than a broad external-agent study, so the repo publishes the
-negative results and local overhead too.
+I built a local optimizer that stops coding agents paying for the same terminal
+work twice. It keeps full redacted artifacts recoverable when it compresses
+terminal noise. I ran ten controlled Codex coding tasks with independent checks:
+both sides passed all ten, while observed agent-visible tool output dropped 45%.
+The same study was slower wall-clock, so this is a context/work reduction claim,
+not a promise of faster execution.
 
 ## Short post
 
-LeanAgent removes deterministic waste around coding agents: compressed diagnostics,
-verified command reuse, duplicate-read protection, and loop warnings. No second
-LLM. Latest checked-in fixtures: −74% agent-visible output, 3/3 verification
-parity. Reports are reproducible and token claims are intentionally omitted.
+LeanAgent removes deterministic waste around coding agents: compressed diagnostics
+and verified command reuse, locally, with no second LLM. Real Codex study:
+−45.4% observed tool-output bytes, 67 → 59 tool calls, 10/10 acceptance parity.
+Token billing claims are intentionally omitted.
 
 ## GitHub release notes
 
@@ -34,3 +35,4 @@ parity. Reports are reproducible and token claims are intentionally omitted.
 - Standalone `leanagent` tarball now bundles the CLI and core runtime; `npm run package:smoke` validates a fresh install.
 - `npm run lint` is a real source-hygiene gate plus typecheck, and CI runs it on Windows, Ubuntu, and macOS.
 - Deterministic suite covers Node/TypeScript repeated work and Python diagnostic output; provider-token usage remains unavailable without adapter metadata.
+- The controlled real-agent report records Codex as the only completed provider study in this environment; Gemini and OpenCode limitations are documented rather than guessed.

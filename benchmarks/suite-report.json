@@ -14,7 +14,7 @@
           "scripts/benchmark-verbose-output.mjs"
         ],
         "exit": 1,
-        "durationMs": 76.2262,
+        "durationMs": 72.2491,
         "outputBytes": 64939,
         "rawOutputBytes": 64939,
         "deliveredOutputBytes": 64939,
@@ -22,7 +22,7 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "repetitions": 1,
-        "endToEndMs": 76.2262
+        "endToEndMs": 72.2491
       },
       "leanagent": {
         "command": [
@@ -30,7 +30,7 @@
           "scripts/benchmark-verbose-output.mjs"
         ],
         "exit": 1,
-        "durationMs": 71.239,
+        "durationMs": 71.4603,
         "outputBytes": 20050,
         "rawOutputBytes": 64939,
         "deliveredOutputBytes": 20050,
@@ -38,7 +38,7 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "repetitions": 1,
-        "endToEndMs": 85.57349999999998
+        "endToEndMs": 85.01800000000001
       },
       "leanagentStats": {
         "fileReads": 0,
@@ -53,17 +53,17 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "cacheInvalidations": 0,
-        "commandWallMs": 71.239,
+        "commandWallMs": 71.4603,
         "avoidedCommandMs": 0,
         "modelCalls": 0,
         "modelInputTokens": 0,
         "modelOutputTokens": 0,
         "extraLlmCalls": 0,
-        "overheadMs": 6.260300000000001,
-        "ruleEvaluationMs": 1.019999999999996,
+        "overheadMs": 6.539399999999972,
+        "ruleEvaluationMs": 1.088399999999993,
         "repositorySnapshotMs": 0,
-        "compressionMs": 1.1217000000000041,
-        "artifactMs": 4.11760000000001
+        "compressionMs": 1.087600000000009,
+        "artifactMs": 4.36239999999998
       },
       "quality": {
         "baselineVerification": {
@@ -72,8 +72,8 @@
             "test"
           ],
           "exit": 0,
-          "durationMs": 5929.829299999999,
-          "outputBytes": 2075
+          "durationMs": 5820.706099999999,
+          "outputBytes": 1929
         },
         "leanagentVerification": {
           "command": [
@@ -81,7 +81,7 @@
             "test"
           ],
           "exit": 0,
-          "durationMs": 5473.731400000001,
+          "durationMs": 5724.1678999999995,
           "outputBytes": 1929
         },
         "equalExit": true
@@ -105,7 +105,7 @@
           "typecheck"
         ],
         "exit": 0,
-        "durationMs": 17325.8298,
+        "durationMs": 17351.2427,
         "outputBytes": 1444,
         "rawOutputBytes": 1444,
         "deliveredOutputBytes": 1444,
@@ -113,7 +113,7 @@
         "cacheHits": 0,
         "cacheMisses": 2,
         "repetitions": 2,
-        "endToEndMs": 17325.8298
+        "endToEndMs": 17351.2427
       },
       "leanagent": {
         "command": [
@@ -122,7 +122,7 @@
           "typecheck"
         ],
         "exit": 0,
-        "durationMs": 8725.2769,
+        "durationMs": 8636.992599999998,
         "outputBytes": 1444,
         "rawOutputBytes": 1444,
         "deliveredOutputBytes": 1444,
@@ -130,7 +130,7 @@
         "cacheHits": 1,
         "cacheMisses": 1,
         "repetitions": 2,
-        "endToEndMs": 8809.7775
+        "endToEndMs": 8803.574599999996
       },
       "leanagentStats": {
         "fileReads": 0,
@@ -145,17 +145,17 @@
         "cacheHits": 2,
         "cacheMisses": 1,
         "cacheInvalidations": 0,
-        "commandWallMs": 8725.2769,
-        "avoidedCommandMs": 8725.2769,
+        "commandWallMs": 8636.992599999998,
+        "avoidedCommandMs": 8636.992599999998,
         "modelCalls": 0,
         "modelInputTokens": 0,
         "modelOutputTokens": 0,
         "extraLlmCalls": 0,
-        "overheadMs": 78.74120000000039,
-        "ruleEvaluationMs": 0.691899999997986,
-        "repositorySnapshotMs": 75.31379999999626,
-        "compressionMs": 0.020100000001548324,
-        "artifactMs": 2.6635000000023865
+        "overheadMs": 160.16310000000522,
+        "ruleEvaluationMs": 0.6526000000012573,
+        "repositorySnapshotMs": 156.65939999999682,
+        "compressionMs": 0.02629999999771826,
+        "artifactMs": 2.7741000000023632
       },
       "quality": {
         "baselineVerification": {
@@ -164,7 +164,7 @@
             "test"
           ],
           "exit": 0,
-          "durationMs": 5507.694100000001,
+          "durationMs": 5785.844799999999,
           "outputBytes": 1929
         },
         "leanagentVerification": {
@@ -173,7 +173,7 @@
             "test"
           ],
           "exit": 0,
-          "durationMs": 5555.179700000001,
+          "durationMs": 6023.115100000003,
           "outputBytes": 1929
         },
         "equalExit": true
@@ -196,7 +196,7 @@
           "noisy_check.py"
         ],
         "exit": 1,
-        "durationMs": 672.1632000000027,
+        "durationMs": 133.59300000000076,
         "outputBytes": 19776,
         "rawOutputBytes": 19776,
         "deliveredOutputBytes": 19776,
@@ -204,7 +204,7 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "repetitions": 1,
-        "endToEndMs": 672.1632000000027
+        "endToEndMs": 133.59300000000076
       },
       "leanagent": {
         "command": [
@@ -212,7 +212,7 @@
           "noisy_check.py"
         ],
         "exit": 1,
-        "durationMs": 128.09309999999823,
+        "durationMs": 131.24629999999888,
         "outputBytes": 961,
         "rawOutputBytes": 19776,
         "deliveredOutputBytes": 961,
@@ -220,7 +220,7 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "repetitions": 1,
-        "endToEndMs": 134.87300000000687
+        "endToEndMs": 137.31570000000647
       },
       "leanagentStats": {
         "fileReads": 0,
@@ -235,17 +235,17 @@
         "cacheHits": 0,
         "cacheMisses": 1,
         "cacheInvalidations": 0,
-        "commandWallMs": 128.09309999999823,
+        "commandWallMs": 131.24629999999888,
         "avoidedCommandMs": 0,
         "modelCalls": 0,
         "modelInputTokens": 0,
         "modelOutputTokens": 0,
         "extraLlmCalls": 0,
-        "overheadMs": 3.488600000004226,
-        "ruleEvaluationMs": 0.35560000000259606,
+        "overheadMs": 3.5962000000072294,
+        "ruleEvaluationMs": 0.3660000000090804,
         "repositorySnapshotMs": 0,
-        "compressionMs": 0.3934000000008382,
-        "artifactMs": 2.7388000000064494
+        "compressionMs": 0.3562999999994645,
+        "artifactMs": 2.8729999999995925
       },
       "quality": {
         "baselineVerification": {
@@ -254,7 +254,7 @@
             "test_app.py"
           ],
           "exit": 0,
-          "durationMs": 290.4464000000007,
+          "durationMs": 128.0827999999965,
           "outputBytes": 0
         },
         "leanagentVerification": {
@@ -263,7 +263,7 @@
             "test_app.py"
           ],
           "exit": 0,
-          "durationMs": 124.73769999999786,
+          "durationMs": 124.50950000000012,
           "outputBytes": 0
         },
         "equalExit": true

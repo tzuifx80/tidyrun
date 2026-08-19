@@ -1,0 +1,875 @@
+{
+  "schema": "leanagent.final-launch-report/v1",
+  "commitSha": "d74ae8670dedf79f94e136202ea853dacd82535f",
+  "observedAt": "2026-08-19T13:07:20.046Z",
+  "environment": {
+    "os": "Windows",
+    "platform": "win32",
+    "node": "v24.18.0",
+    "npm": "npm 11.16.0",
+    "python": "3.11.15",
+    "repository": "."
+  },
+  "agents": {
+    "codex": {
+      "installed": "0.147.0",
+      "authenticated": true,
+      "model": "gpt-5.4-mini",
+      "reasoning": "low",
+      "tasksCompleted": 10
+    },
+    "gemini": {
+      "installed": "0.53.1",
+      "authenticated": false,
+      "result": "not run"
+    },
+    "opencode": {
+      "installed": "1.18.15",
+      "credentialsDetected": true,
+      "result": "no completed task; provider attempts errored or timed out"
+    }
+  },
+  "repositories": [
+    "fixtures/python-project",
+    "fixtures/typescript-app"
+  ],
+  "realAgentStudy": {
+    "methodology": "Fresh A/B repositories from the same generated source commit; identical task prompt and Codex model; B adds only LeanAgent wrapper instructions and a local package install; acceptance commands run independently after the agent.",
+    "tasks": [
+      {
+        "id": "py-addition-bug",
+        "repository": "python",
+        "startingCommit": "9ea35ffca4ce44cfe68ba0a6c6bffed0bf974d2f",
+        "baseline": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 26467,
+          "toolCalls": 6,
+          "commandExecutions": 5,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 1239,
+          "inputTokens": 86268,
+          "cachedInputTokens": 72064,
+          "outputTokens": 833
+        },
+        "leanagent": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 38032,
+          "toolCalls": 6,
+          "commandExecutions": 5,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 1714,
+          "inputTokens": 105362,
+          "cachedInputTokens": 90368,
+          "outputTokens": 1034,
+          "stats": {
+            "sessions": 5,
+            "rawBytes": 1713,
+            "deliveredBytes": 1713,
+            "overheadMs": 129.9458000000001,
+            "cacheHits": 0,
+            "duplicateReadsReused": 0,
+            "commands": 5,
+            "avoidedCommandMs": 0,
+            "extraLlmCalls": 0
+          }
+        },
+        "qualityParity": true
+      },
+      {
+        "id": "py-negative-edge",
+        "repository": "python",
+        "startingCommit": "f3f7230e3121f6154bdfcd997e3e167c3d858f48",
+        "baseline": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 35759,
+          "toolCalls": 12,
+          "commandExecutions": 11,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 1588,
+          "inputTokens": 105929,
+          "cachedInputTokens": 100608,
+          "outputTokens": 1502
+        },
+        "leanagent": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 38362,
+          "toolCalls": 8,
+          "commandExecutions": 7,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 9768,
+          "inputTokens": 119838,
+          "cachedInputTokens": 101120,
+          "outputTokens": 1293,
+          "stats": {
+            "sessions": 7,
+            "rawBytes": 9766,
+            "deliveredBytes": 9766,
+            "overheadMs": 163.14439999999996,
+            "cacheHits": 0,
+            "duplicateReadsReused": 0,
+            "commands": 7,
+            "avoidedCommandMs": 0,
+            "extraLlmCalls": 0
+          }
+        },
+        "qualityParity": true
+      },
+      {
+        "id": "py-optional-offset",
+        "repository": "python",
+        "startingCommit": "9dce7b99c1ed4f609976728327ab72037b02bdd4",
+        "baseline": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 27827,
+          "toolCalls": 6,
+          "commandExecutions": 5,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 1155,
+          "inputTokens": 68541,
+          "cachedInputTokens": 65024,
+          "outputTokens": 889
+        },
+        "leanagent": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 39655,
+          "toolCalls": 5,
+          "commandExecutions": 4,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 2719,
+          "inputTokens": 106274,
+          "cachedInputTokens": 100608,
+          "outputTokens": 1072,
+          "stats": {
+            "sessions": 4,
+            "rawBytes": 1389,
+            "deliveredBytes": 1389,
+            "overheadMs": 118.27539999999993,
+            "cacheHits": 0,
+            "duplicateReadsReused": 0,
+            "commands": 4,
+            "avoidedCommandMs": 0,
+            "extraLlmCalls": 0
+          }
+        },
+        "qualityParity": true
+      },
+      {
+        "id": "py-input-validation",
+        "repository": "python",
+        "startingCommit": "d7e1d208928b9b4855f7e1ed675fcc58c6b165c7",
+        "baseline": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 27362,
+          "toolCalls": 6,
+          "commandExecutions": 5,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 1218,
+          "inputTokens": 86116,
+          "cachedInputTokens": 81792,
+          "outputTokens": 1036
+        },
+        "leanagent": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 89470,
+          "toolCalls": 12,
+          "commandExecutions": 11,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 5164,
+          "inputTokens": 255941,
+          "cachedInputTokens": 234880,
+          "outputTokens": 3390,
+          "stats": {
+            "sessions": 10,
+            "rawBytes": 1731,
+            "deliveredBytes": 1731,
+            "overheadMs": 556.4766000000002,
+            "cacheHits": 0,
+            "duplicateReadsReused": 0,
+            "commands": 10,
+            "avoidedCommandMs": 0,
+            "extraLlmCalls": 0
+          }
+        },
+        "qualityParity": true
+      },
+      {
+        "id": "py-high-output-diagnostic",
+        "repository": "python",
+        "startingCommit": "af6ca240735299f6f7ec5ed14bd09a7864ca2f97",
+        "baseline": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 36275,
+          "toolCalls": 9,
+          "commandExecutions": 8,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 31561,
+          "inputTokens": 149068,
+          "cachedInputTokens": 127104,
+          "outputTokens": 1542
+        },
+        "leanagent": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 0
+          },
+          "wallMs": 30698,
+          "toolCalls": 6,
+          "commandExecutions": 5,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 3711,
+          "inputTokens": 88672,
+          "cachedInputTokens": 83840,
+          "outputTokens": 953,
+          "stats": {
+            "sessions": 5,
+            "rawBytes": 22525,
+            "deliveredBytes": 3710,
+            "overheadMs": 134.16339999999983,
+            "cacheHits": 0,
+            "duplicateReadsReused": 0,
+            "commands": 5,
+            "avoidedCommandMs": 0,
+            "extraLlmCalls": 0
+          }
+        },
+        "qualityParity": true
+      },
+      {
+        "id": "ts-addition-bug",
+        "repository": "typescript",
+        "startingCommit": "28794d8ffcbd51c0cc271b41ea705c2f2be9cd9e",
+        "baseline": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 57
+          },
+          "wallMs": 22614,
+          "toolCalls": 6,
+          "commandExecutions": 5,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 1863,
+          "inputTokens": 86347,
+          "cachedInputTokens": 82304,
+          "outputTokens": 749
+        },
+        "leanagent": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 57
+          },
+          "wallMs": 26122,
+          "toolCalls": 4,
+          "commandExecutions": 3,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 3148,
+          "inputTokens": 88032,
+          "cachedInputTokens": 72576,
+          "outputTokens": 788,
+          "stats": {
+            "sessions": 3,
+            "rawBytes": 3148,
+            "deliveredBytes": 3148,
+            "overheadMs": 203.19799999999995,
+            "cacheHits": 0,
+            "duplicateReadsReused": 0,
+            "commands": 3,
+            "avoidedCommandMs": 0,
+            "extraLlmCalls": 0
+          }
+        },
+        "qualityParity": true
+      },
+      {
+        "id": "ts-multiply-feature",
+        "repository": "typescript",
+        "startingCommit": "24b6e3652861f1acecc4c231a3c962f54e9c0494",
+        "baseline": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 516
+          },
+          "wallMs": 22087,
+          "toolCalls": 4,
+          "commandExecutions": 3,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 1935,
+          "inputTokens": 86461,
+          "cachedInputTokens": 82304,
+          "outputTokens": 724
+        },
+        "leanagent": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 516
+          },
+          "wallMs": 30206,
+          "toolCalls": 5,
+          "commandExecutions": 4,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 825,
+          "inputTokens": 103000,
+          "cachedInputTokens": 98560,
+          "outputTokens": 923,
+          "stats": {
+            "sessions": 3,
+            "rawBytes": 721,
+            "deliveredBytes": 721,
+            "overheadMs": 114.91669999999999,
+            "cacheHits": 0,
+            "duplicateReadsReused": 0,
+            "commands": 3,
+            "avoidedCommandMs": 0,
+            "extraLlmCalls": 0
+          }
+        },
+        "qualityParity": true
+      },
+      {
+        "id": "ts-finite-inputs",
+        "repository": "typescript",
+        "startingCommit": "2bf0760c9e237ea1418931af456e45e3e92be541",
+        "baseline": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 513
+          },
+          "wallMs": 20352,
+          "toolCalls": 2,
+          "commandExecutions": 2,
+          "fileChanges": 0,
+          "agentVisibleToolOutputBytes": 11936,
+          "inputTokens": 53060,
+          "cachedInputTokens": 47744,
+          "outputTokens": 852
+        },
+        "leanagent": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 513
+          },
+          "wallMs": 23747,
+          "toolCalls": 3,
+          "commandExecutions": 2,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 663,
+          "inputTokens": 67753,
+          "cachedInputTokens": 53760,
+          "outputTokens": 705,
+          "stats": {
+            "sessions": 2,
+            "rawBytes": 663,
+            "deliveredBytes": 663,
+            "overheadMs": 199.9457000000001,
+            "cacheHits": 0,
+            "duplicateReadsReused": 0,
+            "commands": 2,
+            "avoidedCommandMs": 0,
+            "extraLlmCalls": 0
+          }
+        },
+        "qualityParity": true
+      },
+      {
+        "id": "ts-script-repair",
+        "repository": "typescript",
+        "startingCommit": "f44bf7541dcfa909c339407d7eba7dd7a87a0043",
+        "baseline": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 62
+          },
+          "wallMs": 32450,
+          "toolCalls": 9,
+          "commandExecutions": 8,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 3143,
+          "inputTokens": 106798,
+          "cachedInputTokens": 101120,
+          "outputTokens": 1301
+        },
+        "leanagent": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 62
+          },
+          "wallMs": 39792,
+          "toolCalls": 6,
+          "commandExecutions": 5,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 2090,
+          "inputTokens": 123451,
+          "cachedInputTokens": 117888,
+          "outputTokens": 1110,
+          "stats": {
+            "sessions": 5,
+            "rawBytes": 2090,
+            "deliveredBytes": 2090,
+            "overheadMs": 229.05550000000022,
+            "cacheHits": 0,
+            "duplicateReadsReused": 0,
+            "commands": 5,
+            "avoidedCommandMs": 0,
+            "extraLlmCalls": 0
+          }
+        },
+        "qualityParity": true
+      },
+      {
+        "id": "ts-clamp-feature",
+        "repository": "typescript",
+        "startingCommit": "d8a03e761dab498137f46d47c0f1d2b60dc28d90",
+        "baseline": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 512
+          },
+          "wallMs": 26201,
+          "toolCalls": 7,
+          "commandExecutions": 6,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 1561,
+          "inputTokens": 86640,
+          "cachedInputTokens": 82304,
+          "outputTokens": 903
+        },
+        "leanagent": {
+          "status": "COMPLETE",
+          "exit": 0,
+          "quality": {
+            "status": "PASS",
+            "exit": 0,
+            "outputBytes": 513
+          },
+          "wallMs": 30807,
+          "toolCalls": 4,
+          "commandExecutions": 3,
+          "fileChanges": 1,
+          "agentVisibleToolOutputBytes": 1433,
+          "inputTokens": 86649,
+          "cachedInputTokens": 72064,
+          "outputTokens": 814,
+          "stats": {
+            "sessions": 3,
+            "rawBytes": 1433,
+            "deliveredBytes": 1433,
+            "overheadMs": 112.17860000000007,
+            "cacheHits": 0,
+            "duplicateReadsReused": 0,
+            "commands": 3,
+            "avoidedCommandMs": 0,
+            "extraLlmCalls": 0
+          }
+        },
+        "qualityParity": true
+      }
+    ],
+    "aggregate": {
+      "baselinePass": 10,
+      "leanagentPass": 10,
+      "parity": 10,
+      "baselineToolOutputBytes": 57199,
+      "leanagentToolOutputBytes": 31235,
+      "baselineToolCalls": 67,
+      "leanagentToolCalls": 59,
+      "baselineWallMs": 277394,
+      "leanagentWallMs": 386891,
+      "baselineInputTokens": 915228,
+      "leanagentInputTokens": 1144972,
+      "baselineCachedInputTokens": 842368,
+      "leanagentCachedInputTokens": 1025664,
+      "baselineOutputTokens": 10331,
+      "leanagentOutputTokens": 12082,
+      "leanagentRawBytes": 45179,
+      "leanagentDeliveredBytes": 26364,
+      "leanagentOverheadMs": 1961.3001000000004,
+      "leanagentCacheHits": 0,
+      "leanagentDuplicateReads": 0,
+      "leanagentExtraLlmCalls": 0
+    },
+    "negativeResults": [
+      "Aggregate wall time increased in the LeanAgent treatment; this study does not support a speedup claim.",
+      "Provider token telemetry was observed but is not presented as billing savings.",
+      "The one-shot coding tasks did not exercise verified command reuse; deterministic fixtures cover that mechanism separately."
+    ]
+  },
+  "deterministicSuite": {
+    "schema": "leanagent.benchmark-suite/v1",
+    "reports": [
+      {
+        "schema": "leanagent.benchmark/v1",
+        "name": "verbose-test-diagnostics",
+        "repository": ".",
+        "task": "Preserve actionable failures while removing repetitive test progress output",
+        "agent": "generic-shell",
+        "model": "not applicable",
+        "baseline": {
+          "command": [
+            "node",
+            "scripts/benchmark-verbose-output.mjs"
+          ],
+          "exit": 1,
+          "durationMs": 72.2491,
+          "outputBytes": 64939,
+          "rawOutputBytes": 64939,
+          "deliveredOutputBytes": 64939,
+          "avoidedOutputBytes": 0,
+          "cacheHits": 0,
+          "cacheMisses": 1,
+          "repetitions": 1,
+          "endToEndMs": 72.2491
+        },
+        "leanagent": {
+          "command": [
+            "node",
+            "scripts/benchmark-verbose-output.mjs"
+          ],
+          "exit": 1,
+          "durationMs": 71.4603,
+          "outputBytes": 20050,
+          "rawOutputBytes": 64939,
+          "deliveredOutputBytes": 20050,
+          "avoidedOutputBytes": 44889,
+          "cacheHits": 0,
+          "cacheMisses": 1,
+          "repetitions": 1,
+          "endToEndMs": 85.01800000000001
+        },
+        "leanagentStats": {
+          "fileReads": 0,
+          "duplicateReadsReused": 0,
+          "commands": 1,
+          "cachedCommands": 0,
+          "repeatedBlocked": 0,
+          "loopsDetected": 0,
+          "loopCycles": 0,
+          "rawBytes": 64939,
+          "deliveredBytes": 20050,
+          "cacheHits": 0,
+          "cacheMisses": 1,
+          "cacheInvalidations": 0,
+          "commandWallMs": 71.4603,
+          "avoidedCommandMs": 0,
+          "modelCalls": 0,
+          "modelInputTokens": 0,
+          "modelOutputTokens": 0,
+          "extraLlmCalls": 0,
+          "overheadMs": 6.539399999999972,
+          "ruleEvaluationMs": 1.088399999999993,
+          "repositorySnapshotMs": 0,
+          "compressionMs": 1.087600000000009,
+          "artifactMs": 4.36239999999998
+        },
+        "quality": {
+          "baselineVerification": {
+            "command": [
+              "npm",
+              "test"
+            ],
+            "exit": 0,
+            "durationMs": 5820.706099999999,
+            "outputBytes": 1929
+          },
+          "leanagentVerification": {
+            "command": [
+              "npm",
+              "test"
+            ],
+            "exit": 0,
+            "durationMs": 5724.1678999999995,
+            "outputBytes": 1929
+          },
+          "equalExit": true
+        },
+        "notes": [
+          "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.",
+          "No startingCommit supplied; use a pinned commit for agent studies."
+        ]
+      },
+      {
+        "schema": "leanagent.benchmark/v1",
+        "name": "repeated-safe-command",
+        "repository": ".",
+        "task": "Run the same deterministic typecheck twice without replaying unchanged work",
+        "agent": "generic-shell",
+        "model": "not applicable",
+        "baseline": {
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exit": 0,
+          "durationMs": 17351.2427,
+          "outputBytes": 1444,
+          "rawOutputBytes": 1444,
+          "deliveredOutputBytes": 1444,
+          "avoidedOutputBytes": 0,
+          "cacheHits": 0,
+          "cacheMisses": 2,
+          "repetitions": 2,
+          "endToEndMs": 17351.2427
+        },
+        "leanagent": {
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exit": 0,
+          "durationMs": 8636.992599999998,
+          "outputBytes": 1444,
+          "rawOutputBytes": 1444,
+          "deliveredOutputBytes": 1444,
+          "avoidedOutputBytes": 0,
+          "cacheHits": 1,
+          "cacheMisses": 1,
+          "repetitions": 2,
+          "endToEndMs": 8803.574599999996
+        },
+        "leanagentStats": {
+          "fileReads": 0,
+          "duplicateReadsReused": 0,
+          "commands": 2,
+          "cachedCommands": 2,
+          "repeatedBlocked": 0,
+          "loopsDetected": 0,
+          "loopCycles": 0,
+          "rawBytes": 2166,
+          "deliveredBytes": 2166,
+          "cacheHits": 2,
+          "cacheMisses": 1,
+          "cacheInvalidations": 0,
+          "commandWallMs": 8636.992599999998,
+          "avoidedCommandMs": 8636.992599999998,
+          "modelCalls": 0,
+          "modelInputTokens": 0,
+          "modelOutputTokens": 0,
+          "extraLlmCalls": 0,
+          "overheadMs": 160.16310000000522,
+          "ruleEvaluationMs": 0.6526000000012573,
+          "repositorySnapshotMs": 156.65939999999682,
+          "compressionMs": 0.02629999999771826,
+          "artifactMs": 2.7741000000023632
+        },
+        "quality": {
+          "baselineVerification": {
+            "command": [
+              "npm",
+              "test"
+            ],
+            "exit": 0,
+            "durationMs": 5785.844799999999,
+            "outputBytes": 1929
+          },
+          "leanagentVerification": {
+            "command": [
+              "npm",
+              "test"
+            ],
+            "exit": 0,
+            "durationMs": 6023.115100000003,
+            "outputBytes": 1929
+          },
+          "equalExit": true
+        },
+        "notes": [
+          "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.",
+          "No startingCommit supplied; use a pinned commit for agent studies."
+        ]
+      },
+      {
+        "schema": "leanagent.benchmark/v1",
+        "name": "python-verbose-diagnostics",
+        "repository": "fixtures/python-project",
+        "task": "Preserve the actionable Python failure while removing repetitive progress output",
+        "agent": "generic-shell",
+        "model": "not applicable",
+        "baseline": {
+          "command": [
+            "python",
+            "noisy_check.py"
+          ],
+          "exit": 1,
+          "durationMs": 133.59300000000076,
+          "outputBytes": 19776,
+          "rawOutputBytes": 19776,
+          "deliveredOutputBytes": 19776,
+          "avoidedOutputBytes": 0,
+          "cacheHits": 0,
+          "cacheMisses": 1,
+          "repetitions": 1,
+          "endToEndMs": 133.59300000000076
+        },
+        "leanagent": {
+          "command": [
+            "python",
+            "noisy_check.py"
+          ],
+          "exit": 1,
+          "durationMs": 131.24629999999888,
+          "outputBytes": 961,
+          "rawOutputBytes": 19776,
+          "deliveredOutputBytes": 961,
+          "avoidedOutputBytes": 18815,
+          "cacheHits": 0,
+          "cacheMisses": 1,
+          "repetitions": 1,
+          "endToEndMs": 137.31570000000647
+        },
+        "leanagentStats": {
+          "fileReads": 0,
+          "duplicateReadsReused": 0,
+          "commands": 1,
+          "cachedCommands": 0,
+          "repeatedBlocked": 0,
+          "loopsDetected": 0,
+          "loopCycles": 0,
+          "rawBytes": 19776,
+          "deliveredBytes": 961,
+          "cacheHits": 0,
+          "cacheMisses": 1,
+          "cacheInvalidations": 0,
+          "commandWallMs": 131.24629999999888,
+          "avoidedCommandMs": 0,
+          "modelCalls": 0,
+          "modelInputTokens": 0,
+          "modelOutputTokens": 0,
+          "extraLlmCalls": 0,
+          "overheadMs": 3.5962000000072294,
+          "ruleEvaluationMs": 0.3660000000090804,
+          "repositorySnapshotMs": 0,
+          "compressionMs": 0.3562999999994645,
+          "artifactMs": 2.8729999999995925
+        },
+        "quality": {
+          "baselineVerification": {
+            "command": [
+              "python",
+              "test_app.py"
+            ],
+            "exit": 0,
+            "durationMs": 128.0827999999965,
+            "outputBytes": 0
+          },
+          "leanagentVerification": {
+            "command": [
+              "python",
+              "test_app.py"
+            ],
+            "exit": 0,
+            "durationMs": 124.50950000000012,
+            "outputBytes": 0
+          },
+          "equalExit": true
+        },
+        "notes": [
+          "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.",
+          "No startingCommit supplied; use a pinned commit for agent studies."
+        ]
+      }
+    ]
+  },
+  "deterministicSummary": {
+    "fixtures": 3,
+    "baselineRawBytes": 86159,
+    "leanagentDeliveredBytes": 22455,
+    "baselineEndToEndMs": 17557.0848,
+    "leanagentEndToEndMs": 9025.908300000003,
+    "cacheHits": 1,
+    "parity": 3
+  },
+  "security": {
+    "dependencyAudit": "0 vulnerabilities",
+    "secrets": "no credentials or provider values stored",
+    "providerCredentialsStored": false
+  },
+  "limitations": [
+    "Codex was the only provider with completed real-agent evidence in this environment.",
+    "Native interception remains host-dependent; generic wrapper is the reliable fallback.",
+    "GitHub search found a separate Lean Dojo formal-theorem-proving project named LeanAgent; npm package names were unclaimed on the observation date."
+  ]
+}

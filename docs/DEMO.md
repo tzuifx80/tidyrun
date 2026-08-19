@@ -1,5 +1,10 @@
 # Reproducible terminal demo
 
+The checked-in [asciicast recording](leanagent-demo.cast) is a real packaged
+run on Windows. It observed 13,140 raw bytes → 427 delivered bytes (96.8%
+derived reduction) and one verified cache hit on the repeated command. Replay
+it with `asciinema play docs/leanagent-demo.cast`.
+
 Run this in a repository with a test command:
 
 ```bash
