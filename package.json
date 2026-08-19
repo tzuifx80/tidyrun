@@ -1,0 +1,30 @@
+{
+  "name": "leanagent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-first optimization runtime for AI coding agents. No extra model.",
+  "license": "Apache-2.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @leanagent/core && npm run build -w @leanagent/plugin-sdk && npm run build -w @leanagent/cli && npm run build -w leanagent",
+    "benchmark": "npm run build && node packages/cli/dist/main.js benchmark benchmarks/output-reduction.json",
+    "benchmark:suite": "npm run build && node scripts/run-benchmark-suite.mjs",
+    "package:smoke": "npm run build && node scripts/package-smoke.mjs",
+    "test": "npm run test -w @leanagent/core && npm run test -w @leanagent/plugin-sdk && npm run test -w @leanagent/cli",
+    "typecheck": "npm run typecheck -w @leanagent/core && npm run typecheck -w @leanagent/plugin-sdk && npm run typecheck -w @leanagent/cli",
+    "lint": "node scripts/lint.mjs",
+    "leanagent": "node packages/cli/dist/main.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "typescript": "^5.9.3"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "commonjs"
+}

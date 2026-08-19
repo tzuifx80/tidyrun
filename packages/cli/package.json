@@ -1,0 +1,27 @@
+{
+  "name": "@leanagent/cli",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "engines": { "node": ">=22" },
+  "type": "module",
+  "main": "./dist/main.js",
+  "exports": { ".": { "import": "./dist/main.js", "types": "./dist/main.d.ts" } },
+  "bin": {
+    "leanagent": "./dist/main.js"
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "node ../../scripts/clean-dist.mjs dist && tsc -p tsconfig.build.json",
+    "pretypecheck": "npm run build -w @leanagent/core",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@leanagent/core": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

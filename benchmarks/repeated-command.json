@@ -1,0 +1,11 @@
+{
+  "name": "repeated-safe-command",
+  "repository": ".",
+  "task": "Run the same deterministic typecheck twice without replaying unchanged work",
+  "agent": "generic-shell",
+  "model": "not applicable",
+  "baselineCommand": ["npm", "run", "typecheck"],
+  "repetitions": 2,
+  "verification": ["npm", "test"],
+  "timeoutMs": 120000
+}

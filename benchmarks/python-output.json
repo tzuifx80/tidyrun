@@ -1,0 +1,10 @@
+{
+  "name": "python-verbose-diagnostics",
+  "repository": "fixtures/python-project",
+  "task": "Preserve the actionable Python failure while removing repetitive progress output",
+  "agent": "generic-shell",
+  "model": "not applicable",
+  "baselineCommand": ["python", "noisy_check.py"],
+  "verification": ["python", "test_app.py"],
+  "timeoutMs": 120000
+}

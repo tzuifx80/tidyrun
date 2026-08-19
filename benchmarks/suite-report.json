@@ -1,0 +1,277 @@
+{
+  "schema": "leanagent.benchmark-suite/v1",
+  "reports": [
+    {
+      "schema": "leanagent.benchmark/v1",
+      "name": "verbose-test-diagnostics",
+      "repository": ".",
+      "task": "Preserve actionable failures while removing repetitive test progress output",
+      "agent": "generic-shell",
+      "model": "not applicable",
+      "baseline": {
+        "command": [
+          "node",
+          "scripts/benchmark-verbose-output.mjs"
+        ],
+        "exit": 1,
+        "durationMs": 76.2262,
+        "outputBytes": 64939,
+        "rawOutputBytes": 64939,
+        "deliveredOutputBytes": 64939,
+        "avoidedOutputBytes": 0,
+        "cacheHits": 0,
+        "cacheMisses": 1,
+        "repetitions": 1,
+        "endToEndMs": 76.2262
+      },
+      "leanagent": {
+        "command": [
+          "node",
+          "scripts/benchmark-verbose-output.mjs"
+        ],
+        "exit": 1,
+        "durationMs": 71.239,
+        "outputBytes": 20050,
+        "rawOutputBytes": 64939,
+        "deliveredOutputBytes": 20050,
+        "avoidedOutputBytes": 44889,
+        "cacheHits": 0,
+        "cacheMisses": 1,
+        "repetitions": 1,
+        "endToEndMs": 85.57349999999998
+      },
+      "leanagentStats": {
+        "fileReads": 0,
+        "duplicateReadsReused": 0,
+        "commands": 1,
+        "cachedCommands": 0,
+        "repeatedBlocked": 0,
+        "loopsDetected": 0,
+        "loopCycles": 0,
+        "rawBytes": 64939,
+        "deliveredBytes": 20050,
+        "cacheHits": 0,
+        "cacheMisses": 1,
+        "cacheInvalidations": 0,
+        "commandWallMs": 71.239,
+        "avoidedCommandMs": 0,
+        "modelCalls": 0,
+        "modelInputTokens": 0,
+        "modelOutputTokens": 0,
+        "extraLlmCalls": 0,
+        "overheadMs": 6.260300000000001,
+        "ruleEvaluationMs": 1.019999999999996,
+        "repositorySnapshotMs": 0,
+        "compressionMs": 1.1217000000000041,
+        "artifactMs": 4.11760000000001
+      },
+      "quality": {
+        "baselineVerification": {
+          "command": [
+            "npm",
+            "test"
+          ],
+          "exit": 0,
+          "durationMs": 5929.829299999999,
+          "outputBytes": 2075
+        },
+        "leanagentVerification": {
+          "command": [
+            "npm",
+            "test"
+          ],
+          "exit": 0,
+          "durationMs": 5473.731400000001,
+          "outputBytes": 1929
+        },
+        "equalExit": true
+      },
+      "notes": [
+        "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.",
+        "No startingCommit supplied; use a pinned commit for agent studies."
+      ]
+    },
+    {
+      "schema": "leanagent.benchmark/v1",
+      "name": "repeated-safe-command",
+      "repository": ".",
+      "task": "Run the same deterministic typecheck twice without replaying unchanged work",
+      "agent": "generic-shell",
+      "model": "not applicable",
+      "baseline": {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exit": 0,
+        "durationMs": 17325.8298,
+        "outputBytes": 1444,
+        "rawOutputBytes": 1444,
+        "deliveredOutputBytes": 1444,
+        "avoidedOutputBytes": 0,
+        "cacheHits": 0,
+        "cacheMisses": 2,
+        "repetitions": 2,
+        "endToEndMs": 17325.8298
+      },
+      "leanagent": {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exit": 0,
+        "durationMs": 8725.2769,
+        "outputBytes": 1444,
+        "rawOutputBytes": 1444,
+        "deliveredOutputBytes": 1444,
+        "avoidedOutputBytes": 0,
+        "cacheHits": 1,
+        "cacheMisses": 1,
+        "repetitions": 2,
+        "endToEndMs": 8809.7775
+      },
+      "leanagentStats": {
+        "fileReads": 0,
+        "duplicateReadsReused": 0,
+        "commands": 2,
+        "cachedCommands": 2,
+        "repeatedBlocked": 0,
+        "loopsDetected": 0,
+        "loopCycles": 0,
+        "rawBytes": 2166,
+        "deliveredBytes": 2166,
+        "cacheHits": 2,
+        "cacheMisses": 1,
+        "cacheInvalidations": 0,
+        "commandWallMs": 8725.2769,
+        "avoidedCommandMs": 8725.2769,
+        "modelCalls": 0,
+        "modelInputTokens": 0,
+        "modelOutputTokens": 0,
+        "extraLlmCalls": 0,
+        "overheadMs": 78.74120000000039,
+        "ruleEvaluationMs": 0.691899999997986,
+        "repositorySnapshotMs": 75.31379999999626,
+        "compressionMs": 0.020100000001548324,
+        "artifactMs": 2.6635000000023865
+      },
+      "quality": {
+        "baselineVerification": {
+          "command": [
+            "npm",
+            "test"
+          ],
+          "exit": 0,
+          "durationMs": 5507.694100000001,
+          "outputBytes": 1929
+        },
+        "leanagentVerification": {
+          "command": [
+            "npm",
+            "test"
+          ],
+          "exit": 0,
+          "durationMs": 5555.179700000001,
+          "outputBytes": 1929
+        },
+        "equalExit": true
+      },
+      "notes": [
+        "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.",
+        "No startingCommit supplied; use a pinned commit for agent studies."
+      ]
+    },
+    {
+      "schema": "leanagent.benchmark/v1",
+      "name": "python-verbose-diagnostics",
+      "repository": "fixtures/python-project",
+      "task": "Preserve the actionable Python failure while removing repetitive progress output",
+      "agent": "generic-shell",
+      "model": "not applicable",
+      "baseline": {
+        "command": [
+          "python",
+          "noisy_check.py"
+        ],
+        "exit": 1,
+        "durationMs": 672.1632000000027,
+        "outputBytes": 19776,
+        "rawOutputBytes": 19776,
+        "deliveredOutputBytes": 19776,
+        "avoidedOutputBytes": 0,
+        "cacheHits": 0,
+        "cacheMisses": 1,
+        "repetitions": 1,
+        "endToEndMs": 672.1632000000027
+      },
+      "leanagent": {
+        "command": [
+          "python",
+          "noisy_check.py"
+        ],
+        "exit": 1,
+        "durationMs": 128.09309999999823,
+        "outputBytes": 961,
+        "rawOutputBytes": 19776,
+        "deliveredOutputBytes": 961,
+        "avoidedOutputBytes": 18815,
+        "cacheHits": 0,
+        "cacheMisses": 1,
+        "repetitions": 1,
+        "endToEndMs": 134.87300000000687
+      },
+      "leanagentStats": {
+        "fileReads": 0,
+        "duplicateReadsReused": 0,
+        "commands": 1,
+        "cachedCommands": 0,
+        "repeatedBlocked": 0,
+        "loopsDetected": 0,
+        "loopCycles": 0,
+        "rawBytes": 19776,
+        "deliveredBytes": 961,
+        "cacheHits": 0,
+        "cacheMisses": 1,
+        "cacheInvalidations": 0,
+        "commandWallMs": 128.09309999999823,
+        "avoidedCommandMs": 0,
+        "modelCalls": 0,
+        "modelInputTokens": 0,
+        "modelOutputTokens": 0,
+        "extraLlmCalls": 0,
+        "overheadMs": 3.488600000004226,
+        "ruleEvaluationMs": 0.35560000000259606,
+        "repositorySnapshotMs": 0,
+        "compressionMs": 0.3934000000008382,
+        "artifactMs": 2.7388000000064494
+      },
+      "quality": {
+        "baselineVerification": {
+          "command": [
+            "python",
+            "test_app.py"
+          ],
+          "exit": 0,
+          "durationMs": 290.4464000000007,
+          "outputBytes": 0
+        },
+        "leanagentVerification": {
+          "command": [
+            "python",
+            "test_app.py"
+          ],
+          "exit": 0,
+          "durationMs": 124.73769999999786,
+          "outputBytes": 0
+        },
+        "equalExit": true
+      },
+      "notes": [
+        "Output bytes are observed. Avoided bytes are derived from raw command output minus the exact representation delivered by LeanAgent. Provider token usage is not inferred.",
+        "No startingCommit supplied; use a pinned commit for agent studies."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.leanagent/
+coverage/
+__pycache__/
+*.log
+.env
+.env.*
+.DS_Store
+.aistack/runs/
+.aistack/last-codex.md
+.aistack/cache/
+benchmarks/last-report.*
+!benchmarks/suite-report.json
+!benchmarks/suite-report.md

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "leanagent": {
+      "command": "leanagent",
+      "args": ["mcp"]
+    }
+  }
+}

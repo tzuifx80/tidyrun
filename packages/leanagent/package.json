@@ -1,0 +1,11 @@
+{
+  "name": "leanagent",
+  "version": "0.1.0",
+  "description": "Local-first optimization runtime for AI coding agents",
+  "license": "Apache-2.0",
+  "engines": { "node": ">=22" },
+  "type": "module",
+  "bin": { "leanagent": "./bin/leanagent.mjs" },
+  "files": ["bin", "dist", "README.md", "LICENSE"],
+  "scripts": { "build": "node ../../scripts/build-package.mjs" }
+}

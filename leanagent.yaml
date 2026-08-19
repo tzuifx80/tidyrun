@@ -1,0 +1,51 @@
+version: 1
+preset: balanced
+
+context:
+  duplicate_reads: reuse
+  max_file_bytes: 150000
+  max_tool_output_chars: 20000
+
+ignore:
+  - node_modules/**
+  - dist/**
+  - coverage/**
+  - .next/**
+  - "*.min.js"
+  - "*.map"
+
+commands:
+  repeated_execution: reuse
+  max_identical_failures: 2
+
+loops:
+  enabled: true
+  minimum_cycles: 3
+
+testing:
+  incremental: true
+  final_verification: true
+
+cache:
+  enabled: true
+  conservative: true
+performance:
+  fast_path: true
+  min_output_bytes: 2048
+  min_command_duration_ms: 25
+  min_cache_duration_ms: 100
+
+storage:
+  max_artifact_bytes: 25000000
+  max_artifacts: 2000
+  retention_days: 30
+
+security:
+  allow_outside_repository: false
+  follow_symlinks: false
+  redact_secrets: true
+
+metrics:
+  enabled: true
+
+telemetry: false

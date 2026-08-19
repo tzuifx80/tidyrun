@@ -1,0 +1,7 @@
+{
+  "hooks": {
+    "BeforeTool": [{ "matcher": "run_shell_command", "hooks": [{ "type": "command", "command": "leanagent hook gemini", "name": "leanagent-before-tool" }] }],
+    "AfterTool": [{ "matcher": "run_shell_command", "hooks": [{ "type": "command", "command": "leanagent hook gemini", "name": "leanagent-after-tool" }] }],
+    "SessionStart": [{ "hooks": [{ "type": "command", "command": "leanagent hook gemini", "name": "leanagent-session-start" }] }]
+  }
+}

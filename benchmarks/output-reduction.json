@@ -1,0 +1,10 @@
+{
+  "name": "verbose-test-diagnostics",
+  "repository": ".",
+  "task": "Preserve actionable failures while removing repetitive test progress output",
+  "agent": "generic-shell",
+  "model": "not applicable",
+  "baselineCommand": ["node", "scripts/benchmark-verbose-output.mjs"],
+  "verification": ["npm", "test"],
+  "timeoutMs": 120000
+}
